@@ -11,4 +11,6 @@ export default {
   today: 'Today',
   thisWeek: 'This Week',
   movies: 'Movies',
+  homeScreen: 'HomeScreen',
+  detailScreen: 'DetailScreen',
 };

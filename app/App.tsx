@@ -1,6 +1,10 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/es/integration/react';
+import Routes from './navigation/AppNavigation';
+import reduxStore from './redux/store';
 import {styles} from './theme';
 
 const App = () => {
@@ -8,10 +12,16 @@ const App = () => {
     SplashScreen.hide();
   }, []);
 
+  const {store, persistor} = reduxStore;
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Hello World</Text>
-    </SafeAreaView>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <SafeAreaView style={styles.container}>
+          <Routes />
+        </SafeAreaView>
+      </PersistGate>
+    </Provider>
   );
 };
 
