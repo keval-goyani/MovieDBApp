@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
   listItemImageStyle: {
     marginLeft: horizontalScale(14),
   },
+  loadingStyle: {
+    height: verticalScale(300),
+  },
   card: {
     height: verticalScale(184),
     width: horizontalScale(300),
@@ -71,8 +74,9 @@ const styles = StyleSheet.create({
   },
   movieNameContainer: {
     alignItems: 'center',
-    marginLeft: horizontalScale(15),
+    marginLeft: horizontalScale(18),
     marginTop: verticalScale(4),
+    width: horizontalScale(300),
   },
   movieNameStyle: {
     fontWeight: '700',
@@ -83,6 +87,11 @@ const styles = StyleSheet.create({
     color: Color.white,
     fontSize: moderateScale(15),
     marginTop: verticalScale(4),
+  },
+  footerLoaderStyle: {
+    marginRight: verticalScale(5),
+    height: verticalScale(225),
+    justifyContent: 'center',
   },
 });
 

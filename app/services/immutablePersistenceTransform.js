@@ -3,7 +3,7 @@ import Immutable from 'seamless-immutable';
 
 const isImmutable = R.has('asMutable');
 
-const convertToJs = state => state.asMutable({deep: true});
+const convertToJs = state => state.asMutable({ deep: true });
 
 const fromImmutable = R.when(isImmutable, convertToJs);
 

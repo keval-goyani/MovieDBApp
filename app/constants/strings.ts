@@ -14,4 +14,12 @@ export default {
   homeScreen: 'HomeScreen',
   detailScreen: 'DetailScreen',
   officialTrailer: 'Official Trailer',
+  clientError: 'Client Error',
+  networkError: 'Network Error',
+  connectionError: 'Connection Error',
+  serverError: 'Server Error',
+  errorMessage: 'Something went wrong',
+  pageErrorMessage: 'Page not Found',
+  networkErrorMessage: 'Please check your internet connection',
+  serverErrorMessage: 'Something went wrong',
 };
