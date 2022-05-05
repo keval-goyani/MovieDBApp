@@ -13,4 +13,5 @@ export default {
   movies: 'Movies',
   homeScreen: 'HomeScreen',
   detailScreen: 'DetailScreen',
+  officialTrailer: 'Official Trailer',
 };
