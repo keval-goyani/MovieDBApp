@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { DropDownMenu } from '../components';
-import { appConstants, strings } from '../constants';
+import { appConstants, filterData, strings } from '../constants';
 import dataAction from '../redux/movieRedux';
 import { Icons } from '../theme';
 import { listContainerDataType, listItemDataType } from './ListContainer';
@@ -29,7 +29,11 @@ const MovieTrailer: FC<listContainerDataType> = ({
   const dispatch = useDispatch();
   const movieListData = [...data];
   const { name } = initialValue;
+  const { trailerFilterData } = filterData;
+
   const listItem = ({ item }: ListRenderItemInfo<listItemDataType>) => {
+    const trailerTitle = item?.title ?? item?.name;
+
     return (
       <View style={styles.listItemStyle}>
         <View style={styles.listItemImageStyle}>
@@ -51,7 +55,7 @@ const MovieTrailer: FC<listContainerDataType> = ({
         </View>
         <View style={styles.movieNameContainer}>
           <Text style={styles.movieNameStyle} numberOfLines={1}>
-            {item?.title ?? item?.original_title}
+            {trailerTitle}
           </Text>
           <Text style={styles.officialTrailerStyle}>
             {strings.officialTrailer}
@@ -62,12 +66,17 @@ const MovieTrailer: FC<listContainerDataType> = ({
   };
 
   const pageLoading = () => {
-    dispatch(dataAction.latestTrailerDataRequest(listPage + 1));
+    dispatch(
+      dataAction.latestTrailerDataRequest({
+        urlMainPath: trailerFilterData[0].endPoint,
+        pageNo: listPage + 1,
+      }),
+    );
   };
 
   return (
     <>
-      {fetchingState && listPage === 1 ? (
+      {fetchingState && movieListData.length === 0 ? (
         <ActivityIndicator size="large" style={styles.loadingStyle} />
       ) : !errorState ? (
         <ImageBackground
@@ -79,6 +88,7 @@ const MovieTrailer: FC<listContainerDataType> = ({
             <Text style={styles.fontStyle}>{title}</Text>
             <DropDownMenu
               data={filterOptions}
+              title={title}
               initialValue={name}
               dropDownViewStyle={styles.dropDownMainItemColor}
               dropDownTextStyle={styles.dropDownMainItemTextColor}

@@ -2,18 +2,50 @@ import React, { useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Header, ListContainer, MovieTrailer } from '../../components';
-import { filterData, strings } from '../../constants';
+import { appConstants, filterData, strings } from '../../constants';
 import dataAction, { apiDataSelectors } from '../../redux/movieRedux';
 import styles from './styles/HomeScreenStyles';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
+  const {
+    popularMovieFilterData,
+    freeToWatchMovieFilterData,
+    trailerFilterData,
+    trendingFilterData,
+  } = filterData;
   useEffect(() => {
-    dispatch(dataAction.whatsPopularDataRequest(1));
-    dispatch(dataAction.freeToWatchDataRequest(1));
-    dispatch(dataAction.latestTrailerDataRequest(1));
-    dispatch(dataAction.trendingDataRequest(1));
-  }, [dispatch]);
+    dispatch(
+      dataAction.whatsPopularDataRequest({
+        urlMainPath: popularMovieFilterData[0].endPoint,
+        pageNo: appConstants.defaultPage,
+      }),
+    );
+    dispatch(
+      dataAction.freeToWatchDataRequest({
+        urlMainPath: freeToWatchMovieFilterData[0].endPoint,
+        pageNo: appConstants.defaultPage,
+      }),
+    );
+    dispatch(
+      dataAction.latestTrailerDataRequest({
+        urlMainPath: trailerFilterData[0].endPoint,
+        pageNo: appConstants.defaultPage,
+      }),
+    );
+    dispatch(
+      dataAction.trendingDataRequest({
+        urlMainPath: trendingFilterData[0].endPoint,
+        pageNo: appConstants.defaultPage,
+      }),
+    );
+  }, [
+    dispatch,
+    freeToWatchMovieFilterData,
+    popularMovieFilterData,
+    trailerFilterData,
+    trendingFilterData,
+  ]);
 
   const {
     whatsPopularData,
@@ -40,8 +72,8 @@ const HomeScreen = () => {
       <ScrollView bounces={false}>
         <ListContainer
           title={strings.whatsPopular}
-          filterOptions={filterData.popularMovieTrailerFilterData}
-          initialValue={filterData.popularMovieTrailerFilterData[0]}
+          filterOptions={popularMovieFilterData}
+          initialValue={popularMovieFilterData[0]}
           data={whatsPopularData ?? []}
           fetchingState={fetchingWhatsPopularData}
           errorState={whatsPopularDataFetchingError}
@@ -49,8 +81,8 @@ const HomeScreen = () => {
         />
         <ListContainer
           title={strings.freeToWatch}
-          filterOptions={filterData.freeToWatchMovieFilterData}
-          initialValue={filterData.freeToWatchMovieFilterData[0]}
+          filterOptions={freeToWatchMovieFilterData}
+          initialValue={freeToWatchMovieFilterData[0]}
           data={freeToWatch ?? []}
           fetchingState={fetchingFreeToWatch}
           errorState={freeToWatchFetchingError}
@@ -58,8 +90,8 @@ const HomeScreen = () => {
         />
         <MovieTrailer
           title={strings.latestTrailers}
-          filterOptions={filterData.popularMovieTrailerFilterData}
-          initialValue={filterData.popularMovieTrailerFilterData[0]}
+          filterOptions={trailerFilterData}
+          initialValue={trailerFilterData[0]}
           data={latestTrailers ?? []}
           fetchingState={fetchingLatestTrailers}
           errorState={latestTrailersFetchingError}
@@ -67,8 +99,8 @@ const HomeScreen = () => {
         />
         <ListContainer
           title={strings.trending}
-          filterOptions={filterData.trendingFilterData}
-          initialValue={filterData.trendingFilterData[0]}
+          filterOptions={trendingFilterData}
+          initialValue={trendingFilterData[0]}
           data={trending ?? []}
           fetchingState={fetchingTrending}
           errorState={trendingFetchingError}

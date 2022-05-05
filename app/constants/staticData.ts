@@ -1,19 +1,74 @@
 import { strings } from '../constants';
+import appConstants from './appConstants';
 
 export const filterData = {
-  popularMovieTrailerFilterData: [
-    { id: 0, name: strings.streaming },
-    { id: 1, name: strings.onTv },
-    { id: 2, name: strings.forRent },
-    { id: 3, name: strings.inTheaters },
+  popularMovieFilterData: [
+    {
+      id: 0,
+      name: strings.streaming,
+      endPoint: `${appConstants.popularStreamingMoviePath}${appConstants.apiKey}${appConstants.page}`,
+    },
+    {
+      id: 1,
+      name: strings.onTv,
+      endPoint: `${appConstants.popularTvMoviePath}${appConstants.apiKey}${appConstants.page}`,
+    },
+    {
+      id: 2,
+      name: strings.forRent,
+      endPoint: `${appConstants.discoverMoviePath}${appConstants.apiKey}${appConstants.watchRent}${appConstants.page}`,
+    },
+    {
+      id: 3,
+      name: strings.inTheaters,
+      endPoint: `${appConstants.popularTheaterMoviePath}${appConstants.apiKey}${appConstants.page}`,
+    },
   ],
   freeToWatchMovieFilterData: [
-    { id: 0, name: strings.movies },
-    { id: 1, name: strings.tv },
+    {
+      id: 0,
+      name: strings.movies,
+      endPoint: `${appConstants.discoverMoviePath}${appConstants.apiKey}${appConstants.watchFree}${appConstants.page}`,
+    },
+    {
+      id: 1,
+      name: strings.tv,
+      endPoint: `${appConstants.discoverTvPath}${appConstants.apiKey}${appConstants.watchFree}${appConstants.page}`,
+    },
+  ],
+  trailerFilterData: [
+    {
+      id: 0,
+      name: strings.streaming,
+      endPoint: `${appConstants.latestTrailerPath}${appConstants.apiKey}${appConstants.page}`,
+    },
+    {
+      id: 1,
+      name: strings.onTv,
+      endPoint: `${appConstants.discoverTvPath}${appConstants.apiKey}${appConstants.trailerOnTv}${appConstants.page}`,
+    },
+    {
+      id: 2,
+      name: strings.forRent,
+      endPoint: `${appConstants.discoverMoviePath}${appConstants.apiKey}${appConstants.trailerWatchRent}${appConstants.page}`,
+    },
+    {
+      id: 3,
+      name: strings.inTheaters,
+      endPoint: `${appConstants.popularTheaterMoviePath}${appConstants.apiKey}${appConstants.page}`,
+    },
   ],
   trendingFilterData: [
-    { id: 0, name: strings.today },
-    { id: 1, name: strings.thisWeek },
+    {
+      id: 0,
+      name: strings.today,
+      endPoint: `${appConstants.trendingDayMoviePath}${appConstants.apiKey}${appConstants.page}`,
+    },
+    {
+      id: 1,
+      name: strings.thisWeek,
+      endPoint: `${appConstants.trendingWeekMoviePath}${appConstants.apiKey}${appConstants.page}`,
+    },
   ],
 };
 
