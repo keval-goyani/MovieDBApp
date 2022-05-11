@@ -1,0 +1,30 @@
+import { StyleSheet } from 'react-native';
+import {
+  Color,
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from '../../theme';
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: verticalScale(17),
+    backgroundColor: Color.darkBlue,
+    paddingHorizontal: horizontalScale(12),
+  },
+  menuIconStyle: {
+    height: moderateScale(20),
+    width: moderateScale(20),
+    tintColor: Color.white,
+  },
+  searchIconStyle: {
+    height: moderateScale(20),
+    width: moderateScale(20),
+    tintColor: Color.lightBlue,
+  },
+});
+
+export default styles;
