@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import {
   Image,
   ImageStyle,
@@ -10,12 +10,16 @@ import {
   ViewStyle,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useDispatch } from 'react-redux';
+import { appConstants, strings } from '../constants';
+import dataAction from '../redux/movieRedux';
 import { Color, Icons } from '../theme';
 import { DataType } from './ListContainer';
 import styles from './styles/DropDownMenuStyles';
 
 export interface dropDownDataType {
   data: Array<DataType>;
+  title: string;
   initialValue: string;
   dropDownViewStyle?: StyleProp<ViewStyle>;
   dropDownTextStyle?: StyleProp<TextStyle>;
@@ -24,6 +28,7 @@ export interface dropDownDataType {
 
 const DropDownMenu: FC<dropDownDataType> = ({
   data,
+  title,
   initialValue,
   dropDownViewStyle,
   dropDownTextStyle,
@@ -31,9 +36,54 @@ const DropDownMenu: FC<dropDownDataType> = ({
 }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [selectedItem, setSelectedItem] = useState(initialValue);
-  const selectItem = (name: string) => {
+  const [urlEndPoint, setUrlEndPoint] = useState(data?.[0]?.endPoint);
+  const dispatch = useDispatch();
+
+  const dropDownFilterData = useCallback(() => {
+    switch (title) {
+      case strings.whatsPopular:
+        dispatch(
+          dataAction.whatsPopularDataRequest({
+            urlMainPath: urlEndPoint,
+            pageNo: appConstants.defaultPage,
+          }),
+        );
+        break;
+      case strings.freeToWatch:
+        dispatch(
+          dataAction.freeToWatchDataRequest({
+            urlMainPath: urlEndPoint,
+            pageNo: appConstants.defaultPage,
+          }),
+        );
+        break;
+      case strings.latestTrailers:
+        dispatch(
+          dataAction.latestTrailerDataRequest({
+            urlMainPath: urlEndPoint,
+            pageNo: appConstants.defaultPage,
+          }),
+        );
+        break;
+      case strings.trending:
+        dispatch(
+          dataAction.trendingDataRequest({
+            urlMainPath: urlEndPoint,
+            pageNo: appConstants.defaultPage,
+          }),
+        );
+        break;
+    }
+  }, [dispatch, title, urlEndPoint]);
+
+  useEffect(() => {
+    dropDownFilterData();
+  }, [dropDownFilterData]);
+
+  const selectItem = (filterValue: string, endPoint: string) => {
     setShowOptions(false);
-    setSelectedItem(name);
+    setSelectedItem(filterValue);
+    setUrlEndPoint(endPoint);
   };
 
   return (
@@ -58,10 +108,10 @@ const DropDownMenu: FC<dropDownDataType> = ({
           <View>
             {data
               .filter(item => item.name !== selectedItem)
-              .map(({ name, id }) => (
+              .map(({ name, id, endPoint }) => (
                 <TouchableOpacity
                   key={id}
-                  onPress={() => selectItem(name)}
+                  onPress={() => selectItem(name, endPoint)}
                   style={styles.dropDownListItem}>
                   <Text style={styles.dropDownListTextStyle}>{name}</Text>
                 </TouchableOpacity>

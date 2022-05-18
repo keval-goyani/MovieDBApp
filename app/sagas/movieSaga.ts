@@ -1,6 +1,5 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { listItemType } from '../components/ListContainer';
-import { appConstants } from '../constants';
 import dataAction, {
   apiDataSelectors,
   ApiDataType,
@@ -21,7 +20,10 @@ export interface ResponseGenerator {
 }
 
 interface SagaDataType {
-  pageNo: number;
+  path: {
+    urlMainPath?: string;
+    pageNo: number;
+  };
   type: string;
 }
 
@@ -30,23 +32,30 @@ function* storedData() {
   return storage;
 }
 
-function* popularDataRequest({ pageNo }: SagaDataType) {
-  const apiEndPoint = `${appConstants.popularMoviePath}${appConstants.apiKey}${appConstants.page}${pageNo}`;
+function* popularDataRequest({ path: { urlMainPath, pageNo } }: SagaDataType) {
+  const apiEndPoint = `${urlMainPath}${pageNo}}`;
   const storage: ApiDataType = yield call(storedData);
   const apiData: ResponseGenerator = yield call(
     getPopularMovieData,
     apiEndPoint,
   );
-
   const {
     status,
-    data: { results, page },
+    data: { results },
   } = apiData;
 
   if (status === 200) {
-    const updatedData = [...storage.whatsPopularData, ...results];
+    let updatedData;
+    if (pageNo === 1) {
+      updatedData = [...results];
+    } else {
+      updatedData = [...storage.whatsPopularData, ...results];
+    }
     yield put(
-      dataAction.whatsPopularDataSuccess({ movieData: updatedData, page }),
+      dataAction.whatsPopularDataSuccess({
+        movieData: updatedData,
+        page: pageNo,
+      }),
     );
   } else {
     const error: ResponseGenerator = yield call(getError, apiData);
@@ -54,8 +63,10 @@ function* popularDataRequest({ pageNo }: SagaDataType) {
   }
 }
 
-function* freeToWatchApiDataRequest({ pageNo }: SagaDataType) {
-  const apiEndPoint = `${appConstants.freeToWatchMoviePath}${appConstants.apiKey}${appConstants.watchFree}${appConstants.page}${pageNo}`;
+function* freeToWatchApiDataRequest({
+  path: { urlMainPath, pageNo },
+}: SagaDataType) {
+  const apiEndPoint = `${urlMainPath}${pageNo}`;
   const storage: ApiDataType = yield call(storedData);
   const apiData: ResponseGenerator = yield call(
     getPopularMovieData,
@@ -63,13 +74,21 @@ function* freeToWatchApiDataRequest({ pageNo }: SagaDataType) {
   );
   const {
     status,
-    data: { results, page },
+    data: { results },
   } = apiData;
 
   if (status === 200) {
-    const updatedData = [...storage.freeToWatch, ...results];
+    let updatedData;
+    if (pageNo === 1) {
+      updatedData = [...results];
+    } else {
+      updatedData = [...storage.freeToWatch, ...results];
+    }
     yield put(
-      dataAction.freeToWatchDataSuccess({ movieData: updatedData, page }),
+      dataAction.freeToWatchDataSuccess({
+        movieData: updatedData,
+        page: pageNo,
+      }),
     );
   } else {
     const error: ResponseGenerator = yield call(getError, apiData);
@@ -77,8 +96,10 @@ function* freeToWatchApiDataRequest({ pageNo }: SagaDataType) {
   }
 }
 
-function* latestTrailerApiDataRequest({ pageNo }: SagaDataType) {
-  const apiEndPoint = `${appConstants.latestTrailerPath}${appConstants.apiKey}${appConstants.page}${pageNo}`;
+function* latestTrailerApiDataRequest({
+  path: { urlMainPath, pageNo },
+}: SagaDataType) {
+  const apiEndPoint = `${urlMainPath}${pageNo}`;
   const storage: ApiDataType = yield call(storedData);
   const apiData: ResponseGenerator = yield call(
     getPopularMovieData,
@@ -86,13 +107,21 @@ function* latestTrailerApiDataRequest({ pageNo }: SagaDataType) {
   );
   const {
     status,
-    data: { results, page },
+    data: { results },
   } = apiData;
 
   if (status === 200) {
-    const updatedData = [...storage.latestTrailers, ...results];
+    let updatedData;
+    if (pageNo === 1) {
+      updatedData = [...results];
+    } else {
+      updatedData = [...storage.latestTrailers, ...results];
+    }
     yield put(
-      dataAction.latestTrailerDataSuccess({ movieData: updatedData, page }),
+      dataAction.latestTrailerDataSuccess({
+        movieData: updatedData,
+        page: pageNo,
+      }),
     );
   } else {
     const error: ResponseGenerator = yield call(getError, apiData);
@@ -100,8 +129,10 @@ function* latestTrailerApiDataRequest({ pageNo }: SagaDataType) {
   }
 }
 
-function* trendingApiDataRequest({ pageNo }: SagaDataType) {
-  const apiEndPoint = `${appConstants.trendingMoviePath}${appConstants.apiKey}${appConstants.page}${pageNo}`;
+function* trendingApiDataRequest({
+  path: { urlMainPath, pageNo },
+}: SagaDataType) {
+  const apiEndPoint = `${urlMainPath}${pageNo}`;
   const storage: ApiDataType = yield call(storedData);
   const apiData: ResponseGenerator = yield call(
     getPopularMovieData,
@@ -109,12 +140,19 @@ function* trendingApiDataRequest({ pageNo }: SagaDataType) {
   );
   const {
     status,
-    data: { results, page },
+    data: { results },
   } = apiData;
 
   if (status === 200) {
-    const updatedData = [...storage.trending, ...results];
-    yield put(dataAction.trendingDataSuccess({ movieData: updatedData, page }));
+    let updatedData;
+    if (pageNo === 1) {
+      updatedData = [...results];
+    } else {
+      updatedData = [...storage.trending, ...results];
+    }
+    yield put(
+      dataAction.trendingDataSuccess({ movieData: updatedData, page: pageNo }),
+    );
   } else {
     const error: ResponseGenerator = yield call(getError, apiData);
     yield put(dataAction.trendingDataFailure(error));

@@ -1,20 +1,20 @@
 import { createActions, createReducer } from 'reduxsauce';
 import Immutable, { ImmutableObject } from 'seamless-immutable';
 import { listItemDataType } from '../components/ListContainer';
-import rootReducer from '.';
+import rootReducer from '../redux';
 import { alertMessage } from '../services/Utils';
 
 const { Types, Creators } = createActions({
-  whatsPopularDataRequest: ['pageNo'],
+  whatsPopularDataRequest: ['path'],
   whatsPopularDataSuccess: ['data'],
   whatsPopularDataFailure: ['error'],
-  freeToWatchDataRequest: ['pageNo'],
+  freeToWatchDataRequest: ['path'],
   freeToWatchDataSuccess: ['data'],
   freeToWatchDataFailure: ['error'],
-  latestTrailerDataRequest: ['pageNo'],
+  latestTrailerDataRequest: ['path'],
   latestTrailerDataSuccess: ['data'],
   latestTrailerDataFailure: ['error'],
-  trendingDataRequest: ['pageNo'],
+  trendingDataRequest: ['path'],
   trendingDataSuccess: ['data'],
   trendingDataFailure: ['error'],
 });
@@ -46,10 +46,10 @@ export const INITIAL_STATE: ImmutableObject<ApiDataType> = Immutable({
   freeToWatch: [],
   latestTrailers: [],
   trending: [],
-  whatsPopularPage: 1,
-  freeToWatchPage: 1,
-  latestTrailersPage: 1,
-  trendingPage: 1,
+  whatsPopularPage: 0,
+  freeToWatchPage: 0,
+  latestTrailersPage: 0,
+  trendingPage: 0,
   fetchingWhatsPopularData: false,
   fetchingFreeToWatch: false,
   fetchingLatestTrailers: false,
@@ -76,7 +76,7 @@ export const apiDataSelectors = {
 
 export const popularDataRequest = (state: ImmutableObject<ApiDataType>) => {
   return state.merge({
-    fetchingWhatsPopularData: state.whatsPopularPage === 1 ? true : false,
+    fetchingWhatsPopularData: true,
     whatsPopularDataFetchingError: false,
   });
 };

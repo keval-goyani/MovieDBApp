@@ -12,7 +12,7 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import { useDispatch } from 'react-redux';
 import { ImmutableArray } from 'seamless-immutable';
 import { DropDownMenu } from '../components';
-import { appConstants, strings } from '../constants';
+import { appConstants, filterData, strings } from '../constants';
 import dataAction from '../redux/movieRedux';
 import { Color, Icons, moderateScale } from '../theme';
 import styles from './styles/ListContainerStyles';
@@ -24,11 +24,14 @@ export interface listItemDataType {
   id: number;
   original_language: string;
   original_title: string;
+  original_name: string;
   overview: string;
   popularity: number;
   poster_path: string;
   release_date: string;
+  first_air_date?: string;
   title: string;
+  name?: string;
   video: boolean;
   vote_average: number;
   vote_count: number;
@@ -44,6 +47,7 @@ export interface listItemType {
 export interface DataType {
   id: number;
   name: string;
+  endPoint: string;
 }
 
 export interface listContainerDataType {
@@ -68,6 +72,40 @@ const ListContainer: FC<listContainerDataType> = ({
   const dispatch = useDispatch();
   const movieListData = [...data];
   const { name } = initialValue;
+  const {
+    popularMovieFilterData,
+    trendingFilterData,
+    freeToWatchMovieFilterData,
+  } = filterData;
+
+  const pageLoading = () => {
+    switch (title) {
+      case strings.whatsPopular:
+        dispatch(
+          dataAction.whatsPopularDataRequest({
+            urlMainPath: popularMovieFilterData[0].endPoint,
+            pageNo: listPage + 1,
+          }),
+        );
+        break;
+      case strings.freeToWatch:
+        dispatch(
+          dataAction.freeToWatchDataRequest({
+            urlMainPath: freeToWatchMovieFilterData[0].endPoint,
+            pageNo: listPage + 1,
+          }),
+        );
+        break;
+      case strings.trending:
+        dispatch(
+          dataAction.trendingDataRequest({
+            urlMainPath: trendingFilterData[0].endPoint,
+            pageNo: listPage + 1,
+          }),
+        );
+        break;
+    }
+  };
 
   const listItem = ({ item }: ListRenderItemInfo<listItemDataType>) => {
     const votePercentage = item?.vote_average * 10;
@@ -79,7 +117,10 @@ const ListContainer: FC<listContainerDataType> = ({
       item?.vote_average > 6.9
         ? Color.PercentageLightGreen
         : Color.percentageLightYellow;
-    const date = new Date(item?.release_date).toString().slice(4, 15);
+    const date = new Date(item?.release_date ?? item?.first_air_date)
+      .toString()
+      .slice(4, 15);
+    const movieTitle = item?.title ?? item?.name;
 
     return (
       <View style={styles.listDataStyle}>
@@ -114,7 +155,7 @@ const ListContainer: FC<listContainerDataType> = ({
 
         <View style={styles.movieNameDateContainer}>
           <Text style={styles.movieNameStyle} numberOfLines={2}>
-            {item?.title ?? item?.original_title}
+            {movieTitle}
           </Text>
           <Text style={styles.movieReleaseDate}>{date}</Text>
         </View>
@@ -122,33 +163,20 @@ const ListContainer: FC<listContainerDataType> = ({
     );
   };
 
-  const pageLoading = () => {
-    switch (title) {
-      case strings.whatsPopular:
-        dispatch(dataAction.whatsPopularDataRequest(listPage + 1));
-        break;
-
-      case strings.freeToWatch:
-        dispatch(dataAction.freeToWatchDataRequest(listPage + 1));
-        break;
-
-      case strings.trending:
-        dispatch(dataAction.trendingDataRequest(listPage + 1));
-        break;
-    }
-  };
-
   return (
     <>
-      {fetchingState && listPage === 1 ? (
+      {fetchingState && movieListData.length === 0 ? (
         <ActivityIndicator size="large" style={styles.loadingStyle} />
       ) : !errorState ? (
         <View style={styles.movieListContainer}>
           <View style={styles.movieListTitleContainer}>
             <Text style={styles.fontStyle}>{title}</Text>
-            <DropDownMenu data={filterOptions} initialValue={name} />
+            <DropDownMenu
+              data={filterOptions}
+              title={title}
+              initialValue={name}
+            />
           </View>
-
           <FlatList
             data={movieListData}
             keyExtractor={(item, index) => `${item.id}-${index}`}
