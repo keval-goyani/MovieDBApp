@@ -65,8 +65,9 @@ export interface listContainerDataType {
   errorState: boolean;
   listPage: number;
 }
+
 export interface NavigationDataType {
-  navigate: (args1: string, args2?: { id: number }) => void;
+  navigate: (screen: string, params: { id: number; data: string }) => void;
 }
 
 const ListContainer: FC<listContainerDataType> = ({
@@ -137,7 +138,8 @@ const ListContainer: FC<listContainerDataType> = ({
         style={styles.listDataStyle}
         onPress={() => {
           navigation.navigate(navigationStrings.DETAILS, {
-            id: strings.id,
+            id: item?.id,
+            data: item?.first_air_date ?? '',
           });
         }}>
         <Image

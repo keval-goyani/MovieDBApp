@@ -1,7 +1,7 @@
 import { createActions, createReducer } from 'reduxsauce';
 import Immutable, { ImmutableObject } from 'seamless-immutable';
 import { listItemDataType } from '../components/ListContainer';
-import rootReducer from '../redux';
+import { RootState } from '../constants';
 import { alertMessage } from '../services/Utils';
 
 const { Types, Creators } = createActions({
@@ -67,8 +67,6 @@ export interface StoreDataType {
   };
   error: string;
 }
-
-export type RootState = ReturnType<typeof rootReducer>;
 
 export const apiDataSelectors = {
   getData: (state: RootState) => state?.movieData,
