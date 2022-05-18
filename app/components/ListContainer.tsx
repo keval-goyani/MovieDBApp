@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   ListRenderItemInfo,
@@ -8,8 +9,11 @@ import {
   View,
 } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { useDispatch } from 'react-redux';
+import { ImmutableArray } from 'seamless-immutable';
 import { DropDownMenu } from '../components';
-import { appConstants } from '../constants';
+import { appConstants, strings } from '../constants';
+import dataAction from '../redux/movieRedux';
 import { Color, Icons, moderateScale } from '../theme';
 import styles from './styles/ListContainerStyles';
 
@@ -30,6 +34,13 @@ export interface listItemDataType {
   vote_count: number;
 }
 
+export interface listItemType {
+  page: number;
+  results: Array<listItemDataType>;
+  total_pages: number;
+  total_results: number;
+}
+
 export interface DataType {
   id: number;
   name: string;
@@ -39,7 +50,10 @@ export interface listContainerDataType {
   title: string;
   filterOptions: Array<DataType>;
   initialValue: DataType;
-  data: Array<listItemDataType>;
+  data: ImmutableArray<listItemDataType>;
+  fetchingState: boolean;
+  errorState: boolean;
+  listPage: number;
 }
 
 const ListContainer: FC<listContainerDataType> = ({
@@ -47,7 +61,14 @@ const ListContainer: FC<listContainerDataType> = ({
   filterOptions,
   initialValue,
   data,
+  fetchingState,
+  errorState,
+  listPage,
 }) => {
+  const dispatch = useDispatch();
+  const movieListData = [...data];
+  const { name } = initialValue;
+
   const listItem = ({ item }: ListRenderItemInfo<listItemDataType>) => {
     const votePercentage = item?.vote_average * 10;
     const activeStrokeColor =
@@ -92,28 +113,58 @@ const ListContainer: FC<listContainerDataType> = ({
         </View>
 
         <View style={styles.movieNameDateContainer}>
-          <Text style={styles.movieNameStyle}>
-            {item?.original_title ?? item?.original_title}
+          <Text style={styles.movieNameStyle} numberOfLines={2}>
+            {item?.title ?? item?.original_title}
           </Text>
           <Text style={styles.movieReleaseDate}>{date}</Text>
         </View>
       </View>
     );
   };
+
+  const pageLoading = () => {
+    switch (title) {
+      case strings.whatsPopular:
+        dispatch(dataAction.whatsPopularDataRequest(listPage + 1));
+        break;
+
+      case strings.freeToWatch:
+        dispatch(dataAction.freeToWatchDataRequest(listPage + 1));
+        break;
+
+      case strings.trending:
+        dispatch(dataAction.trendingDataRequest(listPage + 1));
+        break;
+    }
+  };
+
   return (
-    <View style={styles.movieListContainer}>
-      <View style={styles.movieListTitleContainer}>
-        <Text style={styles.fontStyle}>{title}</Text>
-        <DropDownMenu data={filterOptions} initialValue={initialValue.name} />
-      </View>
-      <FlatList
-        data={data}
-        keyExtractor={(item, index) => `${item.id}-${index}`}
-        renderItem={listItem}
-        horizontal={true}
-        bounces={false}
-      />
-    </View>
+    <>
+      {fetchingState && listPage === 1 ? (
+        <ActivityIndicator size="large" style={styles.loadingStyle} />
+      ) : !errorState ? (
+        <View style={styles.movieListContainer}>
+          <View style={styles.movieListTitleContainer}>
+            <Text style={styles.fontStyle}>{title}</Text>
+            <DropDownMenu data={filterOptions} initialValue={name} />
+          </View>
+
+          <FlatList
+            data={movieListData}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+            renderItem={listItem}
+            horizontal={true}
+            bounces={false}
+            onEndReachedThreshold={1}
+            onEndReached={() => pageLoading()}
+            ListFooterComponent={<ActivityIndicator size="small" />}
+            ListFooterComponentStyle={styles.footerLoaderStyle}
+          />
+        </View>
+      ) : (
+        <View />
+      )}
+    </>
   );
 };
 

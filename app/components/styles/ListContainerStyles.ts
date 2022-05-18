@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: Color.black,
   },
+  loadingStyle: {
+    height: verticalScale(300),
+  },
   listDataStyle: {
     marginVertical: verticalScale(10),
   },
@@ -68,6 +71,11 @@ const styles = StyleSheet.create({
     color: Color.gray,
     fontSize: moderateScale(15),
     marginTop: verticalScale(4),
+  },
+  footerLoaderStyle: {
+    marginRight: horizontalScale(5),
+    height: verticalScale(225),
+    justifyContent: 'center',
   },
 });
 
