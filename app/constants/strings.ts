@@ -22,4 +22,11 @@ export default {
   pageErrorMessage: 'Page not Found',
   networkErrorMessage: 'Please check your internet connection',
   serverErrorMessage: 'Something went wrong',
+  userScore: 'User Score',
+  playTrailer: 'Play Trailer',
+  certification: 'NR',
+  overview: 'OverView',
+  director: 'Director',
+  dot: '⚈',
+  id: 1010,
 };

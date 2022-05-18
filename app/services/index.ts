@@ -1,3 +1,3 @@
 import immutablePersistenceTransform from './immutablePersistenceTransform';
 
-export {immutablePersistenceTransform};
+export { immutablePersistenceTransform };

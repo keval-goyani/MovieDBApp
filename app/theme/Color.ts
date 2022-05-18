@@ -11,4 +11,6 @@ export const Color = {
   gray: '#808080',
   dropDownGradientStart: '#96f6ca',
   dropDownGradientEnd: '#0edbb0',
+  lightBlackBackgroundColor: '#191918',
+  blackBackgroundColor: '#161615',
 };

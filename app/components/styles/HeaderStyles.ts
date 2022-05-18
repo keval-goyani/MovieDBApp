@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
     backgroundColor: Color.darkBlue,
     paddingHorizontal: horizontalScale(12),
   },
-  menuIconStyle: {
+  leftIconStyle: {
     height: moderateScale(20),
     width: moderateScale(20),
     tintColor: Color.white,
   },
-  searchIconStyle: {
+  rightIconStyle: {
     height: moderateScale(20),
     width: moderateScale(20),
     tintColor: Color.lightBlue,
