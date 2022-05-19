@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { Icons } from '../../theme';
 import { Header, ListContainer, MovieTrailer } from '../../components';
 import { appConstants, filterData, strings } from '../../constants';
 import dataAction, { apiDataSelectors } from '../../redux/movieRedux';
@@ -68,7 +69,11 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header
+        leftIcon={Icons.menuIcon}
+        logoIcon={Icons.movieDbIcon}
+        rightIcon={Icons.searchIcon}
+      />
       <ScrollView bounces={false}>
         <ListContainer
           title={strings.whatsPopular}

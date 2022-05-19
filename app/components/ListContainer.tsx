@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
 import {
   ActivityIndicator,
@@ -12,7 +13,12 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import { useDispatch } from 'react-redux';
 import { ImmutableArray } from 'seamless-immutable';
 import { DropDownMenu } from '../components';
-import { appConstants, filterData, strings } from '../constants';
+import {
+  appConstants,
+  filterData,
+  navigationStrings,
+  strings,
+} from '../constants';
 import dataAction from '../redux/movieRedux';
 import { Color, Icons, moderateScale } from '../theme';
 import styles from './styles/ListContainerStyles';
@@ -59,6 +65,9 @@ export interface listContainerDataType {
   errorState: boolean;
   listPage: number;
 }
+export interface NavigationDataType {
+  navigate: (args1: string, args2?: { id: number }) => void;
+}
 
 const ListContainer: FC<listContainerDataType> = ({
   title,
@@ -70,6 +79,7 @@ const ListContainer: FC<listContainerDataType> = ({
   listPage,
 }) => {
   const dispatch = useDispatch();
+  const navigation: NavigationDataType = useNavigation();
   const movieListData = [...data];
   const { name } = initialValue;
   const {
@@ -123,7 +133,13 @@ const ListContainer: FC<listContainerDataType> = ({
     const movieTitle = item?.title ?? item?.name;
 
     return (
-      <View style={styles.listDataStyle}>
+      <TouchableOpacity
+        style={styles.listDataStyle}
+        onPress={() => {
+          navigation.navigate(navigationStrings.DETAILS, {
+            id: strings.id,
+          });
+        }}>
         <Image
           source={{
             uri: `${appConstants.posterImageUrl}${item?.poster_path}`,
@@ -159,7 +175,7 @@ const ListContainer: FC<listContainerDataType> = ({
           </Text>
           <Text style={styles.movieReleaseDate}>{date}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
