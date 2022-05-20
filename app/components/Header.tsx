@@ -22,7 +22,7 @@ const Header: FC<HeaderDataType> = ({ leftIcon, logoIcon, rightIcon }) => {
       {rightIcon ? (
         <Image source={rightIcon} style={styles.rightIconStyle} />
       ) : (
-        <View />
+        <View style={styles.rightIconStyle} />
       )}
     </View>
   );

@@ -28,7 +28,7 @@ import { getError, getPopularMovieData } from '../services';
 function* popularDataRequest({
   payload: { urlMainPath, pageNo },
 }: MovieSagaDataType) {
-  const apiEndPoint = `${urlMainPath}${pageNo}}`;
+  const apiEndPoint = `${urlMainPath}${pageNo}`;
   const storage: PopularDataType = yield select(popularDataSelectors.getData);
   const apiData: MovieResponseGenerator = yield call(
     getPopularMovieData,

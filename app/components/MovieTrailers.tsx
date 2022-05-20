@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -25,20 +25,20 @@ import styles from './styles/MovieTrailersStyle';
 const MovieTrailer: FC<ListContainerDataType> = ({
   title,
   filterOptions,
-  initialValue,
   data,
   fetchingState,
   errorState,
   listPage,
 }) => {
+  const { trailerFilterData } = filterData;
+  const [dataEndPoint, setDataEndPoint] = useState<string>(
+    trailerFilterData[0].endPoint,
+  );
   const dispatch = useDispatch();
   const movieListData = [...data];
-  const { name } = initialValue;
-  const { trailerFilterData } = filterData;
 
   const listItem = ({ item }: ListRenderItemInfo<ListItemDataType>) => {
     const trailerTitle = item?.title ?? item?.name;
-
     return (
       <View style={styles.listItemStyle}>
         <View style={styles.listItemImageStyle}>
@@ -73,7 +73,7 @@ const MovieTrailer: FC<ListContainerDataType> = ({
   const pageLoading = () => {
     dispatch(
       trailerAction.latestTrailerDataRequest({
-        urlMainPath: trailerFilterData[0].endPoint,
+        urlMainPath: dataEndPoint,
         pageNo: listPage + 1,
       }),
     );
@@ -94,13 +94,11 @@ const MovieTrailer: FC<ListContainerDataType> = ({
             <DropDownMenu
               data={filterOptions}
               title={title}
-              initialValue={name}
-              dropDownViewStyle={styles.dropDownMainItemColor}
               dropDownTextStyle={styles.dropDownMainItemTextColor}
               dropDownTintStyle={styles.dropDownExpandIconColor}
+              setMethod={setDataEndPoint}
             />
           </View>
-
           <FlatList
             data={movieListData}
             keyExtractor={(item, index) => `${item.id}-${index}`}

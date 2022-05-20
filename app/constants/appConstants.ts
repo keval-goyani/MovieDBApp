@@ -19,10 +19,11 @@ export default {
   trendingDayMoviePath: '/trending/all/day',
   trendingWeekMoviePath: '/trending/all/week',
   defaultPage: 1,
-  watchFree: '&sort_by=popularity.desc&with_watch_monetization_types=free',
+  watchFreeMovie: '&sort_by=revenue.desc&with_watch_monetization_types=free',
+  watchFreeTv: '&sort_by=popularity.desc&with_watch_monetization_types=free',
   watchRent: '&sort_by=popularity.desc&with_watch_monetization_types=rent',
   trailerWatchRent:
-    '&sort_by=release_date.asc&with_watch_monetization_types=rent',
+    '&sort_by=popularity.desc&with_watch_monetization_types=rent',
   trailerOnTv: '&sort_by=first_air_date.desc',
   moviePath: '/movie/',
   tvPath: '/tv/',

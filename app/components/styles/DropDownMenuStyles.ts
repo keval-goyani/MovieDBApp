@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center',
     backgroundColor: Color.lightGreen,
-    marginHorizontal: horizontalScale(40),
+    marginHorizontal: horizontalScale(20),
     marginVertical: verticalScale(4),
     borderRadius: moderateScale(19),
     borderWidth: moderateScale(1),
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   dropDownMainItem: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: Color.darkBlue,
     width: horizontalScale(135),
     paddingVertical: verticalScale(9),
     paddingHorizontal: horizontalScale(12),

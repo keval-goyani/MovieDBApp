@@ -28,12 +28,12 @@ export const filterData = {
     {
       id: 0,
       name: strings.movies,
-      endPoint: `${appConstants.discoverMoviePath}${appConstants.apiKey}${appConstants.watchFree}${appConstants.page}`,
+      endPoint: `${appConstants.discoverMoviePath}${appConstants.apiKey}${appConstants.watchFreeMovie}${appConstants.page}`,
     },
     {
       id: 1,
       name: strings.tv,
-      endPoint: `${appConstants.discoverTvPath}${appConstants.apiKey}${appConstants.watchFree}${appConstants.page}`,
+      endPoint: `${appConstants.discoverTvPath}${appConstants.apiKey}${appConstants.watchFreeTv}${appConstants.page}`,
     },
   ],
   trailerFilterData: [
@@ -45,7 +45,7 @@ export const filterData = {
     {
       id: 1,
       name: strings.onTv,
-      endPoint: `${appConstants.discoverTvPath}${appConstants.apiKey}${appConstants.trailerOnTv}${appConstants.page}`,
+      endPoint: `${appConstants.discoverTvPath}${appConstants.apiKey}${appConstants.page}`,
     },
     {
       id: 2,

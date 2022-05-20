@@ -112,6 +112,7 @@ export const styles = StyleSheet.create({
   descriptionBottomContainer: {
     paddingVertical: verticalScale(15),
     paddingLeft: horizontalScale(18),
+    paddingRight: horizontalScale(8),
   },
   taglineTextStyle: {
     color: Color.white,

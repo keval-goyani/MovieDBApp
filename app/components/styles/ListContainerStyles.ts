@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: Color.black,
   },
+  dropDownTitleBackgroundColor: {
+    backgroundColor: Color.darkBlue,
+  },
   loadingStyle: {
     height: verticalScale(300),
   },
@@ -70,7 +73,6 @@ const styles = StyleSheet.create({
   movieReleaseDate: {
     color: Color.gray,
     fontSize: moderateScale(15),
-    marginTop: verticalScale(4),
   },
   footerLoaderStyle: {
     marginRight: horizontalScale(5),
