@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
+import { freeMovieReducer } from './FreeMovieRedux';
 import { detailReducer } from './MovieDetailRedux';
-import { movieReducer } from './movieRedux';
+import { popularReducer } from './PopularRedux';
+import { trailerReducer } from './TrailerRedux';
+import { trendingReducer } from './TrendingRedux';
 
 export default combineReducers({
-  movieData: movieReducer,
   movieDetailData: detailReducer,
+  popularData: popularReducer,
+  freeMovieData: freeMovieReducer,
+  trailerData: trailerReducer,
+  trendingData: trendingReducer,
 });

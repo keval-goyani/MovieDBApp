@@ -1,71 +1,42 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ScrollView, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Icons } from '../../theme';
+import { useSelector } from 'react-redux';
 import { Header, ListContainer, MovieTrailer } from '../../components';
-import { appConstants, filterData, strings } from '../../constants';
-import dataAction, { apiDataSelectors } from '../../redux/movieRedux';
+import { filterData, strings } from '../../constants';
+import { freeMovieSelectors } from '../../redux/FreeMovieRedux';
+import { popularDataSelectors } from '../../redux/PopularRedux';
+import { trailerDataSelectors } from '../../redux/TrailerRedux';
+import { trendingSelectors } from '../../redux/TrendingRedux';
+import { Icons } from '../../theme';
 import styles from './styles/HomeScreenStyles';
 
 const HomeScreen = () => {
-  const dispatch = useDispatch();
+  const {
+    whatsPopularData,
+    whatsPopularDataFetchingError,
+    whatsPopularPage,
+    fetchingWhatsPopularData,
+  } = useSelector(popularDataSelectors.getData);
+  const {
+    freeToWatch,
+    freeToWatchFetchingError,
+    freeToWatchPage,
+    fetchingFreeToWatch,
+  } = useSelector(freeMovieSelectors.getData);
+  const {
+    latestTrailers,
+    latestTrailersFetchingError,
+    latestTrailersPage,
+    fetchingLatestTrailers,
+  } = useSelector(trailerDataSelectors.getData);
+  const { trending, trendingPage, fetchingTrending, trendingFetchingError } =
+    useSelector(trendingSelectors.getData);
   const {
     popularMovieFilterData,
     freeToWatchMovieFilterData,
     trailerFilterData,
     trendingFilterData,
   } = filterData;
-  useEffect(() => {
-    dispatch(
-      dataAction.whatsPopularDataRequest({
-        urlMainPath: popularMovieFilterData[0].endPoint,
-        pageNo: appConstants.defaultPage,
-      }),
-    );
-    dispatch(
-      dataAction.freeToWatchDataRequest({
-        urlMainPath: freeToWatchMovieFilterData[0].endPoint,
-        pageNo: appConstants.defaultPage,
-      }),
-    );
-    dispatch(
-      dataAction.latestTrailerDataRequest({
-        urlMainPath: trailerFilterData[0].endPoint,
-        pageNo: appConstants.defaultPage,
-      }),
-    );
-    dispatch(
-      dataAction.trendingDataRequest({
-        urlMainPath: trendingFilterData[0].endPoint,
-        pageNo: appConstants.defaultPage,
-      }),
-    );
-  }, [
-    dispatch,
-    freeToWatchMovieFilterData,
-    popularMovieFilterData,
-    trailerFilterData,
-    trendingFilterData,
-  ]);
-
-  const {
-    whatsPopularData,
-    freeToWatch,
-    latestTrailers,
-    trending,
-    whatsPopularPage,
-    freeToWatchPage,
-    latestTrailersPage,
-    trendingPage,
-    fetchingWhatsPopularData,
-    fetchingFreeToWatch,
-    fetchingLatestTrailers,
-    fetchingTrending,
-    whatsPopularDataFetchingError,
-    freeToWatchFetchingError,
-    latestTrailersFetchingError,
-    trendingFetchingError,
-  } = useSelector(apiDataSelectors.getData);
 
   return (
     <View style={styles.container}>

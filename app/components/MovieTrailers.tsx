@@ -11,13 +11,18 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { DropDownMenu } from '../components';
-import { appConstants, filterData, strings } from '../constants';
-import dataAction from '../redux/movieRedux';
+import {
+  appConstants,
+  filterData,
+  ListContainerDataType,
+  ListItemDataType,
+  strings,
+} from '../constants';
+import trailerAction from '../redux/TrailerRedux';
 import { Icons } from '../theme';
-import { listContainerDataType, listItemDataType } from './ListContainer';
 import styles from './styles/MovieTrailersStyle';
 
-const MovieTrailer: FC<listContainerDataType> = ({
+const MovieTrailer: FC<ListContainerDataType> = ({
   title,
   filterOptions,
   initialValue,
@@ -31,7 +36,7 @@ const MovieTrailer: FC<listContainerDataType> = ({
   const { name } = initialValue;
   const { trailerFilterData } = filterData;
 
-  const listItem = ({ item }: ListRenderItemInfo<listItemDataType>) => {
+  const listItem = ({ item }: ListRenderItemInfo<ListItemDataType>) => {
     const trailerTitle = item?.title ?? item?.name;
 
     return (
@@ -67,7 +72,7 @@ const MovieTrailer: FC<listContainerDataType> = ({
 
   const pageLoading = () => {
     dispatch(
-      dataAction.latestTrailerDataRequest({
+      trailerAction.latestTrailerDataRequest({
         urlMainPath: trailerFilterData[0].endPoint,
         pageNo: listPage + 1,
       }),

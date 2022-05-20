@@ -1,23 +1,35 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { MovieResponseGenerator, MovieSagaDataType } from '../constants';
-import dataAction, {
-  apiDataSelectors,
-  ApiDataType,
-  DataTypes,
-} from '../redux/movieRedux';
-import { getPopularMovieData } from '../services/Api';
-import { getError } from '../services/Utils';
-
-function* storedData() {
-  const storage: ApiDataType = yield select(apiDataSelectors.getData);
-  return storage;
-}
+import {
+  FreeMovieDataType,
+  MovieResponseGenerator,
+  MovieSagaDataType,
+  PopularDataType,
+  TrailerDataType,
+  TrendingDataType,
+} from '../constants';
+import freeMovieAction, {
+  freeMovieSelectors,
+  FreeMovieTypes,
+} from '../redux/FreeMovieRedux';
+import popularAction, {
+  popularDataSelectors,
+  PopularTypes,
+} from '../redux/PopularRedux';
+import trailerAction, {
+  trailerDataSelectors,
+  TrailerDataTypes,
+} from '../redux/TrailerRedux';
+import trendingAction, {
+  trendingSelectors,
+  TrendingTypes,
+} from '../redux/TrendingRedux';
+import { getError, getPopularMovieData } from '../services';
 
 function* popularDataRequest({
-  path: { urlMainPath, pageNo },
+  payload: { urlMainPath, pageNo },
 }: MovieSagaDataType) {
   const apiEndPoint = `${urlMainPath}${pageNo}}`;
-  const storage: ApiDataType = yield call(storedData);
+  const storage: PopularDataType = yield select(popularDataSelectors.getData);
   const apiData: MovieResponseGenerator = yield call(
     getPopularMovieData,
     apiEndPoint,
@@ -35,22 +47,22 @@ function* popularDataRequest({
       updatedData = [...storage.whatsPopularData, ...results];
     }
     yield put(
-      dataAction.whatsPopularDataSuccess({
+      popularAction.whatsPopularDataSuccess({
         movieData: updatedData,
         page: pageNo,
       }),
     );
   } else {
     const error: MovieResponseGenerator = yield call(getError, apiData);
-    yield put(dataAction.whatsPopularDataFailure(error));
+    yield put(popularAction.whatsPopularDataFailure(error));
   }
 }
 
 function* freeToWatchApiDataRequest({
-  path: { urlMainPath, pageNo },
+  payload: { urlMainPath, pageNo },
 }: MovieSagaDataType) {
   const apiEndPoint = `${urlMainPath}${pageNo}`;
-  const storage: ApiDataType = yield call(storedData);
+  const storage: FreeMovieDataType = yield select(freeMovieSelectors.getData);
   const apiData: MovieResponseGenerator = yield call(
     getPopularMovieData,
     apiEndPoint,
@@ -68,22 +80,22 @@ function* freeToWatchApiDataRequest({
       updatedData = [...storage.freeToWatch, ...results];
     }
     yield put(
-      dataAction.freeToWatchDataSuccess({
+      freeMovieAction.freeToWatchDataSuccess({
         movieData: updatedData,
         page: pageNo,
       }),
     );
   } else {
     const error: MovieResponseGenerator = yield call(getError, apiData);
-    yield put(dataAction.freeToWatchDataFailure(error));
+    yield put(freeMovieAction.freeToWatchDataFailure(error));
   }
 }
 
 function* latestTrailerApiDataRequest({
-  path: { urlMainPath, pageNo },
+  payload: { urlMainPath, pageNo },
 }: MovieSagaDataType) {
   const apiEndPoint = `${urlMainPath}${pageNo}`;
-  const storage: ApiDataType = yield call(storedData);
+  const storage: TrailerDataType = yield select(trailerDataSelectors.getData);
   const apiData: MovieResponseGenerator = yield call(
     getPopularMovieData,
     apiEndPoint,
@@ -101,22 +113,22 @@ function* latestTrailerApiDataRequest({
       updatedData = [...storage.latestTrailers, ...results];
     }
     yield put(
-      dataAction.latestTrailerDataSuccess({
+      trailerAction.latestTrailerDataSuccess({
         movieData: updatedData,
         page: pageNo,
       }),
     );
   } else {
     const error: MovieResponseGenerator = yield call(getError, apiData);
-    yield put(dataAction.latestTrailerDataFailure(error));
+    yield put(trailerAction.latestTrailerDataFailure(error));
   }
 }
 
 function* trendingApiDataRequest({
-  path: { urlMainPath, pageNo },
+  payload: { urlMainPath, pageNo },
 }: MovieSagaDataType) {
   const apiEndPoint = `${urlMainPath}${pageNo}`;
-  const storage: ApiDataType = yield call(storedData);
+  const storage: TrendingDataType = yield select(trendingSelectors.getData);
   const apiData: MovieResponseGenerator = yield call(
     getPopularMovieData,
     apiEndPoint,
@@ -134,20 +146,26 @@ function* trendingApiDataRequest({
       updatedData = [...storage.trending, ...results];
     }
     yield put(
-      dataAction.trendingDataSuccess({ movieData: updatedData, page: pageNo }),
+      trendingAction.trendingDataSuccess({
+        movieData: updatedData,
+        page: pageNo,
+      }),
     );
   } else {
     const error: MovieResponseGenerator = yield call(getError, apiData);
-    yield put(dataAction.trendingDataFailure(error));
+    yield put(trendingAction.trendingDataFailure(error));
   }
 }
 
 export default [
-  takeLatest(DataTypes.WHATS_POPULAR_DATA_REQUEST, popularDataRequest),
-  takeLatest(DataTypes.FREE_TO_WATCH_DATA_REQUEST, freeToWatchApiDataRequest),
+  takeLatest(PopularTypes.WHATS_POPULAR_DATA_REQUEST, popularDataRequest),
   takeLatest(
-    DataTypes.LATEST_TRAILER_DATA_REQUEST,
+    FreeMovieTypes.FREE_TO_WATCH_DATA_REQUEST,
+    freeToWatchApiDataRequest,
+  ),
+  takeLatest(
+    TrailerDataTypes.LATEST_TRAILER_DATA_REQUEST,
     latestTrailerApiDataRequest,
   ),
-  takeLatest(DataTypes.TRENDING_DATA_REQUEST, trendingApiDataRequest),
+  takeLatest(TrendingTypes.TRENDING_DATA_REQUEST, trendingApiDataRequest),
 ];

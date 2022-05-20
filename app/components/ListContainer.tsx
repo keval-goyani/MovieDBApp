@@ -11,66 +11,23 @@ import {
 } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { useDispatch } from 'react-redux';
-import { ImmutableArray } from 'seamless-immutable';
 import { DropDownMenu } from '../components';
 import {
   appConstants,
   filterData,
+  ListContainerDataType,
+  ListItemDataType,
+  NavigationDataType,
   navigationStrings,
   strings,
 } from '../constants';
-import dataAction from '../redux/movieRedux';
+import freeMovieAction from '../redux/FreeMovieRedux';
+import popularAction from '../redux/PopularRedux';
+import trendingAction from '../redux/TrendingRedux';
 import { Color, Icons, moderateScale } from '../theme';
 import styles from './styles/ListContainerStyles';
 
-export interface listItemDataType {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: object;
-  id: number;
-  original_language: string;
-  original_title: string;
-  original_name: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  first_air_date?: string;
-  title: string;
-  name?: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
-export interface listItemType {
-  page: number;
-  results: Array<listItemDataType>;
-  total_pages: number;
-  total_results: number;
-}
-
-export interface DataType {
-  id: number;
-  name: string;
-  endPoint: string;
-}
-
-export interface listContainerDataType {
-  title: string;
-  filterOptions: Array<DataType>;
-  initialValue: DataType;
-  data: ImmutableArray<listItemDataType>;
-  fetchingState: boolean;
-  errorState: boolean;
-  listPage: number;
-}
-
-export interface NavigationDataType {
-  navigate: (screen: string, params: { id: number; data: string }) => void;
-}
-
-const ListContainer: FC<listContainerDataType> = ({
+const ListContainer: FC<ListContainerDataType> = ({
   title,
   filterOptions,
   initialValue,
@@ -93,7 +50,7 @@ const ListContainer: FC<listContainerDataType> = ({
     switch (title) {
       case strings.whatsPopular:
         dispatch(
-          dataAction.whatsPopularDataRequest({
+          popularAction.whatsPopularDataRequest({
             urlMainPath: popularMovieFilterData[0].endPoint,
             pageNo: listPage + 1,
           }),
@@ -101,7 +58,7 @@ const ListContainer: FC<listContainerDataType> = ({
         break;
       case strings.freeToWatch:
         dispatch(
-          dataAction.freeToWatchDataRequest({
+          freeMovieAction.freeToWatchDataRequest({
             urlMainPath: freeToWatchMovieFilterData[0].endPoint,
             pageNo: listPage + 1,
           }),
@@ -109,7 +66,7 @@ const ListContainer: FC<listContainerDataType> = ({
         break;
       case strings.trending:
         dispatch(
-          dataAction.trendingDataRequest({
+          trendingAction.trendingDataRequest({
             urlMainPath: trendingFilterData[0].endPoint,
             pageNo: listPage + 1,
           }),
@@ -118,7 +75,7 @@ const ListContainer: FC<listContainerDataType> = ({
     }
   };
 
-  const listItem = ({ item }: ListRenderItemInfo<listItemDataType>) => {
+  const listItem = ({ item }: ListRenderItemInfo<ListItemDataType>) => {
     const votePercentage = item?.vote_average * 10;
     const activeStrokeColor =
       item?.vote_average > 6.9
