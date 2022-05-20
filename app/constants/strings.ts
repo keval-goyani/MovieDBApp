@@ -28,5 +28,4 @@ export default {
   overview: 'OverView',
   director: 'Director',
   dot: '⚈',
-  id: 1010,
 };

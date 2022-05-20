@@ -1,5 +1,5 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { listItemType } from '../components/ListContainer';
+import { MovieResponseGenerator, MovieSagaDataType } from '../constants';
 import dataAction, {
   apiDataSelectors,
   ApiDataType,
@@ -8,34 +8,17 @@ import dataAction, {
 import { getPopularMovieData } from '../services/Api';
 import { getError } from '../services/Utils';
 
-export interface ResponseGenerator {
-  config?: object;
-  data: listItemType;
-  duration?: number;
-  headers?: object;
-  ok?: boolean | null;
-  originalError: string;
-  problem: string;
-  status?: number;
-}
-
-interface SagaDataType {
-  path: {
-    urlMainPath?: string;
-    pageNo: number;
-  };
-  type: string;
-}
-
 function* storedData() {
   const storage: ApiDataType = yield select(apiDataSelectors.getData);
   return storage;
 }
 
-function* popularDataRequest({ path: { urlMainPath, pageNo } }: SagaDataType) {
+function* popularDataRequest({
+  path: { urlMainPath, pageNo },
+}: MovieSagaDataType) {
   const apiEndPoint = `${urlMainPath}${pageNo}}`;
   const storage: ApiDataType = yield call(storedData);
-  const apiData: ResponseGenerator = yield call(
+  const apiData: MovieResponseGenerator = yield call(
     getPopularMovieData,
     apiEndPoint,
   );
@@ -58,17 +41,17 @@ function* popularDataRequest({ path: { urlMainPath, pageNo } }: SagaDataType) {
       }),
     );
   } else {
-    const error: ResponseGenerator = yield call(getError, apiData);
+    const error: MovieResponseGenerator = yield call(getError, apiData);
     yield put(dataAction.whatsPopularDataFailure(error));
   }
 }
 
 function* freeToWatchApiDataRequest({
   path: { urlMainPath, pageNo },
-}: SagaDataType) {
+}: MovieSagaDataType) {
   const apiEndPoint = `${urlMainPath}${pageNo}`;
   const storage: ApiDataType = yield call(storedData);
-  const apiData: ResponseGenerator = yield call(
+  const apiData: MovieResponseGenerator = yield call(
     getPopularMovieData,
     apiEndPoint,
   );
@@ -91,17 +74,17 @@ function* freeToWatchApiDataRequest({
       }),
     );
   } else {
-    const error: ResponseGenerator = yield call(getError, apiData);
+    const error: MovieResponseGenerator = yield call(getError, apiData);
     yield put(dataAction.freeToWatchDataFailure(error));
   }
 }
 
 function* latestTrailerApiDataRequest({
   path: { urlMainPath, pageNo },
-}: SagaDataType) {
+}: MovieSagaDataType) {
   const apiEndPoint = `${urlMainPath}${pageNo}`;
   const storage: ApiDataType = yield call(storedData);
-  const apiData: ResponseGenerator = yield call(
+  const apiData: MovieResponseGenerator = yield call(
     getPopularMovieData,
     apiEndPoint,
   );
@@ -124,17 +107,17 @@ function* latestTrailerApiDataRequest({
       }),
     );
   } else {
-    const error: ResponseGenerator = yield call(getError, apiData);
+    const error: MovieResponseGenerator = yield call(getError, apiData);
     yield put(dataAction.latestTrailerDataFailure(error));
   }
 }
 
 function* trendingApiDataRequest({
   path: { urlMainPath, pageNo },
-}: SagaDataType) {
+}: MovieSagaDataType) {
   const apiEndPoint = `${urlMainPath}${pageNo}`;
   const storage: ApiDataType = yield call(storedData);
-  const apiData: ResponseGenerator = yield call(
+  const apiData: MovieResponseGenerator = yield call(
     getPopularMovieData,
     apiEndPoint,
   );
@@ -154,7 +137,7 @@ function* trendingApiDataRequest({
       dataAction.trendingDataSuccess({ movieData: updatedData, page: pageNo }),
     );
   } else {
-    const error: ResponseGenerator = yield call(getError, apiData);
+    const error: MovieResponseGenerator = yield call(getError, apiData);
     yield put(dataAction.trendingDataFailure(error));
   }
 }

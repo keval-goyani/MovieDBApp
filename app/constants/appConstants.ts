@@ -24,4 +24,7 @@ export default {
   trailerWatchRent:
     '&sort_by=release_date.asc&with_watch_monetization_types=rent',
   trailerOnTv: '&sort_by=first_air_date.desc',
+  moviePath: '/movie/',
+  tvPath: '/tv/',
+  appendResponseOfCredit: '&append_to_response=credits',
 };

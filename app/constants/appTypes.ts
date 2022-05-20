@@ -1,3 +1,5 @@
+import rootReducer from '../redux';
+
 interface genresDataType {
   id: number;
   name: string;
@@ -55,17 +57,101 @@ export interface MovieDetailsDataType {
   production_companies: ProductionCompaniesDataType[];
   production_countries: ProductionCountriesDataType[];
   release_date: string;
+  first_air_date: string;
   revenue: number;
   runtime: number;
+  episode_run_time: number[];
   spoken_languages: SpokenLanguagesDataType[];
   status: string;
   tagline: string;
   title: string;
+  name: string;
   video: boolean;
   vote_average: number;
   vote_count: number;
   credits: {
     cast: CreditsDataType[];
     crew: CreditsDataType[];
+  };
+}
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export interface MovieSagaDataType {
+  path: {
+    urlMainPath?: string;
+    pageNo: number;
+  };
+  type: string;
+}
+
+export interface DetailPathDataType {
+  payload: string;
+  type: string;
+}
+
+export interface DetailResponseGenerator {
+  config?: object;
+  data: MovieDetailsDataType;
+  duration?: number;
+  headers?: object;
+  ok?: boolean | null;
+  originalError: string;
+  problem: string;
+  status?: number;
+}
+
+export interface DetailStateDataType {
+  detailData: MovieDetailsDataType | null;
+  fetchingDetailData: boolean;
+  DetailDataFetchingError: boolean;
+}
+
+export interface DetailStoreDataType {
+  data: MovieDetailsDataType;
+  error: string;
+}
+
+export interface ListItemDataType {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: object;
+  id: number;
+  original_language: string;
+  original_title: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  first_air_date?: string;
+  title: string;
+  name?: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface ListItemType {
+  page: number;
+  results: Array<ListItemDataType>;
+  total_pages: number;
+  total_results: number;
+}
+
+export interface MovieResponseGenerator {
+  config?: object;
+  data: ListItemType;
+  duration?: number;
+  headers?: object;
+  ok?: boolean | null;
+  originalError: string;
+  problem: string;
+  status?: number;
+}
+
+export interface RouteDataType {
+  route: {
+    params: { id: number; data: string };
   };
 }

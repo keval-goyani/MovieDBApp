@@ -1,23 +1,29 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Image, ImageBackground, ScrollView, Text, View } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { useDispatch, useSelector } from 'react-redux';
 import { Header } from '../../components';
-import { appConstants, movieDetails, strings } from '../../constants';
+import { appConstants, RouteDataType, strings } from '../../constants';
+import detailAction, {
+  detailDataSelectors,
+} from '../../redux/MovieDetailRedux';
 import { getDetails } from '../../services/Utils';
 import { Color, Icons, moderateScale } from '../../theme';
 import { styles } from './styles/DetailScreenStyles';
 
-export interface RouteDataType {
-  route: {
-    params: { id: number };
-  };
-}
-
 const DetailScreen: FC<RouteDataType> = ({ route }) => {
-  /**
-  const { params } = route;  <=== use for future prospect
-  **/
-
+  const {
+    params: { id, data },
+  } = route;
+  const apiEndPoint =
+    data === ''
+      ? `${appConstants.moviePath}${id}${appConstants.apiKey}${appConstants.appendResponseOfCredit}`
+      : `${appConstants.tvPath}${id}${appConstants.apiKey}${appConstants.appendResponseOfCredit}`;
+  const dispatch = useDispatch();
+  const { detailData } = useSelector(detailDataSelectors.getData);
+  useEffect(() => {
+    dispatch(detailAction.detailDataRequest(apiEndPoint));
+  }, [dispatch, apiEndPoint]);
   const {
     votePercentage,
     activeStrokeColor,
@@ -28,7 +34,7 @@ const DetailScreen: FC<RouteDataType> = ({ route }) => {
     runTime,
     movieType,
     directorName,
-  } = getDetails();
+  } = getDetails(detailData);
 
   return (
     <View style={styles.container}>
@@ -36,20 +42,22 @@ const DetailScreen: FC<RouteDataType> = ({ route }) => {
       <ScrollView bounces={false}>
         <ImageBackground
           source={{
-            uri: `${appConstants.backDropImageUrl}${movieDetails.backdrop_path}`,
+            uri: `${appConstants.backDropImageUrl}${detailData?.backdrop_path}`,
           }}
           style={styles.backgroundImageContainer}>
           <Image
             source={{
-              uri: `${appConstants.posterImageUrl}${movieDetails.poster_path}`,
+              uri: `${appConstants.posterImageUrl}${detailData?.poster_path}`,
             }}
             style={styles.posterImageStyle}
           />
         </ImageBackground>
         <View style={styles.descriptionTopContainer}>
           <View style={styles.titleContainer}>
-            <Text style={styles.movieTitle}>{movieTitle}</Text>
-            <Text style={styles.movieYear}>{`(${year})`}</Text>
+            <Text style={styles.movieTitle}>
+              {movieTitle}
+              <Text style={styles.movieYear}>{`(${year})`}</Text>
+            </Text>
           </View>
           <View style={styles.voteTrailerContainer}>
             <View style={styles.alignVerticalStyle}>
@@ -84,7 +92,9 @@ const DetailScreen: FC<RouteDataType> = ({ route }) => {
               {strings.certification}
             </Text>
             <Text style={styles.movieDateStyle}>
-              {`${movieDetails?.release_date ?? ''} (${country})`}
+              {`${
+                detailData?.release_date ?? detailData?.first_air_date ?? ''
+              } ${country}`}
             </Text>
             <Text style={styles.dotTextStyle}>{strings.dot}</Text>
             <Text style={styles.movieDateStyle}>{runTime}</Text>
@@ -92,17 +102,27 @@ const DetailScreen: FC<RouteDataType> = ({ route }) => {
           <Text style={styles.movieTypeStyle}>{movieType}</Text>
         </View>
         <View style={styles.descriptionBottomContainer}>
-          <Text style={styles.taglineTextStyle}>
-            {movieDetails?.tagline ?? ''}
-          </Text>
-          <Text style={styles.overviewTextStyle}>{strings.overview}</Text>
-          <Text style={styles.overviewContentStyle}>
-            {movieDetails?.overview ?? ''}
-          </Text>
-          <View style={styles.directorDataContainer}>
-            <Text style={styles.directorName}>{directorName}</Text>
+          {detailData?.tagline ? (
+            <Text style={styles.taglineTextStyle}>{detailData?.tagline}</Text>
+          ) : (
+            <View />
+          )}
+          {detailData?.overview ? (
+            <>
+              <Text style={styles.overviewTextStyle}>{strings.overview}</Text>
+              <Text style={styles.overviewContentStyle}>
+                {detailData?.overview}
+              </Text>
+            </>
+          ) : (
+            <View />
+          )}
+          <Text style={styles.directorName}>{directorName}</Text>
+          {directorName === '' ? (
+            <View />
+          ) : (
             <Text style={styles.directorTextStyle}>{strings.director}</Text>
-          </View>
+          )}
         </View>
       </ScrollView>
     </View>

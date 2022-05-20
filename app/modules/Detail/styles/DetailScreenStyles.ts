@@ -28,23 +28,24 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: verticalScale(8),
+    paddingVertical: verticalScale(10),
   },
   movieTitle: {
     color: Color.white,
     fontSize: moderateScale(23),
     fontWeight: '400',
+    paddingBottom: verticalScale(8),
+    paddingHorizontal: horizontalScale(10),
   },
   movieYear: {
     color: Color.white,
-    fontSize: moderateScale(15),
-    paddingHorizontal: horizontalScale(5),
+    fontSize: moderateScale(19),
   },
   voteTrailerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    paddingBottom: verticalScale(10),
+    paddingBottom: verticalScale(5),
   },
   alignVerticalStyle: {
     flexDirection: 'row',
@@ -80,6 +81,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: verticalScale(5),
   },
   certificationTextStyle: {
     color: Color.gray,
@@ -115,16 +117,18 @@ export const styles = StyleSheet.create({
     color: Color.white,
     fontStyle: 'italic',
     fontSize: moderateScale(15),
+    paddingBottom: verticalScale(8),
   },
   overviewTextStyle: {
     color: Color.white,
     fontSize: moderateScale(18),
     fontWeight: '700',
-    paddingVertical: verticalScale(8),
+    paddingBottom: verticalScale(8),
   },
   overviewContentStyle: {
     color: Color.white,
     fontSize: moderateScale(15),
+    marginBottom: verticalScale(30),
   },
   directorDataContainer: {
     marginTop: verticalScale(30),

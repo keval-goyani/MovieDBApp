@@ -1,14 +1,22 @@
 import apisauce from 'apisauce';
 import { Alert } from 'react-native';
-import { appConstants, movieDetails, strings } from '../constants';
-import { ResponseGenerator } from '../sagas/movieSaga';
+import { ImmutableObject } from 'seamless-immutable';
+import {
+  appConstants,
+  DetailResponseGenerator,
+  MovieDetailsDataType,
+  MovieResponseGenerator,
+  strings,
+} from '../constants';
 import { Color } from '../theme';
 
 export const apiConfig = apisauce.create({
   baseURL: appConstants.baseUrl,
 });
 
-export async function getError(response: ResponseGenerator) {
+export async function getError(
+  response: MovieResponseGenerator | DetailResponseGenerator,
+) {
   if (response.problem === strings.clientError) {
     return strings.pageErrorMessage;
   }
@@ -27,26 +35,36 @@ export const alertMessage = (error: string) => {
   Alert.alert(error);
 };
 
-export const getDetails = () => {
-  const votePercentage = movieDetails?.vote_average * 10;
+export const getDetails = (
+  movieDetails: ImmutableObject<MovieDetailsDataType> | null,
+) => {
+  const time = movieDetails?.runtime ?? movieDetails?.episode_run_time[0] ?? 0;
+  const votePercentage = movieDetails?.vote_average ?? 0 * 10;
   const activeStrokeColor =
-    movieDetails?.vote_average > 6.9
+    movieDetails?.vote_average ?? 0 > 6.9
       ? Color.PercentageDarkGreen
       : Color.percentageDarkYellow;
   const inActiveStrokeColor =
-    movieDetails?.vote_average > 6.9
+    movieDetails?.vote_average ?? 0 > 6.9
       ? Color.PercentageLightGreen
       : Color.percentageLightYellow;
-  const year = new Date(movieDetails?.release_date).toString().slice(11, 15);
-  const country = movieDetails?.production_countries?.[0]?.iso_3166_1;
-  const movieTitle = movieDetails?.title;
-  const hour = Math.floor((movieDetails?.runtime ?? 0) / 60);
-  const minutes = (movieDetails?.runtime ?? 0) % 60;
+  const year = new Date(
+    movieDetails?.release_date ?? movieDetails?.first_air_date ?? '',
+  )
+    .toString()
+    .slice(11, 15);
+  const country =
+    movieDetails?.production_countries.length === 0
+      ? ''
+      : `(${movieDetails?.production_countries?.[0]?.iso_3166_1})`;
+  const movieTitle = movieDetails?.title ?? movieDetails?.name;
+  const hour = Math.floor(time / 60);
+  const minutes = time % 60;
   const runTime =
     minutes === 0
-      ? hour === 0
-        ? `${minutes}m`
-        : `${hour}h`
+      ? `${hour}h`
+      : hour === 0
+      ? `${minutes}m`
       : `${hour}h ${minutes}m`;
   const movieType = movieDetails?.genres?.map(item => item.name).join(', ');
   const directorName = movieDetails?.credits?.crew
