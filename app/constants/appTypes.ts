@@ -1,3 +1,11 @@
+import {
+  ImageSourcePropType,
+  ImageStyle,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
+import { ImmutableArray } from 'seamless-immutable';
 import rootReducer from '../redux';
 
 interface genresDataType {
@@ -78,7 +86,7 @@ export interface MovieDetailsDataType {
 export type RootState = ReturnType<typeof rootReducer>;
 
 export interface MovieSagaDataType {
-  path: {
+  payload: {
     urlMainPath?: string;
     pageNo: number;
   };
@@ -139,6 +147,22 @@ export interface ListItemType {
   total_results: number;
 }
 
+export interface DataType {
+  id: number;
+  name: string;
+  endPoint: string;
+}
+
+export interface ListContainerDataType {
+  title: string;
+  filterOptions: Array<DataType>;
+  initialValue: DataType;
+  data: ImmutableArray<ListItemDataType>;
+  fetchingState: boolean;
+  errorState: boolean;
+  listPage: number;
+}
+
 export interface MovieResponseGenerator {
   config?: object;
   data: ListItemType;
@@ -154,4 +178,59 @@ export interface RouteDataType {
   route: {
     params: { id: number; data: string };
   };
+}
+
+export interface PopularDataType {
+  whatsPopularData: Array<ListItemDataType>;
+  whatsPopularPage: number;
+  fetchingWhatsPopularData: boolean;
+  whatsPopularDataFetchingError: boolean;
+}
+
+export interface FreeMovieDataType {
+  freeToWatch: Array<ListItemDataType>;
+  freeToWatchPage: number;
+  fetchingFreeToWatch: boolean;
+  freeToWatchFetchingError: boolean;
+}
+
+export interface TrailerDataType {
+  latestTrailers: Array<ListItemDataType>;
+  latestTrailersPage: number;
+  fetchingLatestTrailers: boolean;
+  latestTrailersFetchingError: boolean;
+}
+
+export interface TrendingDataType {
+  trending: Array<ListItemDataType>;
+  trendingPage: number;
+  fetchingTrending: boolean;
+  trendingFetchingError: boolean;
+}
+
+export interface HeaderDataType {
+  leftIcon: ImageSourcePropType;
+  logoIcon: ImageSourcePropType;
+  rightIcon?: ImageSourcePropType;
+}
+
+export interface NavigationDataType {
+  navigate: (screen: string, params?: { id: number; data: string }) => void;
+}
+
+export interface DropDownDataType {
+  data: Array<DataType>;
+  title: string;
+  initialValue: string;
+  dropDownViewStyle?: StyleProp<ViewStyle>;
+  dropDownTextStyle?: StyleProp<TextStyle>;
+  dropDownTintStyle?: StyleProp<ImageStyle>;
+}
+
+export interface MovieStoreDataType {
+  data: {
+    movieData: object;
+    page: number;
+  };
+  error: string;
 }

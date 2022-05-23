@@ -1,33 +1,52 @@
-import { filterData, movieDetails } from './staticData';
-import navigationStrings from './navigationStrings';
-import strings from './strings';
 import appConstants from './appConstants';
 import {
-  MovieDetailsDataType,
-  RootState,
+  DataType,
   DetailPathDataType,
-  MovieSagaDataType,
   DetailResponseGenerator,
-  DetailStoreDataType,
   DetailStateDataType,
+  DetailStoreDataType,
+  DropDownDataType,
+  FreeMovieDataType,
+  HeaderDataType,
+  ListContainerDataType,
   ListItemDataType,
   ListItemType,
+  MovieDetailsDataType,
   MovieResponseGenerator,
+  MovieSagaDataType,
+  MovieStoreDataType,
+  NavigationDataType,
+  PopularDataType,
+  RootState,
   RouteDataType,
+  TrailerDataType,
+  TrendingDataType,
 } from './appTypes';
+import navigationStrings from './navigationStrings';
+import { filterData, movieDetails } from './staticData';
+import strings from './strings';
 
 export { appConstants, navigationStrings, filterData, movieDetails, strings };
-
 export type {
-  MovieDetailsDataType,
-  RootState,
+  DataType,
   DetailPathDataType,
-  MovieSagaDataType,
   DetailResponseGenerator,
-  DetailStoreDataType,
   DetailStateDataType,
+  DetailStoreDataType,
+  DropDownDataType,
+  FreeMovieDataType,
+  HeaderDataType,
+  ListContainerDataType,
   ListItemDataType,
   ListItemType,
+  MovieDetailsDataType,
   MovieResponseGenerator,
+  MovieSagaDataType,
+  MovieStoreDataType,
+  NavigationDataType,
+  PopularDataType,
+  RootState,
   RouteDataType,
+  TrailerDataType,
+  TrendingDataType,
 };

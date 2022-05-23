@@ -1,20 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
+import { Image, TouchableOpacity, View } from 'react-native';
 import {
-  Image,
-  ImageSourcePropType,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { navigationStrings } from '../constants';
-import { NavigationDataType } from './ListContainer';
+  HeaderDataType,
+  NavigationDataType,
+  navigationStrings,
+} from '../constants';
 import styles from './styles/HeaderStyles';
-
-interface HeaderDataType {
-  leftIcon: ImageSourcePropType;
-  logoIcon: ImageSourcePropType;
-  rightIcon?: ImageSourcePropType;
-}
 
 const Header: FC<HeaderDataType> = ({ leftIcon, logoIcon, rightIcon }) => {
   const navigation: NavigationDataType = useNavigation();
