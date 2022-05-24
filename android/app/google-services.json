@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "89996564819",
+    "project_id": "moviedb-2908d",
+    "storage_bucket": "moviedb-2908d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89996564819:android:e942630a87714b1d3ea9a6",
+        "android_client_info": {
+          "package_name": "com.moviedbapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "89996564819-hph4f8e5b765gev43v87vj04t9tun4il.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYrM1MC9Go35l8ra748zqBtCRDkrB_Nn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "89996564819-hph4f8e5b765gev43v87vj04t9tun4il.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

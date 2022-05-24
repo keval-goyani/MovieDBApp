@@ -14,7 +14,7 @@ const Header: FC<HeaderDataType> = ({ leftIcon, logoIcon, rightIcon }) => {
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate(navigationStrings.HOME);
+          navigation.navigate(navigationStrings.Home);
         }}>
         <Image source={leftIcon} style={styles.leftIconStyle} />
       </TouchableOpacity>

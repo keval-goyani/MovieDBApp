@@ -87,7 +87,7 @@ const ListContainer: FC<ListContainerDataType> = ({
       <TouchableOpacity
         style={styles.listDataStyle}
         onPress={() => {
-          navigation.navigate(navigationStrings.DETAILS, {
+          navigation.navigate(navigationStrings.Details, {
             id: item?.id,
             data: item?.first_air_date ?? '',
           });
