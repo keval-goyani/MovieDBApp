@@ -13,4 +13,5 @@ export const Color = {
   dropDownGradientEnd: '#0edbb0',
   lightBlackBackgroundColor: '#191918',
   blackBackgroundColor: '#161615',
+  red: '#FF0D06',
 };

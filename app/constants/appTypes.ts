@@ -32,6 +32,13 @@ interface SpokenLanguagesDataType {
   name: string;
 }
 
+export interface FormTypeProps {
+  getCredentials: React.Dispatch<
+    React.SetStateAction<{ email: string; password: string }>
+  >;
+  type: string;
+}
+
 interface CreditsDataType {
   adult: boolean;
   gender: number;

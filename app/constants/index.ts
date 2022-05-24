@@ -6,6 +6,7 @@ import {
   DetailStateDataType,
   DetailStoreDataType,
   DropDownDataType,
+  FormTypeProps,
   FreeMovieDataType,
   HeaderDataType,
   ListContainerDataType,
@@ -49,4 +50,5 @@ export type {
   RouteDataType,
   TrailerDataType,
   TrendingDataType,
+  FormTypeProps,
 };
