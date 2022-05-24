@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -14,7 +14,6 @@ import { useDispatch } from 'react-redux';
 import { DropDownMenu } from '../components';
 import {
   appConstants,
-  filterData,
   ListContainerDataType,
   ListItemDataType,
   NavigationDataType,
@@ -30,28 +29,22 @@ import styles from './styles/ListContainerStyles';
 const ListContainer: FC<ListContainerDataType> = ({
   title,
   filterOptions,
-  initialValue,
   data,
   fetchingState,
   errorState,
   listPage,
 }) => {
+  const [dataEndPoint, setDataEndPoint] = useState<string>('');
   const dispatch = useDispatch();
   const navigation: NavigationDataType = useNavigation();
   const movieListData = [...data];
-  const { name } = initialValue;
-  const {
-    popularMovieFilterData,
-    trendingFilterData,
-    freeToWatchMovieFilterData,
-  } = filterData;
 
   const pageLoading = () => {
     switch (title) {
       case strings.whatsPopular:
         dispatch(
           popularAction.whatsPopularDataRequest({
-            urlMainPath: popularMovieFilterData[0].endPoint,
+            urlMainPath: dataEndPoint,
             pageNo: listPage + 1,
           }),
         );
@@ -59,7 +52,7 @@ const ListContainer: FC<ListContainerDataType> = ({
       case strings.freeToWatch:
         dispatch(
           freeMovieAction.freeToWatchDataRequest({
-            urlMainPath: freeToWatchMovieFilterData[0].endPoint,
+            urlMainPath: dataEndPoint,
             pageNo: listPage + 1,
           }),
         );
@@ -67,7 +60,7 @@ const ListContainer: FC<ListContainerDataType> = ({
       case strings.trending:
         dispatch(
           trendingAction.trendingDataRequest({
-            urlMainPath: trendingFilterData[0].endPoint,
+            urlMainPath: dataEndPoint,
             pageNo: listPage + 1,
           }),
         );
@@ -127,7 +120,6 @@ const ListContainer: FC<ListContainerDataType> = ({
             valueSuffix={'%'}
           />
         </View>
-
         <View style={styles.movieNameDateContainer}>
           <Text style={styles.movieNameStyle} numberOfLines={2}>
             {movieTitle}
@@ -149,7 +141,8 @@ const ListContainer: FC<ListContainerDataType> = ({
             <DropDownMenu
               data={filterOptions}
               title={title}
-              initialValue={name}
+              dropDownViewStyle={styles.dropDownTitleBackgroundColor}
+              setMethod={setDataEndPoint}
             />
           </View>
           <FlatList

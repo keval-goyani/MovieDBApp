@@ -49,7 +49,6 @@ const HomeScreen = () => {
         <ListContainer
           title={strings.whatsPopular}
           filterOptions={popularMovieFilterData}
-          initialValue={popularMovieFilterData[0]}
           data={whatsPopularData ?? []}
           fetchingState={fetchingWhatsPopularData}
           errorState={whatsPopularDataFetchingError}
@@ -58,7 +57,6 @@ const HomeScreen = () => {
         <ListContainer
           title={strings.freeToWatch}
           filterOptions={freeToWatchMovieFilterData}
-          initialValue={freeToWatchMovieFilterData[0]}
           data={freeToWatch ?? []}
           fetchingState={fetchingFreeToWatch}
           errorState={freeToWatchFetchingError}
@@ -67,7 +65,6 @@ const HomeScreen = () => {
         <MovieTrailer
           title={strings.latestTrailers}
           filterOptions={trailerFilterData}
-          initialValue={trailerFilterData[0]}
           data={latestTrailers ?? []}
           fetchingState={fetchingLatestTrailers}
           errorState={latestTrailersFetchingError}
@@ -76,7 +73,6 @@ const HomeScreen = () => {
         <ListContainer
           title={strings.trending}
           filterOptions={trendingFilterData}
-          initialValue={trendingFilterData[0]}
           data={trending ?? []}
           fetchingState={fetchingTrending}
           errorState={trendingFetchingError}

@@ -1,3 +1,4 @@
+import React, { Dispatch } from 'react';
 import {
   ImageSourcePropType,
   ImageStyle,
@@ -156,7 +157,6 @@ export interface DataType {
 export interface ListContainerDataType {
   title: string;
   filterOptions: Array<DataType>;
-  initialValue: DataType;
   data: ImmutableArray<ListItemDataType>;
   fetchingState: boolean;
   errorState: boolean;
@@ -221,10 +221,10 @@ export interface NavigationDataType {
 export interface DropDownDataType {
   data: Array<DataType>;
   title: string;
-  initialValue: string;
   dropDownViewStyle?: StyleProp<ViewStyle>;
   dropDownTextStyle?: StyleProp<TextStyle>;
   dropDownTintStyle?: StyleProp<ImageStyle>;
+  setMethod: Dispatch<React.SetStateAction<string>>;
 }
 
 export interface MovieStoreDataType {

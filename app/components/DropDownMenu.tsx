@@ -13,11 +13,12 @@ import styles from './styles/DropDownMenuStyles';
 const DropDownMenu: FC<DropDownDataType> = ({
   data,
   title,
-  initialValue,
   dropDownViewStyle,
   dropDownTextStyle,
   dropDownTintStyle,
+  setMethod,
 }) => {
+  const initialValue = data?.[0].name;
   const [showOptions, setShowOptions] = useState(false);
   const [selectedItem, setSelectedItem] = useState(initialValue);
   const [urlEndPoint, setUrlEndPoint] = useState(data?.[0]?.endPoint);
@@ -63,6 +64,10 @@ const DropDownMenu: FC<DropDownDataType> = ({
   useEffect(() => {
     dropDownFilterData();
   }, [dropDownFilterData]);
+
+  useEffect(() => {
+    setMethod(urlEndPoint);
+  }, [setMethod, urlEndPoint]);
 
   const selectItem = (filterValue: string, endPoint: string) => {
     setShowOptions(false);

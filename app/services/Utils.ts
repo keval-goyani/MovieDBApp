@@ -39,13 +39,13 @@ export const getDetails = (
   movieDetails: ImmutableObject<MovieDetailsDataType> | null,
 ) => {
   const time = movieDetails?.runtime ?? movieDetails?.episode_run_time[0] ?? 0;
-  const votePercentage = movieDetails?.vote_average ?? 0 * 10;
+  const votePercentage = (movieDetails?.vote_average ?? 0) * 10;
   const activeStrokeColor =
-    movieDetails?.vote_average ?? 0 > 6.9
+    votePercentage > 69
       ? Color.PercentageDarkGreen
       : Color.percentageDarkYellow;
   const inActiveStrokeColor =
-    movieDetails?.vote_average ?? 0 > 6.9
+    votePercentage > 69
       ? Color.PercentageLightGreen
       : Color.percentageLightYellow;
   const year = new Date(
@@ -70,7 +70,7 @@ export const getDetails = (
   const directorName = movieDetails?.credits?.crew
     .filter(item => item.job === strings.director)
     .map(item => item.name)
-    .join();
+    .join(', ');
 
   return {
     votePercentage,
