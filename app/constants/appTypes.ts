@@ -1,5 +1,6 @@
 import React, { Dispatch } from 'react';
 import {
+  ImageProps,
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
@@ -271,4 +272,9 @@ export interface AuthStateDataType {
   user: null | string;
   authenticated: null | boolean;
   error: null | boolean;
+}
+
+export interface TabBarIconDataType {
+  focused: boolean;
+  icon: ImageProps;
 }

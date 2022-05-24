@@ -8,4 +8,8 @@ export default {
   backIcon: require('./backIcon.png'),
   movieDbIcon3x: require('./movieDB3x.png'),
   movieDbIcon2x: require('./movieDB2x.png'),
+  homeIcon: require('./homeIcon.png'),
+  trailerIcon: require('./trailerIcon.png'),
+  moviesIcon: require('./moviesIcon.png'),
+  communityIcon: require('./communityIcon.png'),
 };

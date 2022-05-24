@@ -27,6 +27,7 @@ import {
   RouteDataType,
   TrailerDataType,
   TrendingDataType,
+  TabBarIconDataType,
 } from './appTypes';
 import navigationStrings from './navigationStrings';
 import { filterData, movieDetails } from './staticData';
@@ -61,4 +62,5 @@ export type {
   RouteDataType,
   TrailerDataType,
   TrendingDataType,
+  TabBarIconDataType,
 };

@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
-import Routes from './navigation/AppNavigation';
+import { Routes } from './navigation';
 import reduxStore from './redux/store';
 import { styles } from './theme';
 

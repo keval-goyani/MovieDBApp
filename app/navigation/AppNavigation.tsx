@@ -3,24 +3,23 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { navigationStrings } from '../constants';
-import {
-  DetailScreen,
-  HomeScreen,
-  LoginScreen,
-  SignUpScreen,
-} from '../modules';
+import { DetailScreen, LoginScreen, SignUpScreen } from '../modules';
+import { TabRoutes } from '../navigation';
 import { authDataSelectors } from '../redux/AuthRedux';
 
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
-  const data = useSelector(authDataSelectors.getData);
+  const { authenticated } = useSelector(authDataSelectors.getData);
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {data.authenticated ? (
-          <Stack.Screen name={navigationStrings.Home} component={HomeScreen} />
+        {authenticated ? (
+          <Stack.Screen
+            name={navigationStrings.HomeTab}
+            component={TabRoutes}
+          />
         ) : (
           <>
             <Stack.Screen
