@@ -49,4 +49,5 @@ export default {
   createAccount: 'Create One!',
   createYourAccount: 'Create Your Account',
   confirmPassword: 'Password & Confirm Password Should Be Same',
+  loginError: 'Invalid Credentials or User Not Found',
 };

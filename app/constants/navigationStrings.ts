@@ -1,4 +1,6 @@
 export default {
-  HOME: 'Home',
-  DETAILS: 'Details',
+  Home: 'Home',
+  Details: 'Details',
+  SignUp: 'SignUp',
+  Login: 'Login',
 };

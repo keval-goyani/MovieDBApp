@@ -45,6 +45,8 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              keyboardType="email-address"
+              autoCapitalize="none"
             />
           )}
           name="email"
@@ -65,6 +67,7 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              secureTextEntry={true}
             />
           )}
           name="password"

@@ -241,3 +241,34 @@ export interface MovieStoreDataType {
   };
   error: string;
 }
+
+export interface Credentials {
+  email: string;
+  password: string;
+}
+
+export interface NavigationScreenType {
+  navigate: (Screen: string) => void;
+}
+
+interface AuthPayloadDataType {
+  _user: {
+    email: string;
+  };
+}
+
+export interface AuthSagaDataType {
+  payload: AuthPayloadDataType;
+  type: string;
+}
+
+export interface AuthReduxDataType {
+  data: string;
+  error: string;
+}
+
+export interface AuthStateDataType {
+  user: null | string;
+  authenticated: null | boolean;
+  error: null | boolean;
+}

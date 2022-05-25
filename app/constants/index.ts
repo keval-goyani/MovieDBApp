@@ -1,5 +1,9 @@
 import appConstants from './appConstants';
 import {
+  AuthReduxDataType,
+  AuthSagaDataType,
+  AuthStateDataType,
+  Credentials,
   DataType,
   DetailPathDataType,
   DetailResponseGenerator,
@@ -17,6 +21,7 @@ import {
   MovieSagaDataType,
   MovieStoreDataType,
   NavigationDataType,
+  NavigationScreenType,
   PopularDataType,
   RootState,
   RouteDataType,
@@ -29,12 +34,17 @@ import strings from './strings';
 
 export { appConstants, navigationStrings, filterData, movieDetails, strings };
 export type {
+  AuthReduxDataType,
+  AuthSagaDataType,
+  AuthStateDataType,
+  Credentials,
   DataType,
   DetailPathDataType,
   DetailResponseGenerator,
   DetailStateDataType,
   DetailStoreDataType,
   DropDownDataType,
+  FormTypeProps,
   FreeMovieDataType,
   HeaderDataType,
   ListContainerDataType,
@@ -45,10 +55,10 @@ export type {
   MovieSagaDataType,
   MovieStoreDataType,
   NavigationDataType,
+  NavigationScreenType,
   PopularDataType,
   RootState,
   RouteDataType,
   TrailerDataType,
   TrendingDataType,
-  FormTypeProps,
 };
