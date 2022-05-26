@@ -1,13 +1,14 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, fork, put, select, takeLatest } from 'redux-saga/effects';
 import {
+  filterData,
   FreeMovieDataType,
   ListItemDataType,
   MovieResponseGenerator,
   MovieSagaDataType,
   PopularDataType,
+  SearchFunctionDataType,
   TrailerDataType,
   TrendingDataType,
-  SearchFunctionDataType,
 } from '../constants';
 import freeMovieAction, {
   freeMovieSelectors,
@@ -195,6 +196,46 @@ function* searchMovies({ query }: SearchFunctionDataType) {
   yield put(trendingAction.trendingSearchData(trendingSearchData));
 }
 
+function* moviesPagination() {
+  const { whatsPopularPage }: PopularDataType = yield select(
+    popularDataSelectors.getData,
+  );
+  const { freeToWatchPage }: FreeMovieDataType = yield select(
+    freeMovieSelectors.getData,
+  );
+  const { trendingPage }: TrendingDataType = yield select(
+    trendingSelectors.getData,
+  );
+
+  if (whatsPopularPage <= 500) {
+    yield fork(popularDataRequest, {
+      type: PopularTypes.WHATS_POPULAR_DATA_REQUEST,
+      payload: {
+        urlMainPath: filterData.popularMovieFilterData[0].endPoint,
+        pageNo: whatsPopularPage + 1,
+      },
+    });
+  }
+  if (freeToWatchPage <= 500) {
+    yield fork(freeToWatchApiDataRequest, {
+      type: FreeMovieTypes.FREE_TO_WATCH_DATA_REQUEST,
+      payload: {
+        urlMainPath: filterData.freeToWatchMovieFilterData[0].endPoint,
+        pageNo: freeToWatchPage + 1,
+      },
+    });
+  }
+  if (trendingPage <= 500) {
+    yield fork(trendingApiDataRequest, {
+      type: TrendingTypes.TRENDING_DATA_REQUEST,
+      payload: {
+        urlMainPath: filterData.trendingFilterData[0].endPoint,
+        pageNo: trendingPage + 1,
+      },
+    });
+  }
+}
+
 export default [
   takeLatest(PopularTypes.WHATS_POPULAR_DATA_REQUEST, popularDataRequest),
   takeLatest(PopularTypes.SEARCH_REQUEST, searchMovies),
@@ -207,4 +248,5 @@ export default [
     latestTrailerApiDataRequest,
   ),
   takeLatest(TrendingTypes.TRENDING_DATA_REQUEST, trendingApiDataRequest),
+  takeLatest(PopularTypes.MOVIES_PAGINATION_REQUEST, moviesPagination),
 ];

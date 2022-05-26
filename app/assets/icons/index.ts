@@ -13,4 +13,5 @@ export default {
   moviesIcon: require('./moviesIcon.png'),
   communityIcon: require('./communityIcon.png'),
   notFound: require('./notFoundIcon.png'),
+  comingSoon: require('./comingSoon.png'),
 };

@@ -26,6 +26,68 @@ import trendingAction from '../redux/TrendingRedux';
 import { Color, Icons, moderateScale } from '../theme';
 import styles from './styles/ListContainerStyles';
 
+export const listItem = (
+  { item }: ListRenderItemInfo<ListItemDataType>,
+  navigation: NavigationDataType,
+) => {
+  const votePercentage = item?.vote_average * 10;
+  const activeStrokeColor =
+    item?.vote_average > 6.9
+      ? Color.PercentageDarkGreen
+      : Color.percentageDarkYellow;
+  const inActiveStrokeColor =
+    item?.vote_average > 6.9
+      ? Color.PercentageLightGreen
+      : Color.percentageLightYellow;
+  const date = new Date(item?.release_date ?? item?.first_air_date)
+    .toString()
+    .slice(4, 15);
+  const movieTitle = item?.title ?? item?.name;
+
+  return (
+    <TouchableOpacity
+      style={styles.listDataStyle}
+      onPress={() => {
+        navigation.navigate(navigationStrings.Details, {
+          id: item?.id,
+          data: item?.first_air_date ?? '',
+        });
+      }}>
+      <Image
+        source={{
+          uri: `${appConstants.posterImageUrl}${item?.poster_path}`,
+        }}
+        style={styles.card}
+      />
+      <TouchableOpacity style={styles.threeDotContainerStyles}>
+        <Image source={Icons.threeDotIcon} style={styles.threeDotIconStyles} />
+      </TouchableOpacity>
+      <View style={styles.circularView}>
+        <CircularProgress
+          value={votePercentage}
+          radius={18}
+          circleBackgroundColor={Color.black}
+          activeStrokeWidth={3}
+          inActiveStrokeWidth={3}
+          progressValueFontSize={moderateScale(11)}
+          duration={800}
+          activeStrokeColor={activeStrokeColor}
+          inActiveStrokeColor={inActiveStrokeColor}
+          inActiveStrokeOpacity={0.4}
+          progressValueColor={Color.white}
+          valueSuffix={'%'}
+        />
+      </View>
+      <View style={styles.movieNameDateContainer}>
+        <Text style={styles.movieNameStyle} numberOfLines={2}>
+          {movieTitle}
+        </Text>
+        <Text style={styles.movieReleaseDate}>{date}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const ListContainer: FC<ListContainerDataType> = ({
   title,
   filterOptions,
@@ -68,68 +130,6 @@ const ListContainer: FC<ListContainerDataType> = ({
     }
   };
 
-  const listItem = ({ item }: ListRenderItemInfo<ListItemDataType>) => {
-    const votePercentage = item?.vote_average * 10;
-    const activeStrokeColor =
-      item?.vote_average > 6.9
-        ? Color.PercentageDarkGreen
-        : Color.percentageDarkYellow;
-    const inActiveStrokeColor =
-      item?.vote_average > 6.9
-        ? Color.PercentageLightGreen
-        : Color.percentageLightYellow;
-    const date = new Date(item?.release_date ?? item?.first_air_date)
-      .toString()
-      .slice(4, 15);
-    const movieTitle = item?.title ?? item?.name;
-
-    return (
-      <TouchableOpacity
-        style={styles.listDataStyle}
-        onPress={() => {
-          navigation.navigate(navigationStrings.Details, {
-            id: item?.id,
-            data: item?.first_air_date ?? '',
-          });
-        }}>
-        <Image
-          source={{
-            uri: `${appConstants.posterImageUrl}${item?.poster_path}`,
-          }}
-          style={styles.card}
-        />
-        <TouchableOpacity style={styles.threeDotContainerStyles}>
-          <Image
-            source={Icons.threeDotIcon}
-            style={styles.threeDotIconStyles}
-          />
-        </TouchableOpacity>
-        <View style={styles.circularView}>
-          <CircularProgress
-            value={votePercentage}
-            radius={18}
-            circleBackgroundColor={Color.black}
-            activeStrokeWidth={3}
-            inActiveStrokeWidth={3}
-            progressValueFontSize={moderateScale(11)}
-            duration={800}
-            activeStrokeColor={activeStrokeColor}
-            inActiveStrokeColor={inActiveStrokeColor}
-            inActiveStrokeOpacity={0.4}
-            progressValueColor={Color.white}
-            valueSuffix={'%'}
-          />
-        </View>
-        <View style={styles.movieNameDateContainer}>
-          <Text style={styles.movieNameStyle} numberOfLines={2}>
-            {movieTitle}
-          </Text>
-          <Text style={styles.movieReleaseDate}>{date}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
   return (
     <>
       {fetchingState && movieListData.length === 0 ? (
@@ -139,8 +139,8 @@ const ListContainer: FC<ListContainerDataType> = ({
           <View style={styles.movieListTitleContainer}>
             <Text style={styles.fontStyle}>{title}</Text>
             <DropDownMenu
-              data={filterOptions}
-              title={title}
+              data={filterOptions ? filterOptions : []}
+              title={title ? title : ''}
               dropDownViewStyle={styles.dropDownTitleBackgroundColor}
               setMethod={setDataEndPoint}
             />
@@ -153,7 +153,7 @@ const ListContainer: FC<ListContainerDataType> = ({
             <FlatList
               data={movieListData}
               keyExtractor={(item, index) => `${item.id}-${index}`}
-              renderItem={listItem}
+              renderItem={item => listItem(item, navigation)}
               horizontal
               bounces={false}
               onEndReachedThreshold={1}

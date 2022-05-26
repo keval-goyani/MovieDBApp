@@ -19,7 +19,7 @@ import {
 } from '../constants';
 import trailerAction from '../redux/TrailerRedux';
 import { Icons } from '../theme';
-import styles from './styles/MovieTrailersStyle';
+import styles from './styles/MovieTrailersStyles';
 
 export const listItem = ({ item }: ListRenderItemInfo<ListItemDataType>) => {
   const trailerTitle = item?.title ?? item?.name;
@@ -82,7 +82,7 @@ const MovieTrailer: FC<ListContainerDataType> = ({
     dispatch(
       trailerAction.latestTrailerDataRequest({
         urlMainPath: dataEndPoint,
-        pageNo: listPage + 1,
+        pageNo: listPage ?? 0 + 1,
       }),
     );
   };

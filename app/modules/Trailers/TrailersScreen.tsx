@@ -1,12 +1,27 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { strings } from '../../constants';
+import { View } from 'react-native';
+import { useSelector } from 'react-redux';
+import { Header, Trailers } from '../../components';
+import { trailerDataSelectors } from '../../redux/TrailerRedux';
+import { Icons } from '../../theme';
 import styles from './styles/TrailerScreenStyles';
 
 const TrailersScreen = () => {
+  const { latestTrailers, latestTrailersPage } = useSelector(
+    trailerDataSelectors.getData,
+  );
+
   return (
     <View style={styles.container}>
-      <Text>{strings.trailersScreen}</Text>
+      <Header
+        leftIcon={Icons.menuIcon}
+        logoIcon={Icons.movieDbIcon}
+        rightIcon={Icons.searchIcon}
+      />
+      <Trailers
+        data={latestTrailers ?? []}
+        listPage={latestTrailersPage ?? 0}
+      />
     </View>
   );
 };

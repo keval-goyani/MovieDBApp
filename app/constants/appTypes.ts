@@ -171,6 +171,17 @@ export interface ListContainerDataType {
   listPage: number;
 }
 
+export interface MovieDataType {
+  data: ImmutableArray<ListItemDataType> | Array<ListItemDataType>;
+  listPage: listPageType;
+}
+
+export interface listPageType {
+  whatsPopularPage: number;
+  freeToWatchPage: number;
+  trendingPage: number;
+}
+
 export interface MovieResponseGenerator {
   config?: object;
   data: ListItemType;
@@ -224,7 +235,7 @@ export interface HeaderDataType {
   leftIcon: ImageSourcePropType;
   logoIcon: ImageSourcePropType;
   rightIcon?: ImageSourcePropType;
-  searchModal: boolean;
+  searchModal?: boolean;
   setSearchModal?: Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -299,7 +310,8 @@ export interface SearchFunctionDataType {
 }
 
 export interface LoaderDataType {
-  size: string | number;
+  size?: string | number;
   animating?: boolean;
   style?: StyleProp<ViewStyle>;
+  color?: string;
 }
