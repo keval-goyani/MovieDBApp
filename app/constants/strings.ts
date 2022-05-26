@@ -50,4 +50,7 @@ export default {
   createYourAccount: 'Create Your Account',
   confirmPassword: 'Password & Confirm Password Should Be Same',
   loginError: 'Invalid Credentials or User Not Found',
+  movieScreen: 'MoviesScreen',
+  trailersScreen: 'TrailersScreen',
+  communityScreen: 'CommunityScreen',
 };

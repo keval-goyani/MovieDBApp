@@ -3,4 +3,8 @@ export default {
   Details: 'Details',
   SignUp: 'SignUp',
   Login: 'Login',
+  HomeTab: 'HomeTab',
+  Trailers: 'Trailers',
+  Movies: 'Movies',
+  Community: 'Community',
 };
