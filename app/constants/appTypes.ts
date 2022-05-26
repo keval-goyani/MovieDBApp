@@ -162,11 +162,11 @@ export interface DataType {
 }
 
 export interface ListContainerDataType {
-  title: string;
-  filterOptions: Array<DataType>;
+  title?: string;
+  filterOptions?: Array<DataType>;
   data: ImmutableArray<ListItemDataType>;
-  fetchingState: boolean;
-  errorState: boolean;
+  fetchingState?: boolean;
+  errorState?: boolean;
   listPage: number;
 }
 
