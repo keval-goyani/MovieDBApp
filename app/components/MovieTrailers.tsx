@@ -7,7 +7,7 @@ import {
   ListRenderItemInfo,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { DropDownMenu } from '../components';
@@ -16,11 +16,53 @@ import {
   filterData,
   ListContainerDataType,
   ListItemDataType,
-  strings,
+  strings
 } from '../constants';
 import trailerAction from '../redux/TrailerRedux';
 import { Icons } from '../theme';
 import styles from './styles/MovieTrailersStyle';
+
+export const listItem = ({ item }: ListRenderItemInfo<ListItemDataType>) => {
+  const trailerTitle = item?.title ?? item?.name;
+
+  return (
+    <View style={styles.listItemStyle}>
+      <View style={styles.listItemImageStyle}>
+        <Image
+          source={{
+            uri: `${appConstants.backDropImageUrl}${item?.backdrop_path}`,
+          }}
+          style={styles.card}
+        />
+        <TouchableOpacity
+          style={styles.threeDotContainerStyles}
+          onPress={() => {
+            /* TODO add menu pop here */
+          }}>
+          <Image
+            source={Icons.threeDotIcon}
+            style={styles.threeDotIconStyles}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.playIconStyles}
+          onPress={() => {
+            /* TODO add menu pop here */
+          }}>
+          <Image source={Icons.playIcon} style={styles.playIconStyles} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.movieNameContainer}>
+        <Text style={styles.movieNameStyle} numberOfLines={1}>
+          {trailerTitle}
+        </Text>
+        <Text style={styles.officialTrailerStyle}>
+          {strings.officialTrailer}
+        </Text>
+      </View>
+    </View>
+  );
+};
 
 const MovieTrailer: FC<ListContainerDataType> = ({
   title,
@@ -36,39 +78,6 @@ const MovieTrailer: FC<ListContainerDataType> = ({
   );
   const dispatch = useDispatch();
   const movieListData = [...data];
-
-  const listItem = ({ item }: ListRenderItemInfo<ListItemDataType>) => {
-    const trailerTitle = item?.title ?? item?.name;
-    return (
-      <View style={styles.listItemStyle}>
-        <View style={styles.listItemImageStyle}>
-          <Image
-            source={{
-              uri: `${appConstants.backDropImageUrl}${item?.backdrop_path}`,
-            }}
-            style={styles.card}
-          />
-          <TouchableOpacity style={styles.threeDotContainerStyles}>
-            <Image
-              source={Icons.threeDotIcon}
-              style={styles.threeDotIconStyles}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.playIconStyles}>
-            <Image source={Icons.playIcon} style={styles.playIconStyles} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.movieNameContainer}>
-          <Text style={styles.movieNameStyle} numberOfLines={1}>
-            {trailerTitle}
-          </Text>
-          <Text style={styles.officialTrailerStyle}>
-            {strings.officialTrailer}
-          </Text>
-        </View>
-      </View>
-    );
-  };
 
   const pageLoading = () => {
     dispatch(
@@ -92,8 +101,8 @@ const MovieTrailer: FC<ListContainerDataType> = ({
           <View style={styles.movieListTitleContainer}>
             <Text style={styles.fontStyle}>{title}</Text>
             <DropDownMenu
-              data={filterOptions}
-              title={title}
+              data={filterOptions ?? []}
+              title={title ?? ''}
               dropDownTextStyle={styles.dropDownMainItemTextColor}
               dropDownTintStyle={styles.dropDownExpandIconColor}
               setMethod={setDataEndPoint}
