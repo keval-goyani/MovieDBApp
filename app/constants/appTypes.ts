@@ -132,7 +132,7 @@ export interface DetailStoreDataType {
 export interface ListItemDataType {
   adult: boolean;
   backdrop_path: string;
-  genre_ids: object;
+  genre_ids: Array<number>;
   id: number;
   original_language: string;
   original_title: string;
@@ -190,6 +190,7 @@ export interface RouteDataType {
 
 export interface PopularDataType {
   whatsPopularData: Array<ListItemDataType>;
+  whatsPopularSearch: Array<ListItemDataType>;
   whatsPopularPage: number;
   fetchingWhatsPopularData: boolean;
   whatsPopularDataFetchingError: boolean;
@@ -197,6 +198,7 @@ export interface PopularDataType {
 
 export interface FreeMovieDataType {
   freeToWatch: Array<ListItemDataType>;
+  freeToWatchSearch: Array<ListItemDataType>;
   freeToWatchPage: number;
   fetchingFreeToWatch: boolean;
   freeToWatchFetchingError: boolean;
@@ -204,6 +206,7 @@ export interface FreeMovieDataType {
 
 export interface TrailerDataType {
   latestTrailers: Array<ListItemDataType>;
+  latestTrailersSearch: Array<ListItemDataType>;
   latestTrailersPage: number;
   fetchingLatestTrailers: boolean;
   latestTrailersFetchingError: boolean;
@@ -211,6 +214,7 @@ export interface TrailerDataType {
 
 export interface TrendingDataType {
   trending: Array<ListItemDataType>;
+  trendingSearch: Array<ListItemDataType>;
   trendingPage: number;
   fetchingTrending: boolean;
   trendingFetchingError: boolean;
@@ -220,6 +224,8 @@ export interface HeaderDataType {
   leftIcon: ImageSourcePropType;
   logoIcon: ImageSourcePropType;
   rightIcon?: ImageSourcePropType;
+  searchModal: boolean;
+  setSearchModal?: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface NavigationDataType {
@@ -241,6 +247,7 @@ export interface MovieStoreDataType {
     page: number;
   };
   error: string;
+  searchData: { type: string; searchData: ListItemDataType[] };
 }
 
 export interface Credentials {
@@ -256,6 +263,11 @@ interface AuthPayloadDataType {
   _user: {
     email: string;
   };
+}
+
+export interface SearchFunctionDataType {
+  query: string;
+  type: string;
 }
 
 export interface AuthSagaDataType {
@@ -277,4 +289,11 @@ export interface AuthStateDataType {
 export interface TabBarIconDataType {
   focused: boolean;
   icon: ImageProps;
+}
+
+export interface SearchModalDataType {
+  searchQuery: string;
+  setSearchQuery: Dispatch<React.SetStateAction<string>>;
+  setSearchModal: Dispatch<React.SetStateAction<boolean>>;
+  searchModal: boolean;
 }

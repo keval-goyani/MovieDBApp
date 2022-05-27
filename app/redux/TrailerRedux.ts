@@ -5,6 +5,7 @@ import { alertMessage } from '../services/Utils';
 
 const { Types, Creators } = createActions({
   latestTrailerDataRequest: ['payload'],
+  latestTrailerSearchData: ['searchData'],
   latestTrailerDataSuccess: ['data'],
   latestTrailerDataFailure: ['error'],
 });
@@ -14,6 +15,7 @@ export default Creators;
 
 export const INITIAL_STATE: ImmutableObject<TrailerDataType> = Immutable({
   latestTrailers: [],
+  latestTrailersSearch: [],
   latestTrailersPage: 0,
   fetchingLatestTrailers: false,
   latestTrailersFetchingError: false,
@@ -53,8 +55,16 @@ export const trailerDataFetchingFailure = (
   });
 };
 
+export const latestTrailersSearchData = (
+  state: ImmutableObject<TrailerDataType>,
+  { searchData }: MovieStoreDataType,
+) => {
+  return state.merge({ latestTrailersSearch: searchData });
+};
+
 export const trailerReducer = createReducer(INITIAL_STATE, {
   [Types.LATEST_TRAILER_DATA_REQUEST]: trailerDataRequest,
+  [Types.LATEST_TRAILER_SEARCH_DATA]: latestTrailersSearchData,
   [Types.LATEST_TRAILER_DATA_SUCCESS]: trailerDataSuccess,
   [Types.LATEST_TRAILER_DATA_FAILURE]: trailerDataFetchingFailure,
 });

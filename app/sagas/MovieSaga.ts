@@ -1,11 +1,13 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   FreeMovieDataType,
+  ListItemDataType,
   MovieResponseGenerator,
   MovieSagaDataType,
   PopularDataType,
   TrailerDataType,
   TrendingDataType,
+  SearchFunctionDataType,
 } from '../constants';
 import freeMovieAction, {
   freeMovieSelectors,
@@ -23,7 +25,7 @@ import trendingAction, {
   trendingSelectors,
   TrendingTypes,
 } from '../redux/TrendingRedux';
-import { getError, getPopularMovieData } from '../services';
+import { getError, getPopularMovieData, searchMovie } from '../services';
 
 function* popularDataRequest({
   payload: { urlMainPath, pageNo },
@@ -157,8 +159,45 @@ function* trendingApiDataRequest({
   }
 }
 
+function* searchMovies({ query }: SearchFunctionDataType) {
+  const { whatsPopularData }: PopularDataType = yield select(
+    popularDataSelectors.getData,
+  );
+  const { freeToWatch }: FreeMovieDataType = yield select(
+    freeMovieSelectors.getData,
+  );
+  const { latestTrailers }: TrailerDataType = yield select(
+    trailerDataSelectors.getData,
+  );
+  const { trending }: TrendingDataType = yield select(
+    trendingSelectors.getData,
+  );
+  const popularSearchData: ListItemDataType[] = yield searchMovie(
+    whatsPopularData,
+    query,
+  );
+  const freeToWatchSearchData: ListItemDataType[] = yield searchMovie(
+    freeToWatch,
+    query,
+  );
+  const latestTrailersSearchData: ListItemDataType[] = yield searchMovie(
+    latestTrailers,
+    query,
+  );
+  const trendingSearchData: ListItemDataType[] = yield searchMovie(
+    trending,
+    query,
+  );
+
+  yield put(popularAction.whatsPopularSearchData(popularSearchData));
+  yield put(freeMovieAction.freeToWatchSearchData(freeToWatchSearchData));
+  yield put(trailerAction.latestTrailerSearchData(latestTrailersSearchData));
+  yield put(trendingAction.trendingSearchData(trendingSearchData));
+}
+
 export default [
   takeLatest(PopularTypes.WHATS_POPULAR_DATA_REQUEST, popularDataRequest),
+  takeLatest(PopularTypes.SEARCH_REQUEST, searchMovies),
   takeLatest(
     FreeMovieTypes.FREE_TO_WATCH_DATA_REQUEST,
     freeToWatchApiDataRequest,

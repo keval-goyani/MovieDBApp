@@ -108,19 +108,25 @@ const MovieTrailer: FC<ListContainerDataType> = ({
               setMethod={setDataEndPoint}
             />
           </View>
-          <FlatList
-            data={movieListData}
-            keyExtractor={(item, index) => `${item.id}-${index}`}
-            renderItem={listItem}
-            horizontal={true}
-            bounces={false}
-            onEndReachedThreshold={1}
-            onEndReached={() => pageLoading()}
-            ListFooterComponent={
-              <ActivityIndicator animating={fetchingState} />
-            }
-            ListFooterComponentStyle={styles.footerLoaderStyle}
-          />
+          {!fetchingState && movieListData.length === 0 ? (
+            <View style={styles.loadingStyle}>
+              <Image source={Icons.notFound} style={styles.image} />
+            </View>
+          ) : (
+            <FlatList
+              data={movieListData}
+              keyExtractor={(item, index) => `${item.id}-${index}`}
+              renderItem={listItem}
+              horizontal={true}
+              bounces={false}
+              onEndReachedThreshold={1}
+              onEndReached={() => pageLoading()}
+              ListFooterComponent={
+                <ActivityIndicator animating={fetchingState} />
+              }
+              ListFooterComponentStyle={styles.footerLoaderStyle}
+            />
+          )}
         </ImageBackground>
       ) : (
         <View />

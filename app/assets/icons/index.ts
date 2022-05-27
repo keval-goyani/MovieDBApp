@@ -12,4 +12,5 @@ export default {
   trailerIcon: require('./trailerIcon.png'),
   moviesIcon: require('./moviesIcon.png'),
   communityIcon: require('./communityIcon.png'),
+  notFound: require('./notFoundIcon.png'),
 };

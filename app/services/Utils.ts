@@ -4,6 +4,8 @@ import { ImmutableObject } from 'seamless-immutable';
 import {
   appConstants,
   DetailResponseGenerator,
+  genres,
+  ListItemDataType,
   MovieDetailsDataType,
   MovieResponseGenerator,
   strings,
@@ -83,4 +85,35 @@ export const getDetails = (
     movieType,
     directorName,
   };
+};
+
+const getGenreID = (query: string) => {
+  return genres.filter(
+    genre => genre?.name.toLowerCase() === query.toLowerCase(),
+  )[0]?.id;
+};
+
+const searchConditionCheck = (item: string, query: string) => {
+  return item?.toLowerCase().includes(query.toLowerCase());
+};
+
+export const searchMovie = (movieList: ListItemDataType[], query: string) => {
+  const genreId = getGenreID(query);
+
+  return movieList.filter(
+    ({
+      title,
+      original_name,
+      original_title,
+      name = '',
+      overview,
+      genre_ids,
+    }) =>
+      searchConditionCheck(title, query) ||
+      searchConditionCheck(original_title, query) ||
+      searchConditionCheck(original_name, query) ||
+      searchConditionCheck(name, query) ||
+      searchConditionCheck(overview, query) ||
+      genre_ids?.includes(genreId),
+  );
 };

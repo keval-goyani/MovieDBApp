@@ -5,6 +5,7 @@ import { alertMessage } from '../services/Utils';
 
 const { Types, Creators } = createActions({
   trendingDataRequest: ['payload'],
+  trendingSearchData: ['searchData'],
   trendingDataSuccess: ['data'],
   trendingDataFailure: ['error'],
 });
@@ -14,6 +15,7 @@ export default Creators;
 
 export const INITIAL_STATE: ImmutableObject<TrendingDataType> = Immutable({
   trending: [],
+  trendingSearch: [],
   trendingPage: 0,
   fetchingTrending: false,
   trendingFetchingError: false,
@@ -47,8 +49,16 @@ export const trendingDataFetchingFailure = (
   return state.merge({ fetchingTrending: false, trendingFetchingError: true });
 };
 
+export const trendingSearchData = (
+  state: ImmutableObject<TrendingDataType>,
+  { searchData }: MovieStoreDataType,
+) => {
+  return state.merge({ trendingSearch: searchData });
+};
+
 export const trendingReducer = createReducer(INITIAL_STATE, {
   [Types.TRENDING_DATA_REQUEST]: trendingRequest,
+  [Types.TRENDING_SEARCH_DATA]: trendingSearchData,
   [Types.TRENDING_DATA_SUCCESS]: trendingSuccess,
   [Types.TRENDING_DATA_FAILURE]: trendingDataFetchingFailure,
 });

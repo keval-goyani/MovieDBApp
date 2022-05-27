@@ -25,15 +25,17 @@ import {
   PopularDataType,
   RootState,
   RouteDataType,
+  SearchFunctionDataType,
+  SearchModalDataType,
+  TabBarIconDataType,
   TrailerDataType,
   TrendingDataType,
-  TabBarIconDataType,
 } from './appTypes';
 import navigationStrings from './navigationStrings';
-import { filterData, movieDetails } from './staticData';
+import { filterData, genres } from './staticData';
 import strings from './strings';
 
-export { appConstants, navigationStrings, filterData, movieDetails, strings };
+export { appConstants, navigationStrings, filterData, genres, strings };
 export type {
   AuthReduxDataType,
   AuthSagaDataType,
@@ -60,7 +62,9 @@ export type {
   PopularDataType,
   RootState,
   RouteDataType,
+  SearchFunctionDataType,
+  SearchModalDataType,
+  TabBarIconDataType,
   TrailerDataType,
   TrendingDataType,
-  TabBarIconDataType,
 };

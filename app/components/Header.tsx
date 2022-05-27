@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, Pressable, TouchableOpacity, View } from 'react-native';
 import {
   HeaderDataType,
   NavigationDataType,
@@ -8,8 +8,15 @@ import {
 } from '../constants';
 import styles from './styles/HeaderStyles';
 
-const Header: FC<HeaderDataType> = ({ leftIcon, logoIcon, rightIcon }) => {
+const Header: FC<HeaderDataType> = ({
+  leftIcon,
+  logoIcon,
+  rightIcon,
+  searchModal = false,
+  setSearchModal = () => {},
+}) => {
   const navigation: NavigationDataType = useNavigation();
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -20,7 +27,9 @@ const Header: FC<HeaderDataType> = ({ leftIcon, logoIcon, rightIcon }) => {
       </TouchableOpacity>
       <Image source={logoIcon} />
       {rightIcon ? (
-        <Image source={rightIcon} style={styles.rightIconStyle} />
+        <Pressable onPress={() => setSearchModal(!searchModal)}>
+          <Image source={rightIcon} style={styles.rightIconStyle} />
+        </Pressable>
       ) : (
         <View style={styles.rightIconStyle} />
       )}
