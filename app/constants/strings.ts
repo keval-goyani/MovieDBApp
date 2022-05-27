@@ -53,4 +53,6 @@ export default {
   movieScreen: 'MoviesScreen',
   trailersScreen: 'TrailersScreen',
   communityScreen: 'CommunityScreen',
+  cancel: 'Cancel',
+  search: 'Search',
 };
