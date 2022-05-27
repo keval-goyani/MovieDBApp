@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
   },
   loadingStyle: {
     height: verticalScale(300),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   card: {
     height: verticalScale(184),
@@ -92,6 +94,11 @@ const styles = StyleSheet.create({
     marginRight: verticalScale(5),
     height: verticalScale(225),
     justifyContent: 'center',
+  },
+  image: {
+    height: verticalScale(270),
+    width: horizontalScale(330),
+    marginBottom: verticalScale(20),
   },
 });
 

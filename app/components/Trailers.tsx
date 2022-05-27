@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { Loader } from '../components';
 import { filterData, ListContainerDataType } from '../constants';
 import trailerAction from '../redux/TrailerRedux';
 import { listItem } from './MovieTrailers';
@@ -33,7 +34,7 @@ const Trailers: FC<ListContainerDataType> = ({ data, listPage }) => {
         bounces={false}
         onEndReachedThreshold={4}
         onEndReached={() => pageLoading()}
-        ListFooterComponent={ActivityIndicator}
+        ListFooterComponent={<Loader size="small" />}
         showsVerticalScrollIndicator={false}
       />
     </View>

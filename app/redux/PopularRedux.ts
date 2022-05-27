@@ -5,6 +5,8 @@ import { alertMessage } from '../services/Utils';
 
 const { Types, Creators } = createActions({
   whatsPopularDataRequest: ['payload'],
+  searchRequest: ['query'],
+  whatsPopularSearchData: ['searchData'],
   whatsPopularDataSuccess: ['data'],
   whatsPopularDataFailure: ['error'],
 });
@@ -14,6 +16,7 @@ export default Creators;
 
 export const INITIAL_STATE: ImmutableObject<PopularDataType> = Immutable({
   whatsPopularData: [],
+  whatsPopularSearch: [],
   whatsPopularPage: 0,
   fetchingWhatsPopularData: false,
   whatsPopularDataFetchingError: false,
@@ -52,8 +55,16 @@ export const popularDataFetchingFailure = (
   });
 };
 
+export const popularSearchData = (
+  state: ImmutableObject<PopularDataType>,
+  { searchData }: MovieStoreDataType,
+) => {
+  return state.merge({ whatsPopularSearch: searchData });
+};
+
 export const popularReducer = createReducer(INITIAL_STATE, {
   [Types.WHATS_POPULAR_DATA_REQUEST]: popularDataRequest,
   [Types.WHATS_POPULAR_DATA_SUCCESS]: popularDataSuccess,
+  [Types.WHATS_POPULAR_SEARCH_DATA]: popularSearchData,
   [Types.WHATS_POPULAR_DATA_FAILURE]: popularDataFetchingFailure,
 });
