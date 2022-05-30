@@ -1,7 +1,9 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Header, Movies } from '../../components';
+import { NavigationDataType } from '../../constants';
 import { freeMovieSelectors } from '../../redux/FreeMovieRedux';
 import { popularDataSelectors } from '../../redux/PopularRedux';
 import { trendingSelectors } from '../../redux/TrendingRedux';
@@ -19,13 +21,14 @@ const MoviesScreen = () => {
   const localData = [...whatsPopularData, ...freeToWatch, ...trending];
   const moviesData = localData.filter(movie => movie?.original_title);
   const paging = { whatsPopularPage, freeToWatchPage, trendingPage };
+  const navigation: NavigationDataType = useNavigation();
 
   return (
     <View style={styles.container}>
       <Header
         leftIcon={Icons.menuIcon}
         logoIcon={Icons.movieDbIcon}
-        rightIcon={Icons.searchIcon}
+        onPress={() => navigation.openDrawer()}
       />
       <Movies data={moviesData ?? []} listPage={paging} />
     </View>

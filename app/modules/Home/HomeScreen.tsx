@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +8,7 @@ import {
   MovieTrailer,
   SearchModal,
 } from '../../components';
-import { filterData, strings } from '../../constants';
+import { filterData, NavigationDataType, strings } from '../../constants';
 import { freeMovieSelectors } from '../../redux/FreeMovieRedux';
 import popularAction, { popularDataSelectors } from '../../redux/PopularRedux';
 import { trailerDataSelectors } from '../../redux/TrailerRedux';
@@ -16,6 +17,7 @@ import { Icons } from '../../theme';
 import styles from './styles/HomeScreenStyles';
 
 const HomeScreen = () => {
+  const navigation: NavigationDataType = useNavigation();
   const {
     whatsPopularSearch,
     whatsPopularData,
@@ -106,6 +108,7 @@ const HomeScreen = () => {
         rightIcon={Icons.searchIcon}
         searchModal={searchModal}
         setSearchModal={setSearchModal}
+        onPress={() => navigation.openDrawer()}
       />
       {searchModal && (
         <SearchModal

@@ -1,8 +1,14 @@
 import auth from '@react-native-firebase/auth';
+import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { Credentials, strings } from '../../constants';
+import {
+  Credentials,
+  NavigationScreenType,
+  navigationStrings,
+  strings,
+} from '../../constants';
 import authAction from '../../redux/AuthRedux';
 import { Icons, Metrics, styles as appStyles } from '../../theme';
 import { Form } from './components';
@@ -14,6 +20,7 @@ const SignUpScreen = () => {
     password: '',
   });
   const dispatch = useDispatch();
+  const navigation: NavigationScreenType = useNavigation();
   const { email, password } = registerCredentials;
   const behavior = Metrics.isAndroid ? 'height' : 'padding';
 
@@ -24,9 +31,14 @@ const SignUpScreen = () => {
         .then(userCredential =>
           dispatch(authAction.authRequest(userCredential.user)),
         )
-        .catch(e => e);
+        .catch(() => {
+          return (
+            dispatch(authAction.authFailure(strings.signUpError)),
+            navigation.navigate(navigationStrings.Login)
+          );
+        });
     }
-  }, [dispatch, email, password]);
+  }, [dispatch, email, navigation, password]);
 
   useEffect(() => {
     signUpHandler();
