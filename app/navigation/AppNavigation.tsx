@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { navigationStrings } from '../constants';
 import { DetailScreen, LoginScreen, SignUpScreen } from '../modules';
-import { TabRoutes } from '../navigation';
+import { DrawerRoutes } from '../navigation';
 import { authDataSelectors } from '../redux/AuthRedux';
 
 const Stack = createNativeStackNavigator();
@@ -17,8 +17,8 @@ const Routes = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {authenticated ? (
           <Stack.Screen
-            name={navigationStrings.HomeTab}
-            component={TabRoutes}
+            name={navigationStrings.HomeDrawer}
+            component={DrawerRoutes}
           />
         ) : (
           <>

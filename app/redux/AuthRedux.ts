@@ -7,6 +7,7 @@ const { Types, Creators } = createActions({
   authRequest: ['payload'],
   authSuccess: ['data'],
   authFailure: ['error'],
+  logout: [],
 });
 
 export const AuthTypes = Types;
@@ -49,8 +50,17 @@ const failure = (
   });
 };
 
+const signOut = (state: ImmutableObject<AuthStateDataType>) => {
+  return state.merge({
+    user: null,
+    authenticated: null,
+    error: null,
+  });
+};
+
 export const authReducer = createReducer(INITIAL_STATE, {
   [Types.AUTH_REQUEST]: request,
   [Types.AUTH_SUCCESS]: success,
   [Types.AUTH_FAILURE]: failure,
+  [Types.LOGOUT]: signOut,
 });

@@ -1,9 +1,16 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { FC, useEffect } from 'react';
 import { Image, ImageBackground, ScrollView, Text, View } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { useDispatch, useSelector } from 'react-redux';
 import { Header } from '../../components';
-import { appConstants, RouteDataType, strings } from '../../constants';
+import {
+  appConstants,
+  NavigationDataType,
+  navigationStrings,
+  RouteDataType,
+  strings,
+} from '../../constants';
 import detailAction, {
   detailDataSelectors,
 } from '../../redux/MovieDetailRedux';
@@ -20,6 +27,7 @@ const DetailScreen: FC<RouteDataType> = ({ route }) => {
       ? `${appConstants.moviePath}${id}${appConstants.apiKey}${appConstants.appendResponseOfCredit}`
       : `${appConstants.tvPath}${id}${appConstants.apiKey}${appConstants.appendResponseOfCredit}`;
   const dispatch = useDispatch();
+  const navigation: NavigationDataType = useNavigation();
   const { detailData } = useSelector(detailDataSelectors.getData);
   useEffect(() => {
     dispatch(detailAction.detailDataRequest(apiEndPoint));
@@ -38,7 +46,11 @@ const DetailScreen: FC<RouteDataType> = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Header leftIcon={Icons.backIcon} logoIcon={Icons.movieDbIcon} />
+      <Header
+        leftIcon={Icons.backIcon}
+        logoIcon={Icons.movieDbIcon}
+        onPress={() => navigation.navigate(navigationStrings.Home)}
+      />
       <ScrollView bounces={false}>
         <ImageBackground
           source={{

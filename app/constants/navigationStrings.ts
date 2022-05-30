@@ -7,4 +7,5 @@ export default {
   Trailers: 'Trailers',
   Movies: 'Movies',
   Community: 'Community',
+  HomeDrawer: 'HomeDrawer',
 };
