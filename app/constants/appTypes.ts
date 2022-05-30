@@ -237,10 +237,13 @@ export interface HeaderDataType {
   rightIcon?: ImageSourcePropType;
   searchModal?: boolean;
   setSearchModal?: Dispatch<React.SetStateAction<boolean>>;
+  onPress?: () => void;
 }
 
 export interface NavigationDataType {
   navigate: (screen: string, params?: { id: number; data: string }) => void;
+  openDrawer: () => void;
+  replace: (screenName: string) => void;
 }
 
 export interface DropDownDataType {
@@ -314,4 +317,12 @@ export interface LoaderDataType {
   animating?: boolean;
   style?: StyleProp<ViewStyle>;
   color?: string;
+}
+
+export interface CustomDrawerDataType {
+  descriptors?: object;
+  navigation: {
+    navigate: (screen: string) => void;
+  };
+  state?: object;
 }
