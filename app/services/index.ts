@@ -1,6 +1,12 @@
 import { getPopularMovieData } from './Api';
 import immutablePersistenceTransform from './immutablePersistenceTransform';
-import { alertMessage, apiConfig, getDetails, getError } from './Utils';
+import {
+  alertMessage,
+  apiConfig,
+  getDetails,
+  getError,
+  searchMovie,
+} from './Utils';
 
 export {
   immutablePersistenceTransform,
@@ -9,4 +15,5 @@ export {
   getDetails,
   getError,
   getPopularMovieData,
+  searchMovie,
 };
