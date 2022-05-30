@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { useDispatch } from 'react-redux';
-import { DropDownMenu } from '../components';
+import { DropDownMenu, Loader } from '../components';
 import {
   appConstants,
   ListContainerDataType,
@@ -145,17 +145,25 @@ const ListContainer: FC<ListContainerDataType> = ({
               setMethod={setDataEndPoint}
             />
           </View>
-          <FlatList
-            data={movieListData}
-            keyExtractor={(item, index) => `${item.id}-${index}`}
-            renderItem={listItem}
-            horizontal={true}
-            bounces={false}
-            onEndReachedThreshold={1}
-            onEndReached={() => pageLoading()}
-            ListFooterComponent={<ActivityIndicator size="small" />}
-            ListFooterComponentStyle={styles.footerLoaderStyle}
-          />
+          {!fetchingState && movieListData.length === 0 ? (
+            <View style={styles.loadingStyle}>
+              <Image source={Icons.notFound} style={styles.image} />
+            </View>
+          ) : (
+            <FlatList
+              data={movieListData}
+              keyExtractor={(item, index) => `${item.id}-${index}`}
+              renderItem={listItem}
+              horizontal
+              bounces={false}
+              onEndReachedThreshold={1}
+              onEndReached={() => pageLoading()}
+              ListFooterComponent={
+                <Loader size="small" animating={fetchingState} />
+              }
+              ListFooterComponentStyle={styles.footerLoaderStyle}
+            />
+          )}
         </View>
       ) : (
         <View />

@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
   },
   loadingStyle: {
     height: verticalScale(300),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: verticalScale(10),
   },
   listDataStyle: {
     marginVertical: verticalScale(10),
@@ -78,6 +81,12 @@ const styles = StyleSheet.create({
     marginRight: horizontalScale(5),
     height: verticalScale(225),
     justifyContent: 'center',
+  },
+  image: {
+    height: verticalScale(300),
+    width: horizontalScale(330),
+    marginRight: horizontalScale(10),
+    marginTop: verticalScale(20),
   },
 });
 

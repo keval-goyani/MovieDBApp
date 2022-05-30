@@ -297,3 +297,9 @@ export interface SearchFunctionDataType {
   query: string;
   type: string;
 }
+
+export interface LoaderDataType {
+  size: string | number;
+  animating?: boolean;
+  style?: StyleProp<ViewStyle>;
+}

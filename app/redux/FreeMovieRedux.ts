@@ -5,6 +5,7 @@ import { alertMessage } from '../services/Utils';
 
 const { Types, Creators } = createActions({
   freeToWatchDataRequest: ['payload'],
+  freeToWatchSearchData: ['searchData'],
   freeToWatchDataSuccess: ['data'],
   freeToWatchDataFailure: ['error'],
 });
@@ -14,6 +15,7 @@ export default Creators;
 
 export const INITIAL_STATE: ImmutableObject<FreeMovieDataType> = Immutable({
   freeToWatch: [],
+  freeToWatchSearch: [],
   freeToWatchPage: 0,
   fetchingFreeToWatch: false,
   freeToWatchFetchingError: false,
@@ -51,8 +53,16 @@ export const freeWatchDataFetchingFailure = (
   });
 };
 
+export const freeToWatchSearchData = (
+  state: ImmutableObject<FreeMovieDataType>,
+  { searchData }: MovieStoreDataType,
+) => {
+  return state.merge({ freeToWatchSearch: searchData });
+};
+
 export const freeMovieReducer = createReducer(INITIAL_STATE, {
   [Types.FREE_TO_WATCH_DATA_REQUEST]: freeWatchDataRequest,
+  [Types.FREE_TO_WATCH_SEARCH_DATA]: freeToWatchSearchData,
   [Types.FREE_TO_WATCH_DATA_SUCCESS]: freeWatchDataSuccess,
   [Types.FREE_TO_WATCH_DATA_FAILURE]: freeWatchDataFetchingFailure,
 });
