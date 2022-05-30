@@ -1,31 +1,19 @@
-import React, { FC, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { FC } from 'react';
 import { FlatList, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
 import { Loader } from '../components';
-import { filterData, ListContainerDataType } from '../constants';
-import trailerAction from '../redux/TrailerRedux';
+import { MovieDataType, NavigationDataType } from '../constants';
+import popularAction from '../redux/PopularRedux';
 import { Color } from '../theme';
-import { listItem } from './MovieTrailers';
-import styles from './styles/TrailersStyles';
+import { listItem } from './ListContainer';
+import styles from './styles/MoviesStyles';
 
-const Trailers: FC<ListContainerDataType> = ({ data, listPage }) => {
-  const { trailerFilterData } = filterData;
-  const dispatch = useDispatch();
-  const [dataEndPoint, setDataEndPoint] = useState<string>(
-    trailerFilterData[0].endPoint,
-  );
+const Movies: FC<MovieDataType> = ({ data }) => {
   const movieListData = [...data];
-
-  const pageLoading = () => {
-    setDataEndPoint(dataEndPoint);
-    dispatch(
-      trailerAction.latestTrailerDataRequest({
-        urlMainPath: dataEndPoint,
-        pageNo: listPage + 1,
-      }),
-    );
-  };
+  const navigation: NavigationDataType = useNavigation();
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -40,15 +28,16 @@ const Trailers: FC<ListContainerDataType> = ({ data, listPage }) => {
           Color.blue,
         ]}>
         <FlatList
-          contentContainerStyle={styles.listItem}
+          contentContainerStyle={styles.listStyle}
+          numColumns={2}
           data={movieListData}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={listItem}
+          renderItem={item => listItem(item, navigation)}
+          showsVerticalScrollIndicator={false}
           bounces={false}
           onEndReachedThreshold={4}
-          onEndReached={() => pageLoading()}
+          onEndReached={() => dispatch(popularAction.moviesPaginationRequest())}
           ListFooterComponent={<Loader size="small" color={Color.white} />}
-          showsVerticalScrollIndicator={false}
           ListFooterComponentStyle={styles.footerLoaderStyle}
         />
       </LinearGradient>
@@ -56,4 +45,4 @@ const Trailers: FC<ListContainerDataType> = ({ data, listPage }) => {
   );
 };
 
-export default Trailers;
+export default Movies;

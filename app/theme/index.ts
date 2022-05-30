@@ -1,4 +1,4 @@
-import { Icons } from '../assets';
+import { Icons, Images } from '../assets';
 import { styles } from './ApplicationStyles';
 import { Color } from './Color';
 import {
@@ -11,6 +11,7 @@ import {
 export {
   Color,
   Icons,
+  Images,
   horizontalScale,
   verticalScale,
   moderateScale,

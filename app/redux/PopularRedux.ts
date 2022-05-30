@@ -6,6 +6,7 @@ import { alertMessage } from '../services/Utils';
 const { Types, Creators } = createActions({
   whatsPopularDataRequest: ['payload'],
   searchRequest: ['query'],
+  moviesPaginationRequest: [''],
   whatsPopularSearchData: ['searchData'],
   whatsPopularDataSuccess: ['data'],
   whatsPopularDataFailure: ['error'],
