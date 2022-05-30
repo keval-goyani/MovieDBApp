@@ -1,4 +1,5 @@
 import Routes from './AppNavigation';
+import DrawerRoutes from './DrawerRoutes';
 import TabRoutes from './TabRoutes';
 
-export { Routes, TabRoutes };
+export { DrawerRoutes, Routes, TabRoutes };

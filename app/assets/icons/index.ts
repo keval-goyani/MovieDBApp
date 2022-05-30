@@ -14,4 +14,8 @@ export default {
   communityIcon: require('./communityIcon.png'),
   notFound: require('./notFoundIcon.png'),
   comingSoon: require('./comingSoon.png'),
+  logout: require('./logout.png'),
+  trending: require('./trending.png'),
+  tv: require('./tv.png'),
+  avatar: require('./user.png'),
 };
