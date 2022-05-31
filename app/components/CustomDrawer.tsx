@@ -13,10 +13,7 @@ function CustomDrawer(props: CustomDrawerDataType) {
   const { user } = useSelector(authDataSelectors.getData);
 
   return (
-    <DrawerContentScrollView
-      {...props}
-      style={styles.scrollView}
-      scrollEnabled={false}>
+    <DrawerContentScrollView {...props} style={styles.scrollView}>
       <View style={{ ...styles.container, ...styles.avatarView }}>
         <Image source={Icons.avatar} style={styles.avatar} />
         <Text style={styles.userEmail}>{user}</Text>
