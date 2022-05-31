@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 import {
-  FlatList,
   Image,
   ImageBackground,
   ListRenderItemInfo,
@@ -9,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { DropDownMenu, Loader } from '../components';
+import { DropDownMenu, List } from '../components';
 import {
   appConstants,
   filterData,
@@ -21,7 +20,9 @@ import trailerAction from '../redux/TrailerRedux';
 import { Icons } from '../theme';
 import styles from './styles/MovieTrailersStyles';
 
-export const listItem = ({ item }: ListRenderItemInfo<ListItemDataType>) => {
+export const trailerListItem = ({
+  item,
+}: ListRenderItemInfo<ListItemDataType>) => {
   const trailerTitle = item?.title ?? item?.name;
 
   return (
@@ -70,13 +71,14 @@ const MovieTrailer: FC<ListContainerDataType> = ({
   fetchingState,
   errorState,
   listPage,
+  searchModal,
 }) => {
   const { trailerFilterData } = filterData;
   const [dataEndPoint, setDataEndPoint] = useState<string>(
     trailerFilterData[0].endPoint,
   );
   const dispatch = useDispatch();
-  const movieListData = [...data];
+  const trailerListData = [...data];
 
   const pageLoading = () => {
     dispatch(
@@ -89,9 +91,7 @@ const MovieTrailer: FC<ListContainerDataType> = ({
 
   return (
     <>
-      {fetchingState && movieListData.length === 0 ? (
-        <Loader size="large" style={styles.loadingStyle} />
-      ) : !errorState ? (
+      {!errorState ? (
         <ImageBackground
           source={{
             uri: appConstants.movieTrailerBackgroundImage,
@@ -107,25 +107,14 @@ const MovieTrailer: FC<ListContainerDataType> = ({
               setMethod={setDataEndPoint}
             />
           </View>
-          {!fetchingState && movieListData.length === 0 ? (
-            <View style={styles.loadingStyle}>
-              <Image source={Icons.notFound} style={styles.image} />
-            </View>
-          ) : (
-            <FlatList
-              data={movieListData}
-              keyExtractor={(item, index) => `${item.id}-${index}`}
-              renderItem={listItem}
-              horizontal={true}
-              bounces={false}
-              onEndReachedThreshold={1}
-              onEndReached={() => pageLoading()}
-              ListFooterComponent={
-                <Loader size="small" animating={fetchingState} />
-              }
-              ListFooterComponentStyle={styles.footerLoaderStyle}
-            />
-          )}
+          <List
+            fetching={fetchingState}
+            listData={trailerListData}
+            searchModal={searchModal}
+            pageHandler={pageLoading}
+            footerStyle={styles.footerLoaderStyle}
+            listType={strings.latestTrailers}
+          />
         </ImageBackground>
       ) : (
         <View />

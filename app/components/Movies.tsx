@@ -3,12 +3,11 @@ import React, { FC } from 'react';
 import { FlatList, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
-import { Loader } from '../components';
+import { Loader, movieListItem } from '../components';
 import { MovieDataType, NavigationDataType } from '../constants';
 import popularAction from '../redux/PopularRedux';
 import { getUniqueMovies } from '../services';
 import { Color } from '../theme';
-import { listItem } from './ListContainer';
 import styles from './styles/MoviesStyles';
 
 const Movies: FC<MovieDataType> = ({ data }) => {
@@ -34,7 +33,7 @@ const Movies: FC<MovieDataType> = ({ data }) => {
           numColumns={2}
           data={uniqueMovies}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={item => listItem(item, navigation)}
+          renderItem={item => movieListItem(item, navigation)}
           showsVerticalScrollIndicator={false}
           bounces={false}
           onEndReachedThreshold={4}

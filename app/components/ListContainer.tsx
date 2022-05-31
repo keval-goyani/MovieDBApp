@@ -1,8 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { FC, useState } from 'react';
 import {
-  ActivityIndicator,
-  FlatList,
   Image,
   ListRenderItemInfo,
   Text,
@@ -11,7 +8,7 @@ import {
 } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { useDispatch } from 'react-redux';
-import { DropDownMenu, Loader } from '../components';
+import { DropDownMenu, List } from '../components';
 import {
   appConstants,
   ListContainerDataType,
@@ -26,7 +23,7 @@ import trendingAction from '../redux/TrendingRedux';
 import { Color, Icons, moderateScale } from '../theme';
 import styles from './styles/ListContainerStyles';
 
-export const listItem = (
+export const movieListItem = (
   { item }: ListRenderItemInfo<ListItemDataType>,
   navigation: NavigationDataType,
 ) => {
@@ -95,10 +92,10 @@ const ListContainer: FC<ListContainerDataType> = ({
   fetchingState,
   errorState,
   listPage,
+  searchModal,
 }) => {
   const [dataEndPoint, setDataEndPoint] = useState<string>('');
   const dispatch = useDispatch();
-  const navigation: NavigationDataType = useNavigation();
   const movieListData = [...data];
 
   const pageLoading = () => {
@@ -132,9 +129,7 @@ const ListContainer: FC<ListContainerDataType> = ({
 
   return (
     <>
-      {fetchingState && movieListData.length === 0 ? (
-        <ActivityIndicator size="large" style={styles.loadingStyle} />
-      ) : !errorState ? (
+      {!errorState ? (
         <View style={styles.movieListContainer}>
           <View style={styles.movieListTitleContainer}>
             <Text style={styles.fontStyle}>{title}</Text>
@@ -145,25 +140,13 @@ const ListContainer: FC<ListContainerDataType> = ({
               setMethod={setDataEndPoint}
             />
           </View>
-          {!fetchingState && movieListData.length === 0 ? (
-            <View style={styles.loadingStyle}>
-              <Image source={Icons.notFound} style={styles.image} />
-            </View>
-          ) : (
-            <FlatList
-              data={movieListData}
-              keyExtractor={(item, index) => `${item.id}-${index}`}
-              renderItem={item => listItem(item, navigation)}
-              horizontal
-              bounces={false}
-              onEndReachedThreshold={1}
-              onEndReached={() => pageLoading()}
-              ListFooterComponent={
-                <Loader size="small" animating={fetchingState} />
-              }
-              ListFooterComponentStyle={styles.footerLoaderStyle}
-            />
-          )}
+          <List
+            fetching={fetchingState}
+            listData={movieListData}
+            searchModal={searchModal}
+            pageHandler={pageLoading}
+            footerStyle={styles.footerLoaderStyle}
+          />
         </View>
       ) : (
         <View />

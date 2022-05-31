@@ -2,11 +2,10 @@ import React, { FC, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
-import { Loader } from '../components';
+import { Loader, trailerListItem } from '../components';
 import { filterData, ListContainerDataType } from '../constants';
 import trailerAction from '../redux/TrailerRedux';
 import { Color } from '../theme';
-import { listItem } from './MovieTrailers';
 import styles from './styles/TrailersStyles';
 
 const Trailers: FC<ListContainerDataType> = ({ data, listPage }) => {
@@ -43,7 +42,7 @@ const Trailers: FC<ListContainerDataType> = ({ data, listPage }) => {
           contentContainerStyle={styles.listItem}
           data={movieListData}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={listItem}
+          renderItem={trailerListItem}
           bounces={false}
           onEndReachedThreshold={4}
           onEndReached={() => pageLoading()}

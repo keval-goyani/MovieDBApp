@@ -169,6 +169,16 @@ export interface ListContainerDataType {
   fetchingState?: boolean;
   errorState?: boolean;
   listPage: number;
+  searchModal: boolean;
+}
+
+export interface ListDataType {
+  fetching?: boolean;
+  listData: Array<ListItemDataType>;
+  searchModal: boolean;
+  pageHandler: () => void;
+  footerStyle: StyleProp<ViewStyle>;
+  listType?: string;
 }
 
 export interface MovieDataType {
@@ -244,6 +254,7 @@ export interface NavigationDataType {
   navigate: (screen: string, params?: { id: number; data: string }) => void;
   openDrawer: () => void;
   replace: (screenName: string) => void;
+  goBack: () => void;
 }
 
 export interface DropDownDataType {

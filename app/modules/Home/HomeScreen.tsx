@@ -126,6 +126,7 @@ const HomeScreen = () => {
           fetchingState={fetchingWhatsPopularData}
           errorState={whatsPopularDataFetchingError}
           listPage={whatsPopularPage}
+          searchModal={searchModal}
         />
         <ListContainer
           title={strings.freeToWatch}
@@ -134,6 +135,7 @@ const HomeScreen = () => {
           fetchingState={fetchingFreeToWatch}
           errorState={freeToWatchFetchingError}
           listPage={freeToWatchPage}
+          searchModal={searchModal}
         />
         <MovieTrailer
           title={strings.latestTrailers}
@@ -142,6 +144,7 @@ const HomeScreen = () => {
           fetchingState={fetchingLatestTrailers}
           errorState={latestTrailersFetchingError}
           listPage={latestTrailersPage}
+          searchModal={searchModal}
         />
         <ListContainer
           title={strings.trending}
@@ -150,6 +153,7 @@ const HomeScreen = () => {
           fetchingState={fetchingTrending}
           errorState={trendingFetchingError}
           listPage={trendingPage}
+          searchModal={searchModal}
         />
       </ScrollView>
     </View>
