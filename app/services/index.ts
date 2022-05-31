@@ -5,6 +5,7 @@ import {
   apiConfig,
   getDetails,
   getError,
+  getUniqueMovies,
   searchMovie,
 } from './Utils';
 
@@ -16,4 +17,5 @@ export {
   getError,
   getPopularMovieData,
   searchMovie,
+  getUniqueMovies,
 };

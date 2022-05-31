@@ -33,6 +33,7 @@ export const popularDataRequest = (state: ImmutableObject<PopularDataType>) => {
     whatsPopularDataFetchingError: false,
   });
 };
+
 export const popularDataSuccess = (
   state: ImmutableObject<PopularDataType>,
   { data: { movieData, page } }: MovieStoreDataType,

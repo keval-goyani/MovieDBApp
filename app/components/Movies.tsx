@@ -6,12 +6,14 @@ import { useDispatch } from 'react-redux';
 import { Loader } from '../components';
 import { MovieDataType, NavigationDataType } from '../constants';
 import popularAction from '../redux/PopularRedux';
+import { getUniqueMovies } from '../services';
 import { Color } from '../theme';
 import { listItem } from './ListContainer';
 import styles from './styles/MoviesStyles';
 
 const Movies: FC<MovieDataType> = ({ data }) => {
   const movieListData = [...data];
+  const uniqueMovies = getUniqueMovies(movieListData);
   const navigation: NavigationDataType = useNavigation();
   const dispatch = useDispatch();
 
@@ -30,7 +32,7 @@ const Movies: FC<MovieDataType> = ({ data }) => {
         <FlatList
           contentContainerStyle={styles.listStyle}
           numColumns={2}
-          data={movieListData}
+          data={uniqueMovies}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={item => listItem(item, navigation)}
           showsVerticalScrollIndicator={false}
