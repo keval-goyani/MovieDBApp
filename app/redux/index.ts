@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { authReducer } from './AuthRedux';
+import { selectTabReducer } from './DrawerSelectRedux';
 import { freeMovieReducer } from './FreeMovieRedux';
 import { detailReducer } from './MovieDetailRedux';
 import { popularReducer } from './PopularRedux';
@@ -13,4 +14,5 @@ export default combineReducers({
   trailerData: trailerReducer,
   trendingData: trendingReducer,
   authData: authReducer,
+  selectTab: selectTabReducer,
 });

@@ -11,6 +11,7 @@ import {
   DetailResponseGenerator,
   DetailStateDataType,
   DetailStoreDataType,
+  DrawerStateDataType,
   DropDownDataType,
   FormTypeProps,
   FreeMovieDataType,
@@ -87,4 +88,5 @@ export type {
   TabBarIconDataType,
   TrailerDataType,
   TrendingDataType,
+  DrawerStateDataType,
 };

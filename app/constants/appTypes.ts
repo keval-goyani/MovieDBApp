@@ -305,6 +305,13 @@ export interface AuthStateDataType {
   authenticated: null | boolean;
   error: null | boolean;
 }
+export interface DrawerStateDataType {
+  setActiveTab: selectDataTypes;
+}
+
+export interface selectDataTypes {
+  payload: string;
+}
 
 export interface TabBarIconDataType {
   focused: boolean;
@@ -333,7 +340,7 @@ export interface LoaderDataType {
 export interface CustomDrawerDataType {
   descriptors?: object;
   navigation: {
-    navigate: (screen: string) => void;
+    navigate: (routeName: string, { screen }: { screen: string }) => void;
   };
   state?: object;
 }

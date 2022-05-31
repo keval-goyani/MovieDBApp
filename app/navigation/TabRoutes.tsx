@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { TabBarIcon } from '../components';
 import { navigationStrings } from '../constants';
 import {
@@ -8,13 +9,16 @@ import {
   MoviesScreen,
   TrailersScreen,
 } from '../modules';
+import selectedAction from '../redux/DrawerSelectRedux';
 import { Color, Icons } from '../theme';
 
 const Tab = createBottomTabNavigator();
 
 const TabRoutes = () => {
+  const dispatch = useDispatch();
   return (
     <Tab.Navigator
+      initialRouteName={navigationStrings.Home}
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
@@ -25,6 +29,11 @@ const TabRoutes = () => {
         },
       }}>
       <Tab.Screen
+        listeners={{
+          tabPress: () => {
+            dispatch(selectedAction.selected(navigationStrings.Home));
+          },
+        }}
         name={navigationStrings.Home}
         component={HomeScreen}
         options={{
@@ -34,6 +43,11 @@ const TabRoutes = () => {
         }}
       />
       <Tab.Screen
+        listeners={{
+          tabPress: () => {
+            dispatch(selectedAction.selected(navigationStrings.Trailers));
+          },
+        }}
         name={navigationStrings.Trailers}
         component={TrailersScreen}
         options={{
@@ -43,6 +57,11 @@ const TabRoutes = () => {
         }}
       />
       <Tab.Screen
+        listeners={{
+          tabPress: () => {
+            dispatch(selectedAction.selected(navigationStrings.Movies));
+          },
+        }}
         name={navigationStrings.Movies}
         component={MoviesScreen}
         options={{
@@ -52,6 +71,11 @@ const TabRoutes = () => {
         }}
       />
       <Tab.Screen
+        listeners={{
+          tabPress: () => {
+            dispatch(selectedAction.selected(navigationStrings.Community));
+          },
+        }}
         name={navigationStrings.Community}
         component={CommunityScreen}
         options={{
