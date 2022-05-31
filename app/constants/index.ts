@@ -11,6 +11,7 @@ import {
   DetailResponseGenerator,
   DetailStateDataType,
   DetailStoreDataType,
+  DrawerStateDataType,
   DropDownDataType,
   FormTypeProps,
   FreeMovieDataType,
@@ -91,4 +92,5 @@ export type {
   TrendingDataType,
   LoadingStateProps,
   SkeletonProps,
+  DrawerStateDataType,
 };
