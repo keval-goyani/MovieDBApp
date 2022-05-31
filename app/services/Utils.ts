@@ -117,3 +117,11 @@ export const searchMovie = (movieList: ListItemDataType[], query: string) => {
       genre_ids?.includes(genreId),
   );
 };
+
+export const getUniqueMovies = (movies: ListItemDataType[]) => {
+  const uniqueMovies = [
+    ...new Map(movies.map(item => [item.id, item])).values(),
+  ];
+
+  return uniqueMovies;
+};

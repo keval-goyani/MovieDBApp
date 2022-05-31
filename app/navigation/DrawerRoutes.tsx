@@ -13,7 +13,7 @@ const DrawerRoutes = () => {
       screenOptions={{
         headerShown: false,
         drawerType: 'front',
-        swipeEnabled: false,
+        keyboardDismissMode: 'on-drag',
       }}
       backBehavior="history"
       drawerContent={props => <CustomDrawer {...props} />}>
