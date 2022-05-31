@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     height: verticalScale(25),
     width: horizontalScale(25),
     tintColor: Color.lightBlue,
+    resizeMode: 'contain',
   },
   userEmail: {
     color: Color.blueGreen,
