@@ -8,6 +8,7 @@ import MovieTrailer from './MovieTrailers';
 import SearchModal from './SearchModal';
 import TabBarIcon from './TabBarIcon';
 import Trailers from './Trailers';
+import UsersList from './UsersList';
 
 export {
   CustomLoader,
@@ -20,4 +21,5 @@ export {
   Loader,
   Trailers,
   Movies,
+  UsersList,
 };

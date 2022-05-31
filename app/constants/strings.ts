@@ -60,4 +60,6 @@ export default {
   tvShows: 'TV Shows',
   people: 'People',
   logout: 'Logout',
+  chatScreen: 'Chat Screen',
+  lastMesage: 'last Message here for the information',
 };

@@ -35,10 +35,17 @@ import {
   TrendingDataType,
 } from './appTypes';
 import navigationStrings from './navigationStrings';
-import { filterData, genres } from './staticData';
+import { filterData, genres, usersList } from './staticData';
 import strings from './strings';
 
-export { appConstants, navigationStrings, filterData, genres, strings };
+export {
+  appConstants,
+  navigationStrings,
+  filterData,
+  genres,
+  strings,
+  usersList,
+};
 export type {
   AuthReduxDataType,
   AuthSagaDataType,
