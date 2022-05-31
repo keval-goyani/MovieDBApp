@@ -17,6 +17,7 @@ const TabRoutes = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: Color.lightBlue,
         tabBarInactiveTintColor: Color.white,
         tabBarStyle: {
