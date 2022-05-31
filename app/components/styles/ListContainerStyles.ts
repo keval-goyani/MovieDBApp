@@ -25,10 +25,12 @@ const styles = StyleSheet.create({
     backgroundColor: Color.darkBlue,
   },
   loadingStyle: {
-    height: verticalScale(300),
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: verticalScale(10),
+  },
+  contentLoader: {
+    marginTop: verticalScale(10),
   },
   listDataStyle: {
     marginVertical: verticalScale(10),

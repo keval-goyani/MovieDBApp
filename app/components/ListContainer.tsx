@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, useState } from 'react';
 import {
-  ActivityIndicator,
   FlatList,
   Image,
   ListRenderItemInfo,
@@ -11,7 +10,7 @@ import {
 } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { useDispatch } from 'react-redux';
-import { DropDownMenu, Loader } from '../components';
+import { CustomLoader, DropDownMenu, Loader } from '../components';
 import {
   appConstants,
   ListContainerDataType,
@@ -95,6 +94,7 @@ const ListContainer: FC<ListContainerDataType> = ({
   fetchingState,
   errorState,
   listPage,
+  searchModal,
 }) => {
   const [dataEndPoint, setDataEndPoint] = useState<string>('');
   const dispatch = useDispatch();
@@ -132,9 +132,7 @@ const ListContainer: FC<ListContainerDataType> = ({
 
   return (
     <>
-      {fetchingState && movieListData.length === 0 ? (
-        <ActivityIndicator size="large" style={styles.loadingStyle} />
-      ) : !errorState ? (
+      {!errorState ? (
         <View style={styles.movieListContainer}>
           <View style={styles.movieListTitleContainer}>
             <Text style={styles.fontStyle}>{title}</Text>
@@ -145,10 +143,16 @@ const ListContainer: FC<ListContainerDataType> = ({
               setMethod={setDataEndPoint}
             />
           </View>
-          {!fetchingState && movieListData.length === 0 ? (
-            <View style={styles.loadingStyle}>
-              <Image source={Icons.notFound} style={styles.image} />
-            </View>
+          {fetchingState === false && movieListData.length === 0 ? (
+            searchModal === true ? (
+              <View style={styles.loadingStyle}>
+                <Image source={Icons.notFound} style={styles.image} />
+              </View>
+            ) : (
+              <View style={styles.contentLoader}>
+                <CustomLoader />
+              </View>
+            )
           ) : (
             <FlatList
               data={movieListData}
@@ -158,9 +162,7 @@ const ListContainer: FC<ListContainerDataType> = ({
               bounces={false}
               onEndReachedThreshold={1}
               onEndReached={() => pageLoading()}
-              ListFooterComponent={
-                <Loader size="small" animating={fetchingState} />
-              }
+              ListFooterComponent={<Loader size="small" />}
               ListFooterComponentStyle={styles.footerLoaderStyle}
             />
           )}

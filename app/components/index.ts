@@ -1,3 +1,4 @@
+import CustomLoader from './CustomLoader';
 import DropDownMenu from './DropDownMenu';
 import Header from './Header';
 import ListContainer from './ListContainer';
@@ -9,6 +10,7 @@ import TabBarIcon from './TabBarIcon';
 import Trailers from './Trailers';
 
 export {
+  CustomLoader,
   DropDownMenu,
   Header,
   ListContainer,

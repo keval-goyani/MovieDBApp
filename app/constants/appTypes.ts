@@ -169,6 +169,7 @@ export interface ListContainerDataType {
   fetchingState?: boolean;
   errorState?: boolean;
   listPage: number;
+  searchModal: boolean;
 }
 
 export interface MovieDataType {
@@ -244,6 +245,7 @@ export interface NavigationDataType {
   navigate: (screen: string, params?: { id: number; data: string }) => void;
   openDrawer: () => void;
   replace: (screenName: string) => void;
+  goBack: () => void;
 }
 
 export interface DropDownDataType {

@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  contentLoader: {
+    marginTop: verticalScale(10),
+  },
   card: {
     height: verticalScale(184),
     width: horizontalScale(300),

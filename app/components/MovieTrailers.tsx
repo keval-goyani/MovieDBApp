@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { DropDownMenu, Loader } from '../components';
+import { CustomLoader, DropDownMenu, Loader } from '../components';
 import {
   appConstants,
   filterData,
@@ -70,6 +70,7 @@ const MovieTrailer: FC<ListContainerDataType> = ({
   fetchingState,
   errorState,
   listPage,
+  searchModal,
 }) => {
   const { trailerFilterData } = filterData;
   const [dataEndPoint, setDataEndPoint] = useState<string>(
@@ -89,9 +90,7 @@ const MovieTrailer: FC<ListContainerDataType> = ({
 
   return (
     <>
-      {fetchingState && movieListData.length === 0 ? (
-        <Loader size="large" style={styles.loadingStyle} />
-      ) : !errorState ? (
+      {!errorState ? (
         <ImageBackground
           source={{
             uri: appConstants.movieTrailerBackgroundImage,
@@ -108,9 +107,15 @@ const MovieTrailer: FC<ListContainerDataType> = ({
             />
           </View>
           {!fetchingState && movieListData.length === 0 ? (
-            <View style={styles.loadingStyle}>
-              <Image source={Icons.notFound} style={styles.image} />
-            </View>
+            searchModal === true ? (
+              <View style={styles.loadingStyle}>
+                <Image source={Icons.notFound} style={styles.image} />
+              </View>
+            ) : (
+              <View style={styles.contentLoader}>
+                <CustomLoader />
+              </View>
+            )
           ) : (
             <FlatList
               data={movieListData}
@@ -120,9 +125,7 @@ const MovieTrailer: FC<ListContainerDataType> = ({
               bounces={false}
               onEndReachedThreshold={1}
               onEndReached={() => pageLoading()}
-              ListFooterComponent={
-                <Loader size="small" animating={fetchingState} />
-              }
+              ListFooterComponent={<Loader size="small" />}
               ListFooterComponentStyle={styles.footerLoaderStyle}
             />
           )}
