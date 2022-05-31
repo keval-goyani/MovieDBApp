@@ -1,3 +1,4 @@
+import auth from '@react-native-firebase/auth';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
@@ -51,6 +52,7 @@ function CustomDrawer(props: CustomDrawerDataType) {
       <DrawerItem
         label={strings.logout}
         onPress={() => {
+          auth().signOut();
           return dispatch(authAction.logout());
         }}
         icon={() => <Image source={Icons.logout} style={styles.icon} />}
