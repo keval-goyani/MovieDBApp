@@ -10,6 +10,7 @@ import MovieTrailer, { trailerListItem } from './MovieTrailers';
 import SearchModal from './SearchModal';
 import TabBarIcon from './TabBarIcon';
 import Trailers from './Trailers';
+import UsersList from './UsersList';
 
 export {
   CustomLoader,
@@ -26,4 +27,5 @@ export {
   movieListItem,
   Trailers,
   trailerListItem,
+  UsersList,
 };

@@ -150,3 +150,16 @@ export const genres = [
     name: 'Western',
   },
 ];
+
+export const usersList = [
+  { id: 0, email: 'user1@gmail.com', day: 'today' },
+  { id: 1, email: 'user2@gmail.com', day: 'today' },
+  { id: 3, email: 'user3@gmail.com', day: 'yesterday' },
+  { id: 4, email: 'user4@gmail.com', day: 'yesterday' },
+  { id: 5, email: 'user5@gmail.com', day: 'yesterday' },
+  { id: 6, email: 'user6@gmail.com', day: '31-05-2022' },
+  { id: 7, email: 'user7@gmail.com', day: '25-05-2022' },
+  { id: 8, email: 'user8@gmail.com', day: '25-05-2022' },
+  { id: 9, email: 'user9@gmail.com', day: '15-05-2022' },
+  { id: 10, email: 'user10@gmail.com', day: '01-05-2022' },
+];
