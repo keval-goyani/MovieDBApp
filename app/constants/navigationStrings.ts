@@ -8,4 +8,5 @@ export default {
   Movies: 'Movies',
   Community: 'Community',
   HomeDrawer: 'HomeDrawer',
+  Chat: 'Chat',
 };

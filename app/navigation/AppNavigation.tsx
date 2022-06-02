@@ -4,7 +4,12 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { navigationStrings } from '../constants';
-import { DetailScreen, LoginScreen, SignUpScreen } from '../modules';
+import {
+  ChatScreen,
+  DetailScreen,
+  LoginScreen,
+  SignUpScreen,
+} from '../modules';
 import { DrawerRoutes } from '../navigation';
 import { authDataSelectors } from '../redux/AuthRedux';
 
@@ -38,6 +43,7 @@ const Routes = () => {
             name={navigationStrings.Details}
             component={DetailScreen}
           />
+          <Stack.Screen name={navigationStrings.Chat} component={ChatScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

@@ -18,4 +18,5 @@ export default {
   trending: require('./trending.png'),
   tv: require('./tv.png'),
   avatar: require('./user.png'),
+  chatBackground: require('./chatBackground.png'),
 };
