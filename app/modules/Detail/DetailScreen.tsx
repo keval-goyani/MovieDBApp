@@ -7,7 +7,6 @@ import { Header } from '../../components';
 import {
   appConstants,
   NavigationDataType,
-  navigationStrings,
   RouteDataType,
   strings,
 } from '../../constants';
@@ -49,7 +48,7 @@ const DetailScreen: FC<RouteDataType> = ({ route }) => {
       <Header
         leftIcon={Icons.backIcon}
         logoIcon={Icons.movieDbIcon}
-        onPress={() => navigation.navigate(navigationStrings.Home)}
+        onPress={() => navigation.goBack()}
       />
       <ScrollView bounces={false}>
         <ImageBackground
