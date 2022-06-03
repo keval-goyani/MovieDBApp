@@ -1,25 +1,32 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { ImageBackground, Text, View } from 'react-native';
+import { ImageBackground, KeyboardAvoidingView } from 'react-native';
 import { Icons } from '../../assets';
-import { Header } from '../../components';
-import { NavigationDataType, strings } from '../../constants';
+import { ChatHeader, ChatInput, MessageList } from '../../components';
+import { strings } from '../../constants';
+import { Metrics, verticalScale } from '../../theme';
 import { styles } from './styles/ChatScreenStyles';
 
 const ChatScreen = () => {
-  const navigation: NavigationDataType = useNavigation();
+  const behavior = Metrics.isAndroid ? 'height' : 'padding';
+  const verticalOffset = Metrics.isAndroid
+    ? verticalScale(25)
+    : verticalScale(45);
 
   return (
-    <View style={styles.container}>
-      <Header
-        leftIcon={Icons.backIcon}
-        logoIcon={Icons.movieDbIcon}
-        onPress={() => navigation.goBack()}
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={behavior}
+      keyboardVerticalOffset={verticalOffset}>
+      <ChatHeader
+        username={strings.username}
+        picture={Icons.avatar}
+        onlineStatus={strings.onlineStatus}
       />
       <ImageBackground source={Icons.chatBackground} style={styles.container}>
-        <Text style={styles.text}>{strings.chatScreen}</Text>
+        <MessageList />
+        <ChatInput />
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

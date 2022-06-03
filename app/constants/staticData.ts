@@ -163,3 +163,10 @@ export const usersList = [
   { id: 9, email: 'user9@gmail.com', day: '15-05-2022' },
   { id: 10, email: 'user10@gmail.com', day: '01-05-2022' },
 ];
+
+export const messagesData = [
+  { user: 0, time: '12:09', content: 'Things are going great!' },
+  { user: 1, time: '12:07', content: 'How is it going?' },
+  { user: 1, time: '12:05', content: "What's Up?" },
+  { user: 0, time: '12:00', content: 'Hey!' },
+];
