@@ -337,3 +337,16 @@ export interface CustomDrawerDataType {
   };
   state?: object;
 }
+
+export interface ChatHeaderDataType {
+  username: string;
+  picture: ImageSourcePropType;
+  onlineStatus: string;
+}
+
+export interface MessageDataType {
+  key?: number;
+  time: string;
+  isLeft: boolean;
+  message: string;
+}

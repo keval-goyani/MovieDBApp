@@ -23,4 +23,6 @@ export const Color = {
   pistachioMoreDark: '#96C8A2',
   skyBlue: '#87e7eb',
   blue: '#00bfff',
+  lightGrey: '#BBCFD5',
+  offWhite: '#f0f0f0',
 };

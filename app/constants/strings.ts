@@ -62,4 +62,7 @@ export default {
   logout: 'Logout',
   chatScreen: 'Chat Screen',
   lastMesage: 'last Message here for the information',
+  username: 'User Name',
+  onlineStatus: 'Online',
+  chatPlaceholder: 'Type Something...',
 };
