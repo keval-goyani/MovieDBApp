@@ -19,4 +19,5 @@ export default {
   tv: require('./tv.png'),
   avatar: require('./user.png'),
   chatBackground: require('./chatBackground.png'),
+  send: require('./send.png'),
 };

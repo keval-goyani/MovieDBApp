@@ -1,3 +1,5 @@
+import ChatHeader from './ChatHeader';
+import ChatInput from './ChatInput';
 import CustomLoader from './CustomLoader';
 import DropDownMenu from './DropDownMenu';
 import Header from './Header';
@@ -5,6 +7,8 @@ import List from './List';
 import ListContainer, { movieListItem } from './ListContainer';
 import Loader from './Loader';
 import LoadingState from './LoadingState';
+import Message from './Message';
+import MessageList from './MessageList';
 import Movies from './Movies';
 import MovieTrailer, { trailerListItem } from './MovieTrailers';
 import SearchModal from './SearchModal';
@@ -14,11 +18,15 @@ import UsersList from './UsersList';
 
 export {
   CustomLoader,
+  ChatHeader,
+  ChatInput,
   DropDownMenu,
   Header,
   List,
   ListContainer,
   MovieTrailer,
+  Message,
+  MessageList,
   TabBarIcon,
   SearchModal,
   Loader,
