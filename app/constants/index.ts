@@ -3,6 +3,7 @@ import {
   AuthReduxDataType,
   AuthSagaDataType,
   AuthStateDataType,
+  ChatHeaderDataType,
   Credentials,
   CustomDrawerDataType,
   DataType,
@@ -19,6 +20,7 @@ import {
   ListItemDataType,
   ListItemType,
   LoaderDataType,
+  MessageDataType,
   MovieDataType,
   MovieDetailsDataType,
   MovieResponseGenerator,
@@ -36,7 +38,7 @@ import {
   TrendingDataType,
 } from './appTypes';
 import navigationStrings from './navigationStrings';
-import { filterData, genres, usersList } from './staticData';
+import { filterData, genres, messagesData, usersList } from './staticData';
 import strings from './strings';
 
 export {
@@ -46,12 +48,13 @@ export {
   genres,
   strings,
   usersList,
+  messagesData,
 };
-
 export type {
   AuthReduxDataType,
   AuthSagaDataType,
   AuthStateDataType,
+  ChatHeaderDataType,
   Credentials,
   CustomDrawerDataType,
   DataType,
@@ -68,6 +71,7 @@ export type {
   ListItemDataType,
   ListItemType,
   LoaderDataType,
+  MessageDataType,
   MovieDataType,
   MovieDetailsDataType,
   MovieResponseGenerator,
