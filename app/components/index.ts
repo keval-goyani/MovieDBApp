@@ -1,6 +1,6 @@
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
-import CustomLoader from './CustomLoader';
+import CustomSkeleton from './CustomSkeleton';
 import DropDownMenu from './DropDownMenu';
 import Header from './Header';
 import List from './List';
@@ -12,12 +12,12 @@ import MessageList from './MessageList';
 import Movies from './Movies';
 import MovieTrailer, { trailerListItem } from './MovieTrailers';
 import SearchModal from './SearchModal';
+import SkeletonCard from './SkeletonCard';
 import TabBarIcon from './TabBarIcon';
 import Trailers from './Trailers';
 import UsersList from './UsersList';
 
 export {
-  CustomLoader,
   ChatHeader,
   ChatInput,
   DropDownMenu,
@@ -36,4 +36,6 @@ export {
   Trailers,
   trailerListItem,
   UsersList,
+  SkeletonCard,
+  CustomSkeleton,
 };

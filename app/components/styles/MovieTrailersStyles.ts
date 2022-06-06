@@ -103,6 +103,10 @@ const styles = StyleSheet.create({
     width: horizontalScale(330),
     marginBottom: verticalScale(20),
   },
+  latestSkeleton: {
+    marginLeft: horizontalScale(14),
+    paddingBottom: verticalScale(10),
+  },
 });
 
 export default styles;

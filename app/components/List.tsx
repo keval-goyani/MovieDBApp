@@ -16,13 +16,17 @@ const List: FC<ListDataType> = ({
   pageHandler,
   footerStyle,
   listType,
+  latestSkeletonStyle,
 }) => {
   const navigation: NavigationDataType = useNavigation();
 
   return (
     <>
-      {listData.length === 0 ? (
-        <LoadingState searchModal={searchModal} />
+      {fetching && listData.length === 0 ? (
+        <LoadingState
+          searchModal={searchModal}
+          latestSkeletonStyle={latestSkeletonStyle}
+        />
       ) : (
         <FlatList
           data={listData}

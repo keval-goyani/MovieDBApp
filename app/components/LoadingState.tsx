@@ -1,17 +1,21 @@
 import React from 'react';
 import { Image, View } from 'react-native';
+import { SkeletonCard } from '../components';
+import { LoadingStateProps } from '../constants';
 import { Icons } from '../theme';
-import { CustomLoader } from '../components';
 import styles from './styles/LoadingStateStyles';
 
-const LoadingState = ({ searchModal }: { searchModal: boolean }) => {
+const LoadingState = ({
+  searchModal,
+  latestSkeletonStyle,
+}: LoadingStateProps) => {
   return searchModal ? (
     <View style={styles.loadingStyle}>
       <Image source={Icons.notFound} style={styles.image} />
     </View>
   ) : (
-    <View style={styles.contentLoader}>
-      <CustomLoader />
+    <View style={(styles.contentLoader, latestSkeletonStyle)}>
+      <SkeletonCard />
     </View>
   );
 };
