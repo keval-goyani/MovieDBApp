@@ -19,8 +19,8 @@ export const styles = StyleSheet.create({
     marginBottom: verticalScale(3),
   },
   avatar: {
-    height: verticalScale(60),
-    width: horizontalScale(60),
+    height: moderateScale(60),
+    width: moderateScale(60),
     resizeMode: 'contain',
   },
   text: {
