@@ -84,7 +84,7 @@ const MovieTrailer: FC<ListContainerDataType> = ({
     dispatch(
       trailerAction.latestTrailerDataRequest({
         urlMainPath: dataEndPoint,
-        pageNo: listPage ?? 0 + 1,
+        pageNo: listPage + 1,
       }),
     );
   };

@@ -11,7 +11,7 @@ import { ListDataType, NavigationDataType } from '../constants';
 
 const List: FC<ListDataType> = ({
   fetching,
-  listData,
+  listData = [],
   searchModal,
   pageHandler,
   footerStyle,
@@ -36,6 +36,7 @@ const List: FC<ListDataType> = ({
           onEndReached={pageHandler}
           ListFooterComponent={<Loader size="small" animating={fetching} />}
           ListFooterComponentStyle={footerStyle}
+          showsHorizontalScrollIndicator={false}
         />
       )}
     </>
