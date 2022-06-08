@@ -179,6 +179,7 @@ export interface ListDataType {
   pageHandler: () => void;
   footerStyle: StyleProp<ViewStyle>;
   listType?: string;
+  latestSkeletonStyle?: StyleProp<ViewStyle>;
 }
 
 export interface MovieDataType {
@@ -349,4 +350,14 @@ export interface MessageDataType {
   time: string;
   isLeft: boolean;
   message: string;
+}
+
+export interface SkeletonProps {
+  width: number;
+  height: number;
+}
+
+export interface LoadingStateProps {
+  searchModal: boolean;
+  latestSkeletonStyle: StyleProp<ViewStyle>;
 }

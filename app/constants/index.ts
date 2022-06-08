@@ -20,6 +20,7 @@ import {
   ListItemDataType,
   ListItemType,
   LoaderDataType,
+  LoadingStateProps,
   MessageDataType,
   MovieDataType,
   MovieDetailsDataType,
@@ -33,6 +34,7 @@ import {
   RouteDataType,
   SearchFunctionDataType,
   SearchModalDataType,
+  SkeletonProps,
   TabBarIconDataType,
   TrailerDataType,
   TrendingDataType,
@@ -87,4 +89,6 @@ export type {
   TabBarIconDataType,
   TrailerDataType,
   TrendingDataType,
+  LoadingStateProps,
+  SkeletonProps,
 };

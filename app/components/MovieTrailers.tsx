@@ -112,6 +112,7 @@ const MovieTrailer: FC<ListContainerDataType> = ({
             listData={trailerListData}
             searchModal={searchModal}
             pageHandler={pageLoading}
+            latestSkeletonStyle={styles.latestSkeleton}
             footerStyle={styles.footerLoaderStyle}
             listType={strings.latestTrailers}
           />

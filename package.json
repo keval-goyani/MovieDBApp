@@ -20,7 +20,6 @@
     "apisauce": "^2.1.5",
     "ramda": "^0.28.0",
     "react": "17.0.2",
-    "react-content-loader": "^6.2.0",
     "react-hook-form": "^7.31.2",
     "react-native": "0.67.1",
     "react-native-circular-progress-indicator": "^4.1.1",
