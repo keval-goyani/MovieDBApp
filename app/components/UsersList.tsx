@@ -23,7 +23,7 @@ const UsersList = () => {
         <View style={styles.nameView}>
           <Text style={styles.text}>{item.email}</Text>
           <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>
-            {strings.lastMesage}
+            {strings.lastMessage}
           </Text>
         </View>
         <View style={styles.dateView}>

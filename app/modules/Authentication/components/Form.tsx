@@ -21,6 +21,7 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
       password: '',
       confirmPassword: '',
     },
+    mode: 'onChange',
   });
 
   const onSubmit = (data: { email: string; password: string }) => {
