@@ -33,7 +33,7 @@ const LoginScreen = () => {
   const behavior = Metrics.isAndroid ? 'height' : 'padding';
 
   const loginHandler = useCallback(async () => {
-    if (!email && !password) {
+    if (email && password) {
       await auth()
         .signInWithEmailAndPassword(email, password)
         .then(userCredential =>

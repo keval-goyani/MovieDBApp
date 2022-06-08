@@ -25,4 +25,6 @@ export const Color = {
   blue: '#00bfff',
   lightGrey: '#BBCFD5',
   offWhite: '#f0f0f0',
+  lightSky: '#87cefa90',
+  powderBlue: '#87cefa40',
 };

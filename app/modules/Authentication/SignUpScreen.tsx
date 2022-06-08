@@ -31,7 +31,7 @@ const SignUpScreen = () => {
   const behavior = Metrics.isAndroid ? 'height' : 'padding';
 
   const signUpHandler = useCallback(async () => {
-    if (!username && !email && !password) {
+    if (username && email && password) {
       await auth()
         .createUserWithEmailAndPassword(email, password)
         .then(userData =>

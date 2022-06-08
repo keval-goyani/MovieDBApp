@@ -20,4 +20,5 @@ export default {
   avatar: require('./user.png'),
   chatBackground: require('./chatBackground.png'),
   send: require('./send.png'),
+  location: require('./share.png'),
 };

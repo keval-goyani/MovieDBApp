@@ -9,4 +9,5 @@ export default {
   Community: 'Community',
   HomeDrawer: 'HomeDrawer',
   Chat: 'Chat',
+  Location: 'Location',
 };
