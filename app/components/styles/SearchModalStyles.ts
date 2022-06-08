@@ -10,7 +10,6 @@ import {
 export const styles = StyleSheet.create({
   searchView: {
     height: verticalScale(60),
-    width: Metrics.screenWidth,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Color.darkBlue,
@@ -18,7 +17,7 @@ export const styles = StyleSheet.create({
     padding: moderateScale(5),
   },
   searchBox: {
-    width: horizontalScale(250),
+    flex: 1,
     borderWidth: Metrics.borderLineWidth,
     backgroundColor: Color.white,
     borderColor: Color.black,

@@ -118,7 +118,7 @@ const HomeScreen = () => {
           setSearchModal={setSearchModal}
         />
       )}
-      <ScrollView bounces={false}>
+      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <ListContainer
           title={strings.whatsPopular}
           filterOptions={popularMovieFilterData}

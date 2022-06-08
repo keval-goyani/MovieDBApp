@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SearchModalDataType, strings } from '../constants';
 import { styles } from './styles/SearchModalStyles';
@@ -9,9 +9,16 @@ const SearchModal = ({
   setSearchModal,
   searchModal,
 }: SearchModalDataType) => {
+  const searchBox = useRef<TextInput>(null);
+
+  useEffect(() => {
+    searchModal && searchBox?.current?.focus();
+  }, [searchModal]);
+
   return (
     <View style={styles.searchView}>
       <TextInput
+        ref={searchBox}
         placeholder={strings.search}
         style={styles.searchBox}
         onChangeText={search => setSearchQuery(search)}

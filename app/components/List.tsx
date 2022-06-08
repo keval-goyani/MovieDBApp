@@ -11,7 +11,7 @@ import { ListDataType, NavigationDataType } from '../constants';
 
 const List: FC<ListDataType> = ({
   fetching,
-  listData,
+  listData = [],
   searchModal,
   pageHandler,
   footerStyle,
@@ -21,7 +21,7 @@ const List: FC<ListDataType> = ({
 
   return (
     <>
-      {fetching && listData.length === 0 ? (
+      {listData.length === 0 ? (
         <LoadingState searchModal={searchModal} />
       ) : (
         <FlatList
@@ -34,8 +34,9 @@ const List: FC<ListDataType> = ({
           bounces={false}
           onEndReachedThreshold={1}
           onEndReached={pageHandler}
-          ListFooterComponent={<Loader size="small" />}
+          ListFooterComponent={<Loader size="small" animating={fetching} />}
           ListFooterComponentStyle={footerStyle}
+          showsHorizontalScrollIndicator={false}
         />
       )}
     </>
