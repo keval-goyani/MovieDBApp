@@ -7,7 +7,10 @@ import {
 } from '../../../theme';
 
 export const styles = StyleSheet.create({
-  container: { justifyContent: 'center', alignItems: 'center' },
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   headerText: {
     color: Color.white,
     fontSize: moderateScale(18),
@@ -23,5 +26,8 @@ export const styles = StyleSheet.create({
     width: horizontalScale(200),
     alignSelf: 'center',
   },
-  image: { marginBottom: verticalScale(50) },
+  image: {
+    marginBottom: verticalScale(50),
+    alignSelf: 'center',
+  },
 });

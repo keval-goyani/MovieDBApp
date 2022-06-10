@@ -1,7 +1,12 @@
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, Keyboard, KeyboardAvoidingView } from 'react-native';
+import {
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  ScrollView,
+} from 'react-native';
 import { useDispatch } from 'react-redux';
 import {
   Credentials,
@@ -47,13 +52,16 @@ const SignUpScreen = () => {
   return (
     <KeyboardAvoidingView
       behavior={behavior}
-      style={{ ...appStyles.container, ...styles.container }}
+      style={appStyles.container}
       onTouchStart={() => Keyboard.dismiss()}>
-      <Image source={Icons.movieDbIcon3x} style={styles.image} />
-      <Form
-        getCredentials={setRegisterCredentials}
-        type={strings.signUpCamel}
-      />
+      <ScrollView
+        contentContainerStyle={{ ...appStyles.container, ...styles.container }}>
+        <Image source={Icons.movieDbIcon3x} style={styles.image} />
+        <Form
+          getCredentials={setRegisterCredentials}
+          type={strings.signUpCamel}
+        />
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };

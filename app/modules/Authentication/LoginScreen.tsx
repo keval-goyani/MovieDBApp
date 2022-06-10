@@ -5,6 +5,7 @@ import {
   Image,
   Keyboard,
   KeyboardAvoidingView,
+  ScrollView,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -49,18 +50,21 @@ const LoginScreen = () => {
   return (
     <KeyboardAvoidingView
       behavior={behavior}
-      style={{ ...appStyles.container, ...styles.container }}
+      style={appStyles.container}
       onTouchStart={() => Keyboard.dismiss()}>
-      <Image source={Icons.movieDbIcon3x} style={styles.image} />
-      <Form getCredentials={setLoginCredentials} type={strings.loginCamel} />
-      <Text style={styles.headerText}>{strings.accountNotExist}</Text>
-      <TouchableOpacity
-        style={styles.linkTextView}
-        onPress={() => {
-          navigation.navigate(navigationStrings.SignUp);
-        }}>
-        <Text style={styles.linkText}>{strings.createAccount}</Text>
-      </TouchableOpacity>
+      <ScrollView
+        contentContainerStyle={{ ...appStyles.container, ...styles.container }}>
+        <Image source={Icons.movieDbIcon3x} style={styles.image} />
+        <Form getCredentials={setLoginCredentials} type={strings.loginCamel} />
+        <Text style={styles.headerText}>{strings.accountNotExist}</Text>
+        <TouchableOpacity
+          style={styles.linkTextView}
+          onPress={() => {
+            navigation.navigate(navigationStrings.SignUp);
+          }}>
+          <Text style={styles.linkText}>{strings.createAccount}</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
