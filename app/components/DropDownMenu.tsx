@@ -75,6 +75,13 @@ const DropDownMenu: FC<DropDownDataType> = ({
     setUrlEndPoint(endPoint);
   };
 
+  useEffect(() => {
+    showOptions &&
+      setTimeout(() => {
+        setShowOptions(false);
+      }, 5000);
+  }, [showOptions]);
+
   return (
     <View style={styles.dropDownContainer}>
       <LinearGradient

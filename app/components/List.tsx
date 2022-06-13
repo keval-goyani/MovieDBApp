@@ -22,7 +22,7 @@ const List: FC<ListDataType> = ({
 
   return (
     <>
-      {fetching && listData.length === 0 ? (
+      {listData.length === 0 ? (
         <LoadingState
           searchModal={searchModal}
           latestSkeletonStyle={latestSkeletonStyle}
