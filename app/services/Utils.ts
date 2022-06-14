@@ -125,3 +125,38 @@ export const getUniqueMovies = (movies: ListItemDataType[]) => {
 
   return uniqueMovies;
 };
+
+const padTo2Digits = (input: number) => {
+  return input.toString().padStart(2, '0');
+};
+
+export const timestampToTime = (timestamp: number) => {
+  const hours = new Date(timestamp).getHours();
+  const minutes = new Date(timestamp).getMinutes();
+
+  return hours >= 12
+    ? `${padTo2Digits(hours - 12)}:${padTo2Digits(minutes)} pm`
+    : `${padTo2Digits(hours)}:${padTo2Digits(minutes)} am`;
+};
+
+export const getChatTime = (time: number) => {
+  const latestChatTime = new Date(time).getDate();
+  const currentTime = new Date().getDate();
+  const timeDifference = currentTime - latestChatTime;
+
+  if (time !== 0) {
+    switch (timeDifference) {
+      case 0:
+        return timestampToTime(time);
+      case 1:
+        return strings.yesterday;
+      default:
+        return new Date(time).toLocaleDateString('en-GB').toString();
+    }
+  }
+  return strings.emptyString;
+};
+
+export const sortString = (input: string) => {
+  return input.split('').sort().join('');
+};

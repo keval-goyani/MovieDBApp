@@ -3,10 +3,13 @@ import immutablePersistenceTransform from './immutablePersistenceTransform';
 import {
   alertMessage,
   apiConfig,
+  getChatTime,
   getDetails,
   getError,
   getUniqueMovies,
   searchMovie,
+  sortString,
+  timestampToTime,
 } from './Utils';
 
 export {
@@ -18,4 +21,7 @@ export {
   getPopularMovieData,
   searchMovie,
   getUniqueMovies,
+  getChatTime,
+  timestampToTime,
+  sortString,
 };
