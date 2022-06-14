@@ -117,7 +117,7 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
       <View style={styles.mainContainer}>
         <View style={{ ...styles.container, ...styles.avatarView }}>
           <Image source={Icons.avatar} style={styles.avatar} />
-          <Text style={styles.userEmail}>{user}</Text>
+          <Text style={styles.userEmail}>{user?.username}</Text>
         </View>
         <DrawerItem
           label={navigationStrings.Home}

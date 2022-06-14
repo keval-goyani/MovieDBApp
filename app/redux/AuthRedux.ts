@@ -5,6 +5,7 @@ import { alertMessage } from '../services';
 
 const { Types, Creators } = createActions({
   authRequest: ['payload'],
+  loginRequest: ['payload'],
   authSuccess: ['data'],
   authFailure: ['error'],
   logout: [],

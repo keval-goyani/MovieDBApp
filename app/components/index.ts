@@ -15,6 +15,7 @@ import SearchModal from './SearchModal';
 import SkeletonCard from './SkeletonCard';
 import TabBarIcon from './TabBarIcon';
 import Trailers from './Trailers';
+import UserListEmpty from './UserListEmpty';
 import UsersList from './UsersList';
 
 export {
@@ -38,4 +39,5 @@ export {
   UsersList,
   SkeletonCard,
   CustomSkeleton,
+  UserListEmpty,
 };

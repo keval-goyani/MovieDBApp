@@ -25,7 +25,15 @@ export const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'justify',
-    fontSize: moderateScale(15),
+    fontWeight: '700',
+    fontSize: moderateScale(17),
+    color: Color.black,
+    marginLeft: horizontalScale(10),
+    paddingBottom: verticalScale(2),
+  },
+  lastChatText: {
+    textAlign: 'justify',
+    fontSize: moderateScale(13),
     color: Color.black,
     marginLeft: horizontalScale(10),
     paddingBottom: verticalScale(2),
