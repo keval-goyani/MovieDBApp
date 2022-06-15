@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { FormTypeProps, strings } from '../../../constants';
+import { Credentials, FormTypeProps, strings } from '../../../constants';
 import { Color } from '../../../theme';
 import { styles } from './styles/FormStyles';
 
@@ -17,6 +17,7 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
     reset,
   } = useForm({
     defaultValues: {
+      username: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -24,8 +25,12 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
     mode: 'onChange',
   });
 
-  const onSubmit = (data: { email: string; password: string }) => {
-    const credentials = { email: data.email, password: data.password };
+  const onSubmit = (data: Credentials) => {
+    const credentials = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    };
     getCredentials(credentials);
     reset();
   };
@@ -33,6 +38,28 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.formView}>
+        {type === strings.signUpCamel && (
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+              minLength: 6,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder={strings.username}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="username"
+          />
+        )}
+        {errors.username && (
+          <Text style={styles.errorMessage}>{strings.usernameFormat}</Text>
+        )}
         <Controller
           control={control}
           rules={{
@@ -90,6 +117,7 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                secureTextEntry={true}
               />
             )}
             name="confirmPassword"

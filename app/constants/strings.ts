@@ -72,4 +72,5 @@ export default {
   tint: 'tint',
   color: 'color',
   back: 'back',
+  noUserFound: 'No Users Found!',
 };

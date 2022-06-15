@@ -32,12 +32,12 @@ const LoginScreen = () => {
   const navigation: NavigationScreenType = useNavigation();
   const behavior = Metrics.isAndroid ? 'height' : 'padding';
 
-  const loginHandler = useCallback(() => {
-    if (email !== '' && password !== '') {
-      auth()
+  const loginHandler = useCallback(async () => {
+    if (!email && !password) {
+      await auth()
         .signInWithEmailAndPassword(email, password)
         .then(userCredential =>
-          dispatch(authAction.authRequest(userCredential.user)),
+          dispatch(authAction.loginRequest({ user: userCredential.user })),
         )
         .catch(() => dispatch(authAction.authFailure(strings.loginError)));
     }

@@ -21,20 +21,26 @@ import { styles } from './styles/SignUpScreenStyles';
 
 const SignUpScreen = () => {
   const [registerCredentials, setRegisterCredentials] = useState<Credentials>({
+    username: '',
     email: '',
     password: '',
   });
   const dispatch = useDispatch();
   const navigation: NavigationScreenType = useNavigation();
-  const { email, password } = registerCredentials;
+  const { username, email, password } = registerCredentials;
   const behavior = Metrics.isAndroid ? 'height' : 'padding';
 
-  const signUpHandler = useCallback(() => {
-    if (email !== '' && password !== '') {
-      auth()
+  const signUpHandler = useCallback(async () => {
+    if (!username && !email && !password) {
+      await auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(userCredential =>
-          dispatch(authAction.authRequest(userCredential.user)),
+        .then(userData =>
+          dispatch(
+            authAction.authRequest({
+              user: userData.user,
+              username,
+            }),
+          ),
         )
         .catch(() => {
           return (
@@ -43,7 +49,7 @@ const SignUpScreen = () => {
           );
         });
     }
-  }, [dispatch, email, navigation, password]);
+  }, [dispatch, email, navigation, password, username]);
 
   useEffect(() => {
     signUpHandler();

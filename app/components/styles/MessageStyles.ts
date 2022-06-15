@@ -8,8 +8,7 @@ import {
 
 export const styles = StyleSheet.create({
   container: {
-    paddingVertical: verticalScale(10),
-    marginVertical: verticalScale(5),
+    marginTop: verticalScale(10),
   },
   messageContainer: {
     maxWidth: '80%',
@@ -39,6 +38,6 @@ export const styles = StyleSheet.create({
   time: {
     color: Color.lightGrey,
     alignSelf: 'flex-end',
-    fontSize: moderateScale(10),
+    fontSize: moderateScale(9),
   },
 });
