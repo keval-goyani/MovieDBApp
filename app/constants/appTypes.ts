@@ -35,7 +35,7 @@ interface SpokenLanguagesDataType {
 
 export interface FormTypeProps {
   getCredentials: React.Dispatch<
-    React.SetStateAction<{ email: string; password: string }>
+    React.SetStateAction<{ userName?: string; email: string; password: string }>
   >;
   type: string;
 }
@@ -252,7 +252,15 @@ export interface HeaderDataType {
 }
 
 export interface NavigationDataType {
-  navigate: (screen: string, params?: { id: number; data: string }) => void;
+  navigate: (
+    screen: string,
+    params?: {
+      id?: number;
+      data?: string;
+      chatId?: string;
+      username?: string;
+    },
+  ) => void;
   openDrawer: () => void;
   replace: (screenName: string) => void;
   goBack: () => void;
@@ -277,6 +285,7 @@ export interface MovieStoreDataType {
 }
 
 export interface Credentials {
+  username?: string;
   email: string;
   password: string;
 }
@@ -285,10 +294,15 @@ export interface NavigationScreenType {
   navigate: (Screen: string) => void;
 }
 
+export interface AuthDataType {
+  username: string;
+  email: string;
+  uid: string;
+}
+
 interface AuthPayloadDataType {
-  _user: {
-    email: string;
-  };
+  user: { _user: AuthDataType };
+  username?: string;
 }
 
 export interface AuthSagaDataType {
@@ -297,12 +311,12 @@ export interface AuthSagaDataType {
 }
 
 export interface AuthReduxDataType {
-  data: string;
+  data: AuthDataType;
   error: string;
 }
 
 export interface AuthStateDataType {
-  user: null | string;
+  user: null | AuthDataType;
   authenticated: null | boolean;
   error: null | boolean;
 }
@@ -367,4 +381,84 @@ export interface SkeletonProps {
 export interface LoadingStateProps {
   searchModal: boolean;
   latestSkeletonStyle: StyleProp<ViewStyle>;
+}
+
+export interface UserListDataType {
+  username: string;
+  email: string;
+  uid: string;
+  content: string;
+  time: number;
+  senderId: string;
+  userId: string;
+}
+export interface UserListStateDataType {
+  userList: UserListDataType[];
+  fetchingUserList: boolean;
+}
+
+export interface ChatUserListType {
+  data: UserListDataType[];
+}
+
+export interface ChatDataType {
+  content: string;
+  time: number;
+  user: string;
+}
+
+export interface ChatStateDataType {
+  fetchingChatData: boolean;
+  chatData: [] | ChatDataType[];
+}
+
+export interface ChatLocalStoreDataType {
+  chat: ChatDataType[];
+}
+
+export interface ChatInputDataType {
+  chatId: string;
+}
+
+export interface LatestMessageDataType {
+  content: string;
+  time: number;
+  senderId: string;
+  userId: string;
+}
+
+export interface ChatListDataType {
+  time: number;
+  username?: string;
+  email?: string;
+  uid?: string;
+}
+
+export interface ChatUserListDataType {
+  chatUserList: Array<UserListDataType>;
+}
+
+export interface ChatScreenDataType {
+  route: {
+    params: {
+      chatId: string;
+      username: string;
+    };
+  };
+}
+
+export interface FireStoreResponseDataType {
+  _data: {
+    email: string;
+    uid: string;
+    username: string;
+  };
+}
+
+export interface ChatListSagaDataType {
+  messageList: {
+    content: string;
+    time: number;
+    user: string;
+  };
 }
