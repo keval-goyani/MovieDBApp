@@ -7,6 +7,7 @@ import { navigationStrings } from '../constants';
 import {
   ChatScreen,
   DetailScreen,
+  LocationScreen,
   LoginScreen,
   SignUpScreen,
 } from '../modules';
@@ -44,6 +45,10 @@ const Routes = () => {
             component={DetailScreen}
           />
           <Stack.Screen name={navigationStrings.Chat} component={ChatScreen} />
+          <Stack.Screen
+            name={navigationStrings.Location}
+            component={LocationScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

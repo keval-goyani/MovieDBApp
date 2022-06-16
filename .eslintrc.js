@@ -10,6 +10,7 @@ module.exports = {
         '@typescript-eslint/no-shadow': ['error'],
         'no-shadow': 'off',
         'no-undef': 'off',
+        complexity: ['error', { max: 5 }],
       },
     },
   ],

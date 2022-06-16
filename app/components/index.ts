@@ -12,6 +12,7 @@ import MessageList from './MessageList';
 import Movies from './Movies';
 import MovieTrailer, { trailerListItem } from './MovieTrailers';
 import SearchModal from './SearchModal';
+import ShareLocation from './ShareLocation';
 import SkeletonCard from './SkeletonCard';
 import TabBarIcon from './TabBarIcon';
 import Trailers from './Trailers';
@@ -40,4 +41,5 @@ export {
   SkeletonCard,
   CustomSkeleton,
   UserListEmpty,
+  ShareLocation,
 };

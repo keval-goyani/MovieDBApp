@@ -4,6 +4,7 @@ import ChatScreen from './Chat/ChatScreen';
 import CommunityScreen from './Community/CommunityScreen';
 import DetailScreen from './Detail/DetailScreen';
 import HomeScreen from './Home/HomeScreen';
+import LocationScreen from './Location/LocationScreen';
 import MoviesScreen from './Movies/MoviesScreen';
 import TrailersScreen from './Trailers/TrailersScreen';
 
@@ -16,4 +17,5 @@ export {
   MoviesScreen,
   SignUpScreen,
   TrailersScreen,
+  LocationScreen,
 };
