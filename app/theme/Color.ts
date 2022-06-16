@@ -27,4 +27,6 @@ export const Color = {
   offWhite: '#f0f0f0',
   lightSky: '#87cefa90',
   powderBlue: '#87cefa40',
+  lightIndigo: '#5C5FE0',
+  lightRed: '#E44041',
 };

@@ -86,4 +86,13 @@ export default {
     'please go to Settings -> Location to turn on Location permission',
   setting: 'Settings',
   shareLiveLocation: 'Share live location',
+  cameraPermission: 'Camera',
+  galleryPermission: 'Gallery',
+  cameraPermissionBlocked: 'Camera Permission Blocked',
+  galleryPermissionBlocked: 'Storage Permission Blocked',
+  grantPermission: 'Please Grant it Manually',
+  goToSettings: 'Go To Settings',
+  openingCamera: 'Opening Camera',
+  permissionUnavailable: 'Oops! Feature Unavailable / Limited',
+  imageSavedAlert: 'Image Saved Successfully',
 };

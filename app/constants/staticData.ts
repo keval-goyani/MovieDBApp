@@ -1,5 +1,4 @@
-import { strings } from '../constants';
-import appConstants from './appConstants';
+import { appConstants, strings } from '../constants';
 
 export const filterData = {
   popularMovieFilterData: [
@@ -150,3 +149,10 @@ export const genres = [
     name: 'Western',
   },
 ];
+
+export const pickerOptions = {
+  maxWidth: 800,
+  maxHeight: 800,
+  includeBase64: true,
+  includeExtra: true,
+};

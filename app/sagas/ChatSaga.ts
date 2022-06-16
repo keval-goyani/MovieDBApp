@@ -10,7 +10,7 @@ function* chatDataHandler({ payload }: { payload: string; type: string }) {
     .doc(payload)
     .get()
     .then(documentSnapshot => documentSnapshot?.data())
-    .catch(e => alertMessage(e));
+    .catch(error => alertMessage(error));
 
   yield put(chatAction.chatDataSuccess(chatList?.messageList ?? []));
 }

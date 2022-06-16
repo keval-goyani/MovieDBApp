@@ -22,8 +22,8 @@ export const styles = StyleSheet.create({
     tintColor: Color.white,
   },
   avatarImage: {
-    height: verticalScale(65),
-    width: horizontalScale(65),
+    height: moderateScale(65),
+    width: moderateScale(65),
     borderRadius: 32,
   },
   profileView: {

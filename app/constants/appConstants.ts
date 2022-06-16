@@ -1,3 +1,7 @@
+import { PERMISSIONS } from 'react-native-permissions';
+import RNFetchBlob from 'rn-fetch-blob';
+import { Metrics } from '../theme';
+
 export default {
   posterImageUrl: 'https://image.tmdb.org/t/p/w342',
   backDropImageUrl: 'https://image.tmdb.org/t/p/w780',
@@ -28,4 +32,13 @@ export default {
   moviePath: '/movie/',
   tvPath: '/tv/',
   appendResponseOfCredit: '&append_to_response=credits',
+  androidFolder: `${RNFetchBlob.fs.dirs.DCIMDir}/MovieDB`,
+  iosFolder: `${RNFetchBlob.fs.dirs.DocumentDir}/MovieDB`,
+  timestamp: new Date().getTime(),
+  cameraPermission: Metrics.isAndroid
+    ? PERMISSIONS.ANDROID.CAMERA
+    : PERMISSIONS.IOS.CAMERA,
+  galleryPermission: Metrics.isAndroid
+    ? PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+    : PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY,
 };
