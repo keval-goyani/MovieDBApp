@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Image, Pressable, TouchableOpacity, View } from 'react-native';
+import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { HeaderDataType } from '../constants';
 import styles from './styles/HeaderStyles';
 
@@ -10,13 +10,18 @@ const Header: FC<HeaderDataType> = ({
   searchModal = false,
   onPress,
   setSearchModal = () => {},
+  title,
 }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
         <Image source={leftIcon} style={styles.leftIconStyle} />
       </TouchableOpacity>
-      <Image source={logoIcon} />
+      {title ? (
+        <Text style={styles.headerTitleStyle}>{title}</Text>
+      ) : (
+        <Image source={logoIcon} />
+      )}
       {rightIcon ? (
         <Pressable onPress={() => setSearchModal(!searchModal)}>
           <Image source={rightIcon} style={styles.rightIconStyle} />

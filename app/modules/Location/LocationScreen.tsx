@@ -1,8 +1,7 @@
 import Geolocation from '@react-native-community/geolocation';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
-import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Alert, View } from 'react-native';
 import {
   check,
   openSettings,
@@ -10,28 +9,38 @@ import {
   request,
   RESULTS,
 } from 'react-native-permissions';
-import { Header } from '../../components';
-import { strings } from '../../constants';
-import { Color, Icons, Metrics } from '../../theme';
+import { CustomShareLocationButton, Header, Map } from '../../components';
+import {
+  ChatScreenDataType,
+  NavigationDataType,
+  strings,
+} from '../../constants';
+import { Icons, Metrics } from '../../theme';
 import { styles } from './styles/LocationScreenStyle';
 
-const LocationScreen = () => {
-  const navigation = useNavigation();
+const LocationScreen = ({ route }: ChatScreenDataType) => {
+  const { isFromChat, chatId, username, lastLatitude, lastLongitude } =
+    route.params;
+  const navigation: NavigationDataType = useNavigation();
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const chatValue = isFromChat ?? true;
+  const headerTitle = isFromChat ? username : strings.sendLocation;
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(data => {
-      setLatitude(data.coords.latitude);
-      setLongitude(data.coords.longitude);
-    });
-  }, []);
+    if (!isFromChat) {
+      Geolocation.getCurrentPosition(data => {
+        setLatitude(data?.coords?.latitude);
+        setLongitude(data?.coords?.longitude);
+      });
+    }
+  }, [isFromChat]);
 
   const permissionHandler = (permissionRequest: string) => {
     permissionRequest === RESULTS.GRANTED
       ? Geolocation.getCurrentPosition(data => {
-          setLatitude(data.coords.latitude);
-          setLongitude(data.coords.longitude);
+          setLatitude(data?.coords?.latitude);
+          setLongitude(data?.coords?.longitude);
         })
       : Alert.alert(strings.turnOn, strings.goToSetting, [
           { onPress: () => openSettings(), text: strings.setting },
@@ -70,40 +79,21 @@ const LocationScreen = () => {
       <Header
         leftIcon={Icons.backIcon}
         logoIcon={Icons.movieDbIcon}
-        onPress={() => navigation.goBack}
+        title={headerTitle}
+        onPress={() => navigation.goBack()}
       />
-      <View style={styles.mapContainer}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          region={{
-            latitude: latitude,
-            longitude: longitude,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}>
-          <Circle
-            strokeColor={Color.lightSky}
-            center={{ latitude: latitude, longitude: longitude }}
-            radius={100}
-            fillColor={Color.powderBlue}
-          />
-          <Marker
-            coordinate={{
-              latitude: latitude,
-              longitude: longitude,
-            }}
-          />
-        </MapView>
+      <View style={styles.container}>
+        <Map
+          isFromChat={chatValue}
+          lastLatitude={lastLatitude ?? 0}
+          lastLongitude={lastLongitude ?? 0}
+          {...{ latitude, longitude }}
+        />
       </View>
-      <View style={styles.shareButton}>
-        <TouchableOpacity style={styles.touchable}>
-          <View style={styles.imageContainer}>
-            <Image source={Icons.location} style={styles.locationIcon} />
-          </View>
-          <Text style={styles.text}>{strings.shareLiveLocation}</Text>
-        </TouchableOpacity>
-      </View>
+      <CustomShareLocationButton
+        isFromChat={chatValue}
+        {...{ chatId, username, latitude, longitude }}
+      />
     </View>
   );
 };

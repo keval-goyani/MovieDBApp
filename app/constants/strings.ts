@@ -97,4 +97,11 @@ export default {
   imageSavedAlert: 'Image Saved Successfully',
   changeWallpaper: 'Change Wallpaper',
   files: 'file:///',
+  sendLocation: 'Send location',
+  stopShare: 'Stop sharing',
+  stopShareLiveLocation: 'Stop sharing live location?',
+  areYouSure: 'Are you sure',
+  stop: 'Stop',
+  liveLocationEnded: 'Live location ended',
+  staticTime: '04:42 pm',
 };

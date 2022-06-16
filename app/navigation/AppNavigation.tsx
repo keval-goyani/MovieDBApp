@@ -44,11 +44,16 @@ const Routes = () => {
             name={navigationStrings.Details}
             component={DetailScreen}
           />
-          <Stack.Screen name={navigationStrings.Chat} component={ChatScreen} />
-          <Stack.Screen
-            name={navigationStrings.Location}
-            component={LocationScreen}
-          />
+          <>
+            <Stack.Screen
+              name={navigationStrings.Chat}
+              component={ChatScreen}
+            />
+            <Stack.Screen
+              name={navigationStrings.Location}
+              component={LocationScreen}
+            />
+          </>
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

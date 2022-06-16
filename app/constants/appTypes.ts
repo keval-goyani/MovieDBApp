@@ -249,6 +249,7 @@ export interface HeaderDataType {
   searchModal?: boolean;
   setSearchModal?: Dispatch<React.SetStateAction<boolean>>;
   onPress?: () => void;
+  title?: string;
 }
 
 export interface NavigationDataType {
@@ -259,6 +260,11 @@ export interface NavigationDataType {
       data?: string;
       chatId?: string;
       username?: string;
+      isFromChat?: boolean;
+      currentLatitude?: number;
+      currentLongitude?: number;
+      lastLatitude?: number;
+      lastLongitude?: number;
     },
   ) => void;
   openDrawer: () => void;
@@ -420,11 +426,14 @@ export interface ChatLocalStoreDataType {
 }
 
 export interface ChatInputDataType {
-  chatId: string;
   cameraModal?: boolean;
   imagePath?: string;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setImagePath: Dispatch<React.SetStateAction<string>>;
+  chatId?: string;
+  username?: string;
+  currentLatitude?: number;
+  currentLongitude?: number;
 }
 
 export interface LatestMessageDataType {
@@ -450,6 +459,9 @@ export interface ChatScreenDataType {
     params: {
       chatId: string;
       username: string;
+      isFromChat?: boolean;
+      lastLatitude?: number;
+      lastLongitude?: number;
     };
   };
 }
@@ -490,4 +502,34 @@ export interface SetWallpaperDataType {
 export interface ChatMenuDataType {
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface LocationCoordsProps {
+  endedLatitude: number;
+  endedLongitude: number;
+}
+
+export interface MapDataProps {
+  isFromChat: boolean;
+  longitude: number;
+  latitude: number;
+  lastLatitude: number;
+  lastLongitude: number;
+  chatId?: string;
+  username?: string;
+}
+
+export interface CustomButtonProps {
+  isFromChat: boolean;
+  longitude: number;
+  latitude: number;
+  chatId?: string;
+  username?: string;
+}
+
+export interface ShareLocationDataProps {
+  chatId?: string;
+  username?: string;
+  currentLatitude?: number;
+  currentLongitude?: number;
 }
