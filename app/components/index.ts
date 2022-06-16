@@ -14,6 +14,7 @@ import MovieTrailer, { trailerListItem } from './MovieTrailers';
 import SearchModal from './SearchModal';
 import ShareLocation from './ShareLocation';
 import SkeletonCard from './SkeletonCard';
+import Stagger from './Stagger';
 import TabBarIcon from './TabBarIcon';
 import Trailers from './Trailers';
 import UserListEmpty from './UserListEmpty';
@@ -42,4 +43,5 @@ export {
   CustomSkeleton,
   UserListEmpty,
   ShareLocation,
+  Stagger,
 };
