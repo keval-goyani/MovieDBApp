@@ -21,4 +21,7 @@ export default {
   chatBackground: require('./chatBackground.png'),
   send: require('./send.png'),
   location: require('./share.png'),
+  camera: require('./camera.png'),
+  attach: require('./attach.png'),
+  gallery: require('./gallery.png'),
 };
