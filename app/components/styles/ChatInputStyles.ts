@@ -23,10 +23,11 @@ export const styles = StyleSheet.create({
   inputAndSend: {
     flexDirection: 'row',
     backgroundColor: Color.offWhite,
-    flex: 3,
+    flex: 1,
     marginRight: horizontalScale(10),
     paddingVertical: paddingInputBox,
     borderRadius: 30,
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
   input: {
@@ -35,6 +36,8 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(15),
     height: inputHeight,
     maxHeight: verticalScale(100),
+    color: Color.black,
+    flex: 1,
   },
   sendButtonView: {
     backgroundColor: Color.darkBlue,
@@ -48,5 +51,11 @@ export const styles = StyleSheet.create({
     height: moderateScale(20),
     width: moderateScale(20),
     tintColor: Color.white,
+  },
+  inputIcon: {
+    height: moderateScale(23),
+    width: moderateScale(23),
+    tintColor: Color.gray,
+    marginRight: horizontalScale(10),
   },
 });

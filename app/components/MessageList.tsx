@@ -4,12 +4,12 @@ import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { asMutable } from 'seamless-immutable';
 import { Message } from '../components';
-import { ChatDataType, strings } from '../constants';
+import { ChatDataType, MessageListDataType, strings } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import chatAction, { chatDataSelector } from '../redux/ChatRedux';
 import { timestampToTime } from '../services';
 
-const MessageList = ({ chatId }: { chatId: string }) => {
+const MessageList = ({ chatId, setCameraModal }: MessageListDataType) => {
   const scrollRef = useRef<FlatList>(null);
   const dispatch = useDispatch();
   const { chatData } = useSelector(chatDataSelector.getData);
@@ -53,6 +53,7 @@ const MessageList = ({ chatId }: { chatId: string }) => {
         );
       }}
       bounces={false}
+      onTouchStart={() => setCameraModal(false)}
     />
   );
 };

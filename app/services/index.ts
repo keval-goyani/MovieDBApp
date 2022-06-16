@@ -7,6 +7,8 @@ import {
   getDetails,
   getError,
   getUniqueMovies,
+  handleCameraPermission,
+  handleGalleryPermission,
   searchMovie,
   sortString,
   timestampToTime,
@@ -24,4 +26,6 @@ export {
   getChatTime,
   timestampToTime,
   sortString,
+  handleGalleryPermission,
+  handleCameraPermission,
 };

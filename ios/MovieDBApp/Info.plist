@@ -48,7 +48,12 @@
       <key>NeedToAccessLocation</key>
       <string>MovieDB needs Location access</string>
     </dict>
-
+	<key>NSCameraUsageDescription</key>
+  	<string>MovieDB needs Camera access</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+  	<string>MovieDB needs Photo Gallery acees</string>
+  	<key>NSPhotoLibraryAddUsageDescription</key>
+  	<string>MovieDB needs Photo Gallery acees</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

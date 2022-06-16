@@ -1,5 +1,19 @@
 import apisauce from 'apisauce';
+import React, { Dispatch } from 'react';
 import { Alert } from 'react-native';
+import {
+  Asset,
+  launchCamera,
+  launchImageLibrary,
+} from 'react-native-image-picker';
+import {
+  check,
+  openSettings,
+  PERMISSIONS,
+  request,
+  RESULTS,
+} from 'react-native-permissions';
+import RNFetchBlob from 'rn-fetch-blob';
 import { ImmutableObject } from 'seamless-immutable';
 import {
   appConstants,
@@ -8,9 +22,10 @@ import {
   ListItemDataType,
   MovieDetailsDataType,
   MovieResponseGenerator,
+  pickerOptions,
   strings,
 } from '../constants';
-import { Color } from '../theme';
+import { Color, Metrics } from '../theme';
 
 export const apiConfig = apisauce.create({
   baseURL: appConstants.baseUrl,
@@ -159,4 +174,142 @@ export const getChatTime = (time: number) => {
 
 export const sortString = (input: string) => {
   return input.split('').sort().join('');
+};
+
+export const handleCameraPermission = (
+  setImagePath: Dispatch<React.SetStateAction<string>>,
+) => {
+  check(appConstants.cameraPermission)
+    .then(result => {
+      switch (result) {
+        case RESULTS.BLOCKED:
+          permissionAlert(strings.cameraPermission);
+          break;
+        case RESULTS.DENIED:
+          requestCameraPermission();
+          break;
+        case RESULTS.UNAVAILABLE || RESULTS.LIMITED:
+          alertMessage(strings.permissionUnavailable);
+          break;
+        default:
+          openCamera(setImagePath);
+      }
+    })
+    .catch(error => {
+      alertMessage(error);
+    });
+};
+
+export const handleGalleryPermission = (
+  setImagePath: Dispatch<React.SetStateAction<string>>,
+) => {
+  check(appConstants.galleryPermission)
+    .then(result => {
+      switch (result) {
+        case RESULTS.BLOCKED:
+          permissionAlert(strings.galleryPermission);
+          break;
+        case RESULTS.DENIED:
+          requestGalleryPermission();
+          break;
+        case RESULTS.UNAVAILABLE || RESULTS.LIMITED:
+          alertMessage(strings.permissionUnavailable);
+          break;
+        default:
+          selectImage(setImagePath);
+      }
+    })
+    .catch(error => {
+      alertMessage(error);
+    });
+};
+
+const requestCameraPermission = () => {
+  return Metrics.isAndroid
+    ? request(PERMISSIONS.ANDROID.CAMERA)
+    : request(PERMISSIONS.IOS.CAMERA);
+};
+
+const requestGalleryPermission = () => {
+  return Metrics.isAndroid
+    ? request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE)
+    : request(PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY);
+};
+
+const permissionAlert = (type: string) => {
+  const permissionBlockedAlert =
+    type === strings.cameraPermission
+      ? strings.cameraPermissionBlocked
+      : strings.galleryPermissionBlocked;
+
+  Alert.alert(permissionBlockedAlert, strings.grantPermission, [
+    { onPress: () => openSettings(), text: strings.goToSettings },
+    { text: strings.cancel },
+  ]);
+};
+
+const pickerCallback = (
+  assets: Asset[] = [],
+  setImagePath: Dispatch<React.SetStateAction<string>>,
+) => {
+  const { androidFolder, iosFolder } = appConstants;
+  const filePath = generateFilePath(assets[0]?.fileName);
+  const data = assets[0]?.base64 ?? '';
+  const directory = Metrics.isAndroid ? androidFolder : iosFolder;
+
+  RNFetchBlob.fs.isDir(directory).then(isDir => {
+    if (isDir) {
+      filePath && saveImage(filePath, data, setImagePath);
+    } else {
+      RNFetchBlob.fs
+        .mkdir(directory)
+        .then(() => filePath && saveImage(filePath, data, setImagePath))
+        .catch(error => alertMessage(error));
+    }
+  });
+};
+
+const generateFilePath = (fileName: string = '') => {
+  const { androidFolder, iosFolder, timestamp } = appConstants;
+
+  if (fileName) {
+    return Metrics.isAndroid
+      ? `${androidFolder}/${timestamp}_${fileName}`
+      : `${iosFolder}/${timestamp}_${fileName}`;
+  }
+};
+
+const saveImage = (
+  path: string,
+  data: string,
+  setImagePath: Dispatch<React.SetStateAction<string>>,
+) => {
+  RNFetchBlob.fs
+    .createFile(path, data, 'base64')
+    .then(() => getImage(path, setImagePath))
+    .catch(error => alertMessage(error));
+};
+
+const getImage = (
+  path: string,
+  setImagePath: Dispatch<React.SetStateAction<string>>,
+) => {
+  RNFetchBlob.fs
+    .readStream(path, 'base64')
+    .then(({ path: imagePath }) => {
+      setImagePath(imagePath);
+    })
+    .catch(error => alertMessage(error));
+};
+
+const openCamera = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
+  launchCamera({ mediaType: 'photo', ...pickerOptions })
+    .then(({ assets }) => pickerCallback(assets, setImagePath))
+    .catch(error => alertMessage(error));
+};
+
+const selectImage = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
+  launchImageLibrary({ mediaType: 'photo', ...pickerOptions })
+    .then(({ assets }) => pickerCallback(assets, setImagePath))
+    .catch(error => alertMessage(error));
 };

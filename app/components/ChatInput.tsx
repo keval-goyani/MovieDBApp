@@ -1,13 +1,25 @@
 import firestore from '@react-native-firebase/firestore';
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Image, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Keyboard,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useSelector } from 'react-redux';
 import { Icons } from '../assets';
+import { Stagger } from '../components';
 import { ChatDataType, ChatInputDataType, strings } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import { styles } from './styles/ChatInputStyles';
 
-const ChatInput: FC<ChatInputDataType> = ({ chatId }) => {
+const ChatInput: FC<ChatInputDataType> = ({
+  chatId,
+  cameraModal,
+  setCameraModal,
+  setImagePath,
+}) => {
   const [message, setMessage] = useState<string>('');
   const [messageList, setMessageList] = useState<ChatDataType[]>([]);
   const { user } = useSelector(authDataSelectors.getData);
@@ -18,7 +30,7 @@ const ChatInput: FC<ChatInputDataType> = ({ chatId }) => {
         .collection(strings.chatCollection)
         .doc(chatId)
         .set({ messageList })
-        .catch(e => e));
+        .catch(error => error));
   }, [chatId, messageList]);
 
   useEffect(() => {
@@ -58,14 +70,29 @@ const ChatInput: FC<ChatInputDataType> = ({ chatId }) => {
             style={styles.input}
             onChangeText={text => setMessage(text)}
             value={message}
+            onFocus={() => setCameraModal(false)}
           />
+          <Image source={Icons.attach} style={styles.inputIcon} />
+          <TouchableOpacity
+            onPress={() => {
+              setCameraModal(!cameraModal);
+              Keyboard.dismiss();
+            }}>
+            <Image source={Icons.camera} style={styles.inputIcon} />
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           style={styles.sendButtonView}
-          onPress={sendMessageHandler}>
+          onPress={() => {
+            sendMessageHandler();
+            setCameraModal(false);
+          }}>
           <Image source={Icons.send} style={styles.sendButton} />
         </TouchableOpacity>
       </View>
+      {cameraModal && (
+        <Stagger {...{ cameraModal, setCameraModal, setImagePath }} />
+      )}
     </View>
   );
 };

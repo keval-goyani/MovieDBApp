@@ -418,6 +418,10 @@ export interface ChatLocalStoreDataType {
 
 export interface ChatInputDataType {
   chatId: string;
+  cameraModal?: boolean;
+  imagePath?: string;
+  setCameraModal: Dispatch<React.SetStateAction<boolean>>;
+  setImagePath: Dispatch<React.SetStateAction<string>>;
 }
 
 export interface LatestMessageDataType {
@@ -461,4 +465,16 @@ export interface ChatListSagaDataType {
     time: number;
     user: string;
   };
+}
+
+export interface StaggerDataType {
+  cameraModal?: boolean;
+  imagePath?: string;
+  setCameraModal: Dispatch<React.SetStateAction<boolean>>;
+  setImagePath: Dispatch<React.SetStateAction<string>>;
+}
+
+export interface MessageListDataType {
+  chatId: string;
+  setCameraModal: Dispatch<React.SetStateAction<boolean>>;
 }
