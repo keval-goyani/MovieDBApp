@@ -196,7 +196,7 @@ export const handleCameraPermission = (
       }
     })
     .catch(error => {
-      alertMessage(error);
+      alertMessage(error.message);
     });
 };
 
@@ -220,7 +220,7 @@ export const handleGalleryPermission = (
       }
     })
     .catch(error => {
-      alertMessage(error);
+      alertMessage(error.message);
     });
 };
 
@@ -264,7 +264,7 @@ const pickerCallback = (
       RNFetchBlob.fs
         .mkdir(directory)
         .then(() => filePath && saveImage(filePath, data, setImagePath))
-        .catch(error => alertMessage(error));
+        .catch(error => alertMessage(error.message));
     }
   });
 };
@@ -287,7 +287,7 @@ const saveImage = (
   RNFetchBlob.fs
     .createFile(path, data, 'base64')
     .then(() => getImage(path, setImagePath))
-    .catch(error => alertMessage(error));
+    .catch(error => alertMessage(error.message));
 };
 
 const getImage = (
@@ -299,17 +299,23 @@ const getImage = (
     .then(({ path: imagePath }) => {
       setImagePath(imagePath);
     })
-    .catch(error => alertMessage(error));
+    .catch(error => alertMessage(error.message));
 };
 
 const openCamera = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
   launchCamera({ mediaType: 'photo', ...pickerOptions })
-    .then(({ assets }) => pickerCallback(assets, setImagePath))
-    .catch(error => alertMessage(error));
+    .then(
+      ({ assets, didCancel }) =>
+        !didCancel && pickerCallback(assets, setImagePath),
+    )
+    .catch(error => alertMessage(error.message));
 };
 
 const selectImage = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
   launchImageLibrary({ mediaType: 'photo', ...pickerOptions })
-    .then(({ assets }) => pickerCallback(assets, setImagePath))
-    .catch(error => alertMessage(error));
+    .then(
+      ({ assets, didCancel }) =>
+        !didCancel && pickerCallback(assets, setImagePath),
+    )
+    .catch(error => alertMessage(error.message));
 };
