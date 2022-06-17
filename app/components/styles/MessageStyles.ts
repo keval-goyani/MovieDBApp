@@ -8,7 +8,7 @@ import {
 
 export const styles = StyleSheet.create({
   container: {
-    marginTop: verticalScale(10),
+    marginVertical: verticalScale(10),
   },
   messageContainer: {
     maxWidth: '80%',
