@@ -95,4 +95,6 @@ export default {
   openingCamera: 'Opening Camera',
   permissionUnavailable: 'Oops! Feature Unavailable / Limited',
   imageSavedAlert: 'Image Saved Successfully',
+  changeWallpaper: 'Change Wallpaper',
+  files: 'file:///',
 };
