@@ -1,6 +1,7 @@
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
 import ChatMenu from './ChatMenu';
+import CustomShareLocationButton from './CustomShareLocationButton';
 import CustomSkeleton from './CustomSkeleton';
 import DropDownMenu from './DropDownMenu';
 import Header from './Header';
@@ -8,6 +9,8 @@ import List from './List';
 import ListContainer, { movieListItem } from './ListContainer';
 import Loader from './Loader';
 import LoadingState from './LoadingState';
+import Location from './Location';
+import Map from './Map';
 import Message from './Message';
 import MessageList from './MessageList';
 import Movies from './Movies';
@@ -46,4 +49,7 @@ export {
   ShareLocation,
   Stagger,
   ChatMenu,
+  CustomShareLocationButton,
+  Map,
+  Location,
 };

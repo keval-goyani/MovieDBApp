@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
     width: moderateScale(20),
     tintColor: Color.lightBlue,
   },
+  headerTitleStyle: {
+    color: Color.white,
+    fontWeight: '700',
+    fontSize: moderateScale(17),
+  },
 });
 
 export default styles;
