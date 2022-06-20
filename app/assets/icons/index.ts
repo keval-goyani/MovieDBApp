@@ -24,4 +24,5 @@ export default {
   camera: require('./camera.png'),
   attach: require('./attach.png'),
   gallery: require('./gallery.png'),
+  dotMenu: require('./dots.png'),
 };

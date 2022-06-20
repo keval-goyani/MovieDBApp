@@ -49,4 +49,10 @@ export const styles = StyleSheet.create({
     color: Color.white,
     fontSize: moderateScale(16),
   },
+  dotsMenu: {
+    height: moderateScale(25),
+    width: moderateScale(25),
+    tintColor: Color.white,
+    marginRight: horizontalScale(15),
+  },
 });

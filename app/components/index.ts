@@ -1,5 +1,6 @@
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
+import ChatMenu from './ChatMenu';
 import CustomSkeleton from './CustomSkeleton';
 import DropDownMenu from './DropDownMenu';
 import Header from './Header';
@@ -44,4 +45,5 @@ export {
   UserListEmpty,
   ShareLocation,
   Stagger,
+  ChatMenu,
 };

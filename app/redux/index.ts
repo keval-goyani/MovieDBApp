@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { authReducer } from './AuthRedux';
 import { chatReducer } from './ChatRedux';
 import { userListReducer } from './ChatUserListRedux';
+import { wallpaperReducer } from './ChatWallpaperRedux';
 import { selectTabReducer } from './DrawerSelectRedux';
 import { freeMovieReducer } from './FreeMovieRedux';
 import { detailReducer } from './MovieDetailRedux';
@@ -19,4 +20,5 @@ export default combineReducers({
   trailerData: trailerReducer,
   trendingData: trendingReducer,
   selectTab: selectTabReducer,
+  chatWallpaper: wallpaperReducer,
 });

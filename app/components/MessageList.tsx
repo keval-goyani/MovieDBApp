@@ -9,7 +9,11 @@ import { authDataSelectors } from '../redux/AuthRedux';
 import chatAction, { chatDataSelector } from '../redux/ChatRedux';
 import { timestampToTime } from '../services';
 
-const MessageList = ({ chatId, setCameraModal }: MessageListDataType) => {
+const MessageList = ({
+  chatId,
+  setCameraModal,
+  setShowMenu,
+}: MessageListDataType) => {
   const scrollRef = useRef<FlatList>(null);
   const dispatch = useDispatch();
   const { chatData } = useSelector(chatDataSelector.getData);
@@ -53,7 +57,10 @@ const MessageList = ({ chatId, setCameraModal }: MessageListDataType) => {
         );
       }}
       bounces={false}
-      onTouchStart={() => setCameraModal(false)}
+      onTouchStart={() => {
+        setCameraModal(false);
+        setShowMenu(false);
+      }}
     />
   );
 };

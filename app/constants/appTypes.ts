@@ -364,6 +364,9 @@ export interface ChatHeaderDataType {
   username: string;
   picture: ImageSourcePropType;
   onlineStatus: string;
+  showMenu: boolean;
+  setShowMenu: Dispatch<React.SetStateAction<boolean>>;
+  setChatWallpaper: Dispatch<React.SetStateAction<string>>;
 }
 
 export interface MessageDataType {
@@ -477,4 +480,14 @@ export interface StaggerDataType {
 export interface MessageListDataType {
   chatId: string;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
+  setShowMenu: Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface SetWallpaperDataType {
+  wallpaperPath: string;
+}
+
+export interface ChatMenuDataType {
+  setChatWallpaper: Dispatch<React.SetStateAction<string>>;
+  setShowMenu: Dispatch<React.SetStateAction<boolean>>;
 }
