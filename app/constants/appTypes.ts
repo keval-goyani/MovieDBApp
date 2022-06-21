@@ -373,6 +373,7 @@ export interface ChatHeaderDataType {
   showMenu: boolean;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
+  chatId: string;
 }
 
 export interface MessageDataType {
@@ -502,6 +503,20 @@ export interface SetWallpaperDataType {
 export interface ChatMenuDataType {
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
+  chatId: string;
+}
+
+export interface CustomButtonDataType {
+  onPress: () => void;
+  buttonStyle: TextStyle;
+  buttonTextStyle: TextStyle;
+  buttonText: string;
+}
+
+export interface ClearChatDataType {
+  navigation: NavigationDataType;
+  setShowMenu: Dispatch<React.SetStateAction<boolean>>;
+  chatId: string;
 }
 
 export interface LocationCoordsProps {

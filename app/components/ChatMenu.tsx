@@ -1,19 +1,41 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
-import { ChatMenuDataType, strings } from '../constants';
-import { handleGalleryPermission } from '../services';
+import { View } from 'react-native';
+import { CustomButton } from '../components';
+import { ChatMenuDataType, NavigationDataType, strings } from '../constants';
+import { clearChat, handleGalleryPermission } from '../services';
 import { styles } from './styles/ChatMenuStyles';
 
-const ChatMenu = ({ setChatWallpaper, setShowMenu }: ChatMenuDataType) => {
+const ChatMenu = ({
+  setChatWallpaper,
+  setShowMenu,
+  chatId,
+}: ChatMenuDataType) => {
+  const navigation: NavigationDataType = useNavigation();
+
+  const changeWallpaper = () => {
+    handleGalleryPermission(setChatWallpaper);
+    setShowMenu(false);
+  };
+
   return (
     <View style={styles.container}>
-      <Pressable
-        onPress={() => {
-          handleGalleryPermission(setChatWallpaper);
-          setShowMenu(false);
-        }}>
-        <Text style={styles.menuItem}>{strings.changeWallpaper}</Text>
-      </Pressable>
+      <CustomButton
+        {...{
+          buttonTextStyle: styles.menuItem,
+          buttonStyle: styles.menuListItem,
+          buttonText: strings.changeWallpaper,
+          onPress: changeWallpaper,
+        }}
+      />
+      <CustomButton
+        {...{
+          buttonStyle: styles.menuListItem,
+          buttonTextStyle: styles.menuItem,
+          buttonText: strings.clearChat,
+          onPress: () => clearChat({ ...{ navigation, chatId, setShowMenu } }),
+        }}
+      />
     </View>
   );
 };

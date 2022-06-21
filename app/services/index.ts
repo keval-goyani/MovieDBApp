@@ -3,6 +3,7 @@ import immutablePersistenceTransform from './immutablePersistenceTransform';
 import {
   alertMessage,
   apiConfig,
+  clearChat,
   getChatTime,
   getDetails,
   getError,
@@ -28,4 +29,5 @@ export {
   sortString,
   handleGalleryPermission,
   handleCameraPermission,
+  clearChat,
 };

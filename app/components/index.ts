@@ -1,8 +1,9 @@
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
 import ChatMenu from './ChatMenu';
-import CustomShareLocationButton from './CustomShareLocationButton';
+import CustomButton from './CustomButton';
 import CustomDrawer from './CustomDrawer';
+import CustomShareLocationButton from './CustomShareLocationButton';
 import CustomSkeleton from './CustomSkeleton';
 import DropDownMenu from './DropDownMenu';
 import Header from './Header';
@@ -54,4 +55,5 @@ export {
   Map,
   Location,
   CustomDrawer,
+  CustomButton,
 };
