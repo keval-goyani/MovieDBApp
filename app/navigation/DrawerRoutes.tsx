@@ -1,24 +1,28 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { Icons } from '../assets';
-import CustomDrawer from '../components/CustomDrawer';
+import { CustomDrawer } from '../components';
 import { navigationStrings, strings } from '../constants';
 import { TabRoutes } from '../navigation';
-import { Color, styles } from '../theme';
+import selectedAction from '../redux/DrawerSelectRedux';
+import { styles } from './styles/DrawerRoutesStyles';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerRoutes = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(selectedAction.selected(navigationStrings.Home));
+  }, [dispatch]);
+
   return (
     <Drawer.Navigator
       initialRouteName={navigationStrings.HomeTab}
       screenOptions={{
         headerShown: false,
-        drawerLabelStyle: styles.labelStyle,
-        drawerActiveBackgroundColor: Color.blueGreen,
-        drawerActiveTintColor: Color.darkBlue,
-        drawerInactiveTintColor: Color.white,
         drawerType: 'front',
         keyboardDismissMode: 'on-drag',
       }}
@@ -28,12 +32,13 @@ const DrawerRoutes = () => {
         name={strings.tabRoute}
         component={TabRoutes}
         options={{
-          drawerIcon: ({ color }) => (
-            <Image
-              source={Icons.homeIcon}
-              style={[styles.icon, { tintColor: color }]}
-            />
-          ),
+          drawerIcon: ({ color }) => {
+            const drawerStyles = styles(color);
+
+            return (
+              <Image source={Icons.homeIcon} style={drawerStyles.iconColor} />
+            );
+          },
         }}
       />
     </Drawer.Navigator>

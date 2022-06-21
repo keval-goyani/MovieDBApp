@@ -2,6 +2,7 @@ import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
 import ChatMenu from './ChatMenu';
 import CustomShareLocationButton from './CustomShareLocationButton';
+import CustomDrawer from './CustomDrawer';
 import CustomSkeleton from './CustomSkeleton';
 import DropDownMenu from './DropDownMenu';
 import Header from './Header';
@@ -52,4 +53,5 @@ export {
   CustomShareLocationButton,
   Map,
   Location,
+  CustomDrawer,
 };
