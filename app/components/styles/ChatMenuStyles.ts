@@ -16,10 +16,14 @@ export const styles = StyleSheet.create({
     top: verticalScale(20),
     width: horizontalScale(200),
     zIndex: 1,
+    borderRadius: 10,
   },
   menuItem: {
     color: Color.darkBlue,
     fontSize: moderateScale(16),
     fontWeight: 'bold',
+  },
+  menuListItem: {
+    padding: moderateScale(5),
   },
 });

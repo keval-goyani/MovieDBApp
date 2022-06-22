@@ -57,6 +57,7 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
           showMenu,
           setShowMenu,
           setChatWallpaper,
+          chatId,
         }}
       />
       <ImageBackground source={chatBackground} style={styles.container}>

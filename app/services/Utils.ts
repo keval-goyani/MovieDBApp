@@ -1,3 +1,4 @@
+import firestore from '@react-native-firebase/firestore';
 import apisauce from 'apisauce';
 import React, { Dispatch } from 'react';
 import { Alert } from 'react-native';
@@ -17,6 +18,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { ImmutableObject } from 'seamless-immutable';
 import {
   appConstants,
+  ClearChatDataType,
   DetailResponseGenerator,
   genres,
   ListItemDataType,
@@ -318,4 +320,22 @@ const selectImage = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
         !didCancel && pickerCallback(assets, setImagePath),
     )
     .catch(error => alertMessage(error.message));
+};
+
+export const clearChat = ({
+  navigation,
+  chatId,
+  setShowMenu,
+}: ClearChatDataType) => {
+  Alert.alert(strings.areYouSure, strings.clearChatAlert, [
+    { text: strings.cancel, onPress: () => setShowMenu(false) },
+    {
+      text: strings.ok,
+      onPress: () => {
+        firestore().collection(strings.chatCollection).doc(chatId).delete();
+        setShowMenu(false);
+        navigation.goBack();
+      },
+    },
+  ]);
 };
