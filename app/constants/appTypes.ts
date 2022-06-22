@@ -548,3 +548,9 @@ export interface ShareLocationDataProps {
   currentLatitude?: number;
   currentLongitude?: number;
 }
+
+export interface CustomHyperlinkDataType {
+  linkTitle: string;
+  hyperlinkTitle: string;
+  onPress: () => void;
+}

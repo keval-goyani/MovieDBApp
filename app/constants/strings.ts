@@ -106,4 +106,6 @@ export default {
   clearChat: 'Clear Chat',
   areYouSure: 'Are You Sure?',
   clearChatAlert: 'This Will Clear Chat!',
+  alreadyAccount: 'Already Have Account?',
+  goToLogin: 'Login Here!',
 };

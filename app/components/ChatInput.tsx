@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import {
   Image,
   Keyboard,
@@ -23,6 +23,7 @@ const ChatInput: FC<ChatInputDataType> = ({
   const [message, setMessage] = useState<string>('');
   const [messageList, setMessageList] = useState<ChatDataType[]>([]);
   const { user } = useSelector(authDataSelectors.getData);
+  const messageInput = useRef<TextInput>(null);
 
   const addToFireStore = useCallback(async () => {
     messageList.length !== 0 &&
@@ -60,6 +61,10 @@ const ChatInput: FC<ChatInputDataType> = ({
     }
   };
 
+  useEffect(() => {
+    messageInput && messageInput?.current?.focus();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -71,6 +76,7 @@ const ChatInput: FC<ChatInputDataType> = ({
             onChangeText={text => setMessage(text)}
             value={message}
             onFocus={() => setCameraModal(false)}
+            ref={messageInput}
           />
           <Image source={Icons.attach} style={styles.inputIcon} />
           <TouchableOpacity

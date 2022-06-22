@@ -3,6 +3,7 @@ import ChatInput from './ChatInput';
 import ChatMenu from './ChatMenu';
 import CustomButton from './CustomButton';
 import CustomDrawer from './CustomDrawer';
+import CustomHyperlink from './CustomHyperlink';
 import CustomShareLocationButton from './CustomShareLocationButton';
 import CustomSkeleton from './CustomSkeleton';
 import DropDownMenu from './DropDownMenu';
@@ -56,4 +57,5 @@ export {
   Location,
   CustomDrawer,
   CustomButton,
+  CustomHyperlink,
 };

@@ -8,9 +8,10 @@ import {
   ScrollView,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { CustomHyperlink } from '../../components';
 import {
   Credentials,
-  NavigationScreenType,
+  NavigationDataType,
   navigationStrings,
   strings,
 } from '../../constants';
@@ -26,7 +27,7 @@ const SignUpScreen = () => {
     password: '',
   });
   const dispatch = useDispatch();
-  const navigation: NavigationScreenType = useNavigation();
+  const navigation: NavigationDataType = useNavigation();
   const { username, email, password } = registerCredentials;
   const behavior = Metrics.isAndroid ? 'height' : 'padding';
 
@@ -66,6 +67,13 @@ const SignUpScreen = () => {
         <Form
           getCredentials={setRegisterCredentials}
           type={strings.signUpCamel}
+        />
+        <CustomHyperlink
+          {...{
+            linkTitle: strings.alreadyAccount,
+            hyperlinkTitle: strings.goToLogin,
+            onPress: () => navigation.goBack(),
+          }}
         />
       </ScrollView>
     </KeyboardAvoidingView>

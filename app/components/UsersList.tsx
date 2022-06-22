@@ -130,15 +130,17 @@ const UsersList = () => {
           dispatch(chatAction.chatDataRequest(chatId));
         }}
         activeOpacity={0.5}>
-        <Image source={Icons.avatar} style={styles.avatar} />
-        <View style={styles.nameView}>
-          <Text style={styles.text}>{item?.username}</Text>
-          <Text
-            style={styles.lastChatText}
-            ellipsizeMode="tail"
-            numberOfLines={1}>
-            {latestMessage}
-          </Text>
+        <View style={styles.avatarGroup}>
+          <Image source={Icons.avatar} style={styles.avatar} />
+          <View style={styles.nameView}>
+            <Text style={styles.text}>{item?.username}</Text>
+            <Text
+              style={styles.lastChatText}
+              ellipsizeMode="tail"
+              numberOfLines={1}>
+              {latestMessage}
+            </Text>
+          </View>
         </View>
         <View style={styles.dateView}>
           <Text style={styles.dateText}>{time}</Text>
