@@ -9,7 +9,7 @@ import {
 
 export const styles = StyleSheet.create({
   listItem: {
-    width: Metrics.screenWidth,
+    flex: 1,
     borderColor: Color.black,
     borderBottomWidth: Metrics.borderLineWidth,
     flexDirection: 'row',
@@ -47,5 +47,11 @@ export const styles = StyleSheet.create({
     width: horizontalScale(190),
     marginLeft: horizontalScale(10),
   },
-  dateView: { width: horizontalScale(100) },
+  dateView: {
+    width: horizontalScale(100),
+  },
+  avatarGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
