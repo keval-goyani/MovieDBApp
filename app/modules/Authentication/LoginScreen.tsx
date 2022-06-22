@@ -6,11 +6,10 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   ScrollView,
-  Text,
-  TouchableOpacity,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Icons } from '../../assets';
+import { CustomHyperlink } from '../../components';
 import {
   Credentials,
   NavigationScreenType,
@@ -56,14 +55,13 @@ const LoginScreen = () => {
         contentContainerStyle={{ ...appStyles.container, ...styles.container }}>
         <Image source={Icons.movieDbIcon3x} style={styles.image} />
         <Form getCredentials={setLoginCredentials} type={strings.loginCamel} />
-        <Text style={styles.headerText}>{strings.accountNotExist}</Text>
-        <TouchableOpacity
-          style={styles.linkTextView}
-          onPress={() => {
-            navigation.navigate(navigationStrings.SignUp);
-          }}>
-          <Text style={styles.linkText}>{strings.createAccount}</Text>
-        </TouchableOpacity>
+        <CustomHyperlink
+          {...{
+            linkTitle: strings.accountNotExist,
+            hyperlinkTitle: strings.createAccount,
+            onPress: () => navigation.navigate(navigationStrings.SignUp),
+          }}
+        />
       </ScrollView>
     </KeyboardAvoidingView>
   );
