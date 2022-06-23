@@ -325,6 +325,7 @@ export interface AuthStateDataType {
   user: null | AuthDataType;
   authenticated: null | boolean;
   error: null | boolean;
+  loading: boolean | null;
 }
 export interface DrawerStateDataType {
   setActiveTab: selectDataTypes;

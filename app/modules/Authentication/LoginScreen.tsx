@@ -7,17 +7,17 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Icons } from '../../assets';
-import { CustomHyperlink } from '../../components';
+import { CustomHyperlink, Loader } from '../../components';
 import {
   Credentials,
   NavigationScreenType,
   navigationStrings,
   strings,
 } from '../../constants';
-import authAction from '../../redux/AuthRedux';
-import { Metrics, styles as appStyles } from '../../theme';
+import authAction, { authDataSelectors } from '../../redux/AuthRedux';
+import { Color, Metrics, styles as appStyles } from '../../theme';
 import { Form } from './components';
 import { styles } from './styles/LoginScreenStyles';
 
@@ -30,6 +30,7 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigation: NavigationScreenType = useNavigation();
   const behavior = Metrics.isAndroid ? 'height' : 'padding';
+  const { loading } = useSelector(authDataSelectors.getData);
 
   const loginHandler = useCallback(async () => {
     if (email && password) {
@@ -55,6 +56,9 @@ const LoginScreen = () => {
         contentContainerStyle={{ ...appStyles.container, ...styles.container }}>
         <Image source={Icons.movieDbIcon3x} style={styles.image} />
         <Form getCredentials={setLoginCredentials} type={strings.loginCamel} />
+        {loading && (
+          <Loader color={Color.white} animating={true} size={'large'} />
+        )}
         <CustomHyperlink
           {...{
             linkTitle: strings.accountNotExist,

@@ -18,6 +18,7 @@ export const INITIAL_STATE: ImmutableObject<AuthStateDataType> = Immutable({
   user: null,
   authenticated: null,
   error: null,
+  loading: null,
 });
 
 export const authDataSelectors = {
@@ -25,7 +26,7 @@ export const authDataSelectors = {
 };
 
 const request = (state: ImmutableObject<AuthStateDataType>) => {
-  return state;
+  return state.merge({ loading: true });
 };
 
 const success = (
@@ -36,6 +37,7 @@ const success = (
     user: data,
     authenticated: true,
     error: false,
+    loading: false,
   });
 };
 
@@ -48,6 +50,7 @@ const failure = (
   return state.merge({
     authenticated: false,
     error: true,
+    loading: false,
   });
 };
 
@@ -56,6 +59,7 @@ const signOut = (state: ImmutableObject<AuthStateDataType>) => {
     user: null,
     authenticated: null,
     error: null,
+    loading: null,
   });
 };
 
@@ -64,4 +68,5 @@ export const authReducer = createReducer(INITIAL_STATE, {
   [Types.AUTH_SUCCESS]: success,
   [Types.AUTH_FAILURE]: failure,
   [Types.LOGOUT]: signOut,
+  [Types.LOGIN_REQUEST]: request,
 });
