@@ -2,7 +2,7 @@ import storage from '@react-native-firebase/storage';
 import React, { useEffect, useState } from 'react';
 import { ImageBackground, KeyboardAvoidingView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChatHeader, ChatInput, MessageList } from '../../components';
+import { ChatHeader, ChatInput, MessageList, ShareDocument } from '../../components';
 import { ChatScreenDataType, strings } from '../../constants';
 import wallpaperActions, {
   wallpaperSelectors,
@@ -61,7 +61,7 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
         }}
       />
       <ImageBackground source={chatBackground} style={styles.container}>
-        <MessageList
+        {/* <MessageList
           {...{
             setCameraModal,
             setImagePath,
@@ -70,7 +70,8 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
             setShowMenu,
           }}
         />
-        <ChatInput {...{ cameraModal, setCameraModal, setImagePath, chatId }} />
+        <ChatInput {...{ cameraModal, setCameraModal, setImagePath, chatId }} /> */}
+        <ShareDocument fileType={'JPG'} />
       </ImageBackground>
     </KeyboardAvoidingView>
   );

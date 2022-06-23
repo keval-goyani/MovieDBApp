@@ -554,3 +554,12 @@ export interface CustomHyperlinkDataType {
   hyperlinkTitle: string;
   onPress: () => void;
 }
+
+export interface ShareDocumentProps {
+  fileType: string;
+}
+
+export interface DocumentFooterProps {
+  page: boolean;
+  fileType: string;
+}

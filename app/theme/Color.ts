@@ -29,4 +29,5 @@ export const Color = {
   powderBlue: '#87cefa40',
   lightIndigo: '#5C5FE0',
   lightRed: '#E44041',
+  transparentGray: '#80808099',
 };

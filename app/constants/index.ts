@@ -26,6 +26,7 @@ import {
   DetailResponseGenerator,
   DetailStateDataType,
   DetailStoreDataType,
+  DocumentFooterProps,
   DrawerStateDataType,
   DropDownDataType,
   FireStoreResponseDataType,
@@ -56,6 +57,7 @@ import {
   SearchFunctionDataType,
   SearchModalDataType,
   SetWallpaperDataType,
+  ShareDocumentProps,
   ShareLocationDataProps,
   SkeletonProps,
   StaggerDataType,
@@ -142,4 +144,6 @@ export type {
   TrendingDataType,
   UserListDataType,
   UserListStateDataType,
+  ShareDocumentProps,
+  DocumentFooterProps,
 };
