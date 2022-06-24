@@ -6,6 +6,7 @@ import CustomDrawer from './CustomDrawer';
 import CustomHyperlink from './CustomHyperlink';
 import CustomShareLocationButton from './CustomShareLocationButton';
 import CustomSkeleton from './CustomSkeleton';
+import DocumentFooter from './DocumentFooter';
 import DropDownMenu from './DropDownMenu';
 import Header from './Header';
 import List from './List';
@@ -19,6 +20,7 @@ import MessageList from './MessageList';
 import Movies from './Movies';
 import MovieTrailer, { trailerListItem } from './MovieTrailers';
 import SearchModal from './SearchModal';
+import ShareDocument from './ShareDocument';
 import ShareLocation from './ShareLocation';
 import SkeletonCard from './SkeletonCard';
 import Stagger from './Stagger';
@@ -58,4 +60,6 @@ export {
   CustomDrawer,
   CustomButton,
   CustomHyperlink,
+  ShareDocument,
+  DocumentFooter,
 };

@@ -25,4 +25,10 @@ export default {
   attach: require('./attach.png'),
   gallery: require('./gallery.png'),
   dotMenu: require('./dots.png'),
+  documentIcon: require('./documentIcon.png'),
+  fullStop: require('./fullStop.png'),
+  imageDocument: require('./jpgDocument.png'),
+  videoDocument: require('./mp4Document.png'),
+  pdfDocument: require('./pdfDocument.png'),
+  pptDocument: require('./pptDocument.png'),
 };
