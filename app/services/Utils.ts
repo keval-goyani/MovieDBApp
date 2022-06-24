@@ -118,20 +118,27 @@ export const searchMovie = (movieList: ListItemDataType[], query: string) => {
   const genreId = getGenreID(query);
 
   return movieList.filter(
-    ({
-      title,
-      original_name,
-      original_title,
-      name = '',
-      overview,
-      genre_ids,
-    }) =>
-      searchConditionCheck(title, query) ||
-      searchConditionCheck(original_title, query) ||
-      searchConditionCheck(original_name, query) ||
-      searchConditionCheck(name, query) ||
-      searchConditionCheck(overview, query) ||
-      genre_ids?.includes(genreId),
+    movie =>
+      searchDatacheck(movie, query) || movie.genre_ids?.includes(genreId),
+  );
+};
+
+const searchDatacheck = (
+  {
+    title,
+    original_title,
+    original_name,
+    name = '',
+    overview,
+  }: ListItemDataType,
+  query: string,
+) => {
+  return (
+    searchConditionCheck(title, query) ||
+    searchConditionCheck(original_title, query) ||
+    searchConditionCheck(original_name, query) ||
+    searchConditionCheck(name, query) ||
+    searchConditionCheck(overview, query)
   );
 };
 

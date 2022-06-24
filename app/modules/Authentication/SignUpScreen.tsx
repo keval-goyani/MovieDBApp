@@ -7,16 +7,16 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { CustomHyperlink } from '../../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { CustomHyperlink, Loader } from '../../components';
 import {
   Credentials,
   NavigationDataType,
   navigationStrings,
   strings,
 } from '../../constants';
-import authAction from '../../redux/AuthRedux';
-import { Icons, Metrics, styles as appStyles } from '../../theme';
+import authAction, { authDataSelectors } from '../../redux/AuthRedux';
+import { Color, Icons, Metrics, styles as appStyles } from '../../theme';
 import { Form } from './components';
 import { styles } from './styles/SignUpScreenStyles';
 
@@ -30,6 +30,7 @@ const SignUpScreen = () => {
   const navigation: NavigationDataType = useNavigation();
   const { username, email, password } = registerCredentials;
   const behavior = Metrics.isAndroid ? 'height' : 'padding';
+  const { loading } = useSelector(authDataSelectors.getData);
 
   const signUpHandler = useCallback(async () => {
     if (username && email && password) {
@@ -68,6 +69,9 @@ const SignUpScreen = () => {
           getCredentials={setRegisterCredentials}
           type={strings.signUpCamel}
         />
+        {loading && (
+          <Loader color={Color.white} animating={true} size={'large'} />
+        )}
         <CustomHyperlink
           {...{
             linkTitle: strings.alreadyAccount,
