@@ -403,6 +403,12 @@ export interface UserListDataType {
   senderId: string;
   userId: string;
 }
+
+export interface UserListSagaDataType {
+  payload: UserListDataType[];
+  type: string;
+}
+
 export interface UserListStateDataType {
   userList: UserListDataType[];
   fetchingUserList: boolean;

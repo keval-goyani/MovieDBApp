@@ -91,11 +91,10 @@ const UsersList = () => {
           const uniqueData = [
             ...new Map(chatUserList.map(item => [item.uid, item])).values(),
           ];
-
           uniqueData.sort((a, b) => {
             return a.time === 0 ? b.time : b.time - a.time;
           });
-          dispatch(userListDataAction.userListSuccess(uniqueData));
+          dispatch(userListDataAction.userListRequest(uniqueData));
         });
       });
   }, [dispatch, user]);
@@ -153,7 +152,9 @@ const UsersList = () => {
     <FlatList
       data={asMutable(userList)}
       renderItem={({ item }) => renderUserList(item)}
-      ListEmptyComponent={<UserListEmpty fetching={fetchingUserList} />}
+      ListEmptyComponent={
+        <UserListEmpty {...{ fetchingUserList, length: userList?.length }} />
+      }
       showsVerticalScrollIndicator={false}
       bounces={false}
     />
