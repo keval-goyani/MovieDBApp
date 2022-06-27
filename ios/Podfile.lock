@@ -1144,6 +1144,11 @@ PODS:
     - RNFBApp
   - RNGestureHandler (2.4.2):
     - React-Core
+  - RNNotifee (5.3.0):
+    - React-Core
+    - RNNotifee/NotifeeCore (= 5.3.0)
+  - RNNotifee/NotifeeCore (5.3.0):
+    - React-Core
   - RNPermissions (3.3.1):
     - React-Core
   - RNReanimated (2.8.0):
@@ -1257,6 +1262,7 @@ DEPENDENCIES:
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - "RNNotifee (from `../node_modules/@notifee/react-native`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1400,6 +1406,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/storage"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNNotifee:
+    :path: "../node_modules/@notifee/react-native"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNReanimated:
@@ -1494,6 +1502,7 @@ SPEC CHECKSUMS:
   RNFBFirestore: 20b84abc6368c37297429f810705c203022d8110
   RNFBStorage: b96c566326d070860a9470858c6cf54d825b666b
   RNGestureHandler: 61628a2c859172551aa2100d3e73d1e57878392f
+  RNNotifee: e98a6bb4add6f05e9421ba02683d619b0146d902
   RNPermissions: 34d678157c800b25b22a488e4d8babb57456e796
   RNReanimated: 46cdb89ca59ab7181334f4ed05a70e82ddb36751
   RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
@@ -1503,4 +1512,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 123f8a105fbd7e306353eafa0d65479429476e44
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

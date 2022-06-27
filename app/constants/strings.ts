@@ -119,4 +119,5 @@ export default {
   doc: 'DOC',
   mp4: 'MP4',
   jpg: 'JPG',
+  notificationBlocked: 'Notification Permission Blocked',
 };
