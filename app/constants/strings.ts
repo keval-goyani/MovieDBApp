@@ -81,9 +81,8 @@ export default {
   startConversation: 'Start Conversation',
   yesterday: 'Yesterday',
   emptyString: '',
-  turnOn: 'Turn On Location permission',
-  goToSetting:
-    'please go to Settings -> Location to turn on Location permission',
+  turnOn: 'Turn On Location',
+  goToSetting: 'please go to Settings -> Location to turn on Location',
   setting: 'Settings',
   shareLiveLocation: 'Share live location',
   cameraPermission: 'Camera',
