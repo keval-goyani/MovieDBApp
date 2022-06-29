@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
     <application
       android:name=".MainApplication"
@@ -33,6 +34,11 @@
         <meta-data
      android:name="com.google.android.geo.API_KEY"
      android:value="AIzaSyCnEWnJ3LUq7ffFbv50_An7tobFIC5o6a0"/>
-    
     </application>
+    <queries>
+      <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:mimeType="*/*" />
+      </intent>
+    </queries>
 </manifest>
