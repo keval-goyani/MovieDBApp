@@ -21,7 +21,8 @@ export const styles = StyleSheet.create({
   dotIcon: {
     height: moderateScale(12),
     width: moderateScale(12),
-    margin: moderateScale(1),
+    marginHorizontal: horizontalScale(1),
+    marginVertical: verticalScale(2),
   },
   timeStyle: {
     color: Color.darkBlue,

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ImageBackground, KeyboardAvoidingView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChatHeader, ChatInput, MessageList } from '../../components';
-import { ChatScreenDataType, strings } from '../../constants';
+import { appConstants, ChatScreenDataType, strings } from '../../constants';
 import wallpaperActions, {
   wallpaperSelectors,
 } from '../../redux/ChatWallpaperRedux';
@@ -33,11 +33,12 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
 
   useEffect(() => {
     if (imagePath) {
-      const selectedImage = imagePath.split('/');
-      const imageName = selectedImage[selectedImage.length - 1];
+      const selectedImage = imagePath?.split('/');
+      const imageName = selectedImage?.[selectedImage?.length - 1];
+      const storagePath = `${appConstants.storageImagePath}${imageName}`;
 
       storage()
-        .ref(imageName)
+        .ref(storagePath)
         .putFile(imagePath)
         .then(response => response)
         .catch(error => alertMessage(error));

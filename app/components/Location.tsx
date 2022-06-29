@@ -1,39 +1,43 @@
-import Geolocation from '@react-native-community/geolocation';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import {
-  ChatInputDataType,
   LocationCoordsProps,
+  LocationPropsType,
   NavigationDataType,
   navigationStrings,
   strings,
 } from '../constants';
 import { Color } from '../theme';
 import { styles } from './styles/LocationStyles';
+import { messagePosition } from './styles/PositionStyles';
 
-const Location = ({ username }: ChatInputDataType) => {
+const Location = ({
+  chatUsername,
+  message,
+  isLeft,
+  time,
+}: LocationPropsType) => {
   const navigation: NavigationDataType = useNavigation();
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [lastLatitude, setLastLatitude] = useState(latitude);
   const [lastLongitude, setLastLongitude] = useState(longitude);
   const [isSharing, setIsSharing] = useState(true);
-
+  const positionStyles = messagePosition(isLeft);
+  const location = message.split(',');
   const fixPayload = {
     isFromChat: true,
     lastLatitude: latitude,
     lastLongitude: longitude,
-    ...{ username },
+    ...{ chatUsername },
   };
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(data => {
-      setLatitude(data?.coords?.latitude);
-      setLongitude(data?.coords?.longitude);
-    });
-  }, []);
+    setLatitude(Number(location[0]));
+    setLongitude(Number(location[1]));
+  }, [location]);
 
   const stopShareLiveLocation = ({
     endedLatitude,
@@ -71,7 +75,8 @@ const Location = ({ username }: ChatInputDataType) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.shareLocationContainer}>
+      <View
+        style={[styles.shareLocationContainer, positionStyles.contentPosition]}>
         <TouchableOpacity
           style={styles.shareLocationView}
           activeOpacity={0.5}
@@ -111,7 +116,7 @@ const Location = ({ username }: ChatInputDataType) => {
           <Text style={isSharing ? styles.text : styles.locationEnded}>
             {isSharing ? strings.stopShare : strings.liveLocationEnded}
           </Text>
-          <Text style={styles.timeStyle}>{strings.staticTime}</Text>
+          <Text style={styles.timeStyle}>{time}</Text>
         </TouchableOpacity>
       </View>
     </View>

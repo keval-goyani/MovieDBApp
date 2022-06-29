@@ -4,7 +4,7 @@ import { DocumentFooterProps, strings } from '../constants';
 import { Icons } from '../theme';
 import { styles } from './styles/DocumentFooterStyles';
 
-const DocumentFooter = ({ page, fileType }: DocumentFooterProps) => {
+const DocumentFooter = ({ page, fileType, time }: DocumentFooterProps) => {
   const typeOfPage = fileType === strings.ppt || page;
   const slides = !page ? strings.slides : strings.pages;
 
@@ -20,8 +20,8 @@ const DocumentFooter = ({ page, fileType }: DocumentFooterProps) => {
       )}
       <Text style={styles.pageNo}>{strings.sizeOfDocument}</Text>
       <Image source={Icons.fullStop} style={styles.dotIcon} />
-      <Text style={styles.pageNo}>{strings.typeOfDocument}</Text>
-      <Text style={styles.timeStyle}>{strings.staticTime}</Text>
+      <Text style={styles.pageNo}>{fileType}</Text>
+      <Text style={styles.timeStyle}>{time}</Text>
     </View>
   );
 };

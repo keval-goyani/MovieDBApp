@@ -13,6 +13,8 @@ const MessageList = ({
   chatId,
   setCameraModal,
   setShowMenu,
+  setIsAttach,
+  username,
 }: MessageListDataType) => {
   const scrollRef = useRef<FlatList>(null);
   const dispatch = useDispatch();
@@ -47,12 +49,17 @@ const MessageList = ({
       }}
       renderItem={({ item, index }: { item: ChatDataType; index: number }) => {
         const time: string = timestampToTime(item?.time);
+        const chatUsername =
+          user?.uid === item?.user ? `${strings.you}` : `${username}`;
+
         return (
           <Message
             key={index}
-            time={time}
             isLeft={item?.user !== currentUser.current}
-            message={item?.content ?? ''}
+            message={item?.content}
+            documentName={item?.documentName ?? ''}
+            type={item?.type}
+            {...{ chatUsername, time }}
           />
         );
       }}
@@ -60,6 +67,7 @@ const MessageList = ({
       onTouchStart={() => {
         setCameraModal(false);
         setShowMenu(false);
+        setIsAttach(false);
       }}
     />
   );

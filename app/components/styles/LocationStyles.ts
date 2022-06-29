@@ -11,12 +11,11 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   shareLocationContainer: {
-    backgroundColor: Color.darkBlue,
+    backgroundColor: Color.lightBlue,
     height: verticalScale(200),
     width: horizontalScale(260),
     alignSelf: 'flex-end',
-    margin: moderateScale(10),
-    borderRadius: 14,
+    borderRadius: 10,
     alignItems: 'center',
   },
   shareLocationView: {
@@ -48,7 +47,7 @@ export const styles = StyleSheet.create({
     marginLeft: horizontalScale(2),
   },
   timeStyle: {
-    color: Color.lightGrey,
+    color: Color.gray,
     alignSelf: 'flex-end',
     fontSize: moderateScale(9),
     marginLeft: horizontalScale(198),

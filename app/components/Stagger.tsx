@@ -5,18 +5,14 @@ import { handleCameraPermission, handleGalleryPermission } from '../services';
 import { Icons } from '../theme';
 import { styles } from './styles/StaggerStyles';
 
-const Stagger = ({
-  cameraModal,
-  setCameraModal,
-  setImagePath,
-}: StaggerDataType) => {
+const Stagger = ({ setCameraModal, setImagePath }: StaggerDataType) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.iconCamera}
         onPress={() => {
           handleCameraPermission(setImagePath);
-          setCameraModal(!cameraModal);
+          setCameraModal(false);
         }}>
         <Image source={Icons.camera} style={styles.icon} />
       </TouchableOpacity>
@@ -24,7 +20,7 @@ const Stagger = ({
         style={styles.iconGallery}
         onPress={() => {
           handleGalleryPermission(setImagePath);
-          setCameraModal(!cameraModal);
+          setCameraModal(false);
         }}>
         <Image source={Icons.gallery} style={styles.icon} />
       </TouchableOpacity>
