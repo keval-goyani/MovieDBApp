@@ -3,16 +3,21 @@ import immutablePersistenceTransform from './immutablePersistenceTransform';
 import {
   alertMessage,
   apiConfig,
+  chatCreation,
+  chatIdCreation,
   clearChat,
   getChatTime,
   getDetails,
   getError,
   getUniqueMovies,
   handleCameraPermission,
+  handleDocumentPermission,
   handleGalleryPermission,
   searchMovie,
   sortString,
   timestampToTime,
+  openDocument,
+  addChatToFirestore,
 } from './Utils';
 
 export {
@@ -30,4 +35,9 @@ export {
   handleGalleryPermission,
   handleCameraPermission,
   clearChat,
+  chatCreation,
+  handleDocumentPermission,
+  chatIdCreation,
+  openDocument,
+  addChatToFirestore,
 };

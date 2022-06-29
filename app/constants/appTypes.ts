@@ -373,6 +373,8 @@ export interface ChatHeaderDataType {
   onlineStatus: string;
   showMenu: boolean;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
+  setIsAttach: Dispatch<React.SetStateAction<boolean>>;
+  setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
   chatId: string;
 }
@@ -381,9 +383,11 @@ export interface MessageDataType {
   key?: number;
   time: string;
   isLeft: boolean;
+  type: string;
   message: string;
+  documentName: string;
+  chatUsername: string;
 }
-
 export interface SkeletonProps {
   width: number;
   height: number;
@@ -416,6 +420,8 @@ export interface ChatDataType {
   content: string;
   time: number;
   user: string;
+  type: string;
+  documentName?: string;
 }
 
 export interface ChatStateDataType {
@@ -427,15 +433,23 @@ export interface ChatLocalStoreDataType {
   chat: ChatDataType[];
 }
 
+export interface LocationDataType {
+  currentLatitude: number | undefined;
+  currentLongitude: number | undefined;
+}
+
 export interface ChatInputDataType {
-  cameraModal?: boolean;
-  imagePath?: string;
+  cameraModal: boolean;
+  isAttach: boolean;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
+  setIsAttach: Dispatch<React.SetStateAction<boolean>>;
   setImagePath: Dispatch<React.SetStateAction<string>>;
-  chatId?: string;
-  username?: string;
-  currentLatitude?: number;
-  currentLongitude?: number;
+  setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>;
+  setShowMenu: Dispatch<React.SetStateAction<boolean>>;
+  documentData: DocumentStateDataType;
+  chatId: string;
+  username: string;
+  imageUrl: string;
 }
 
 export interface LatestMessageDataType {
@@ -464,6 +478,8 @@ export interface ChatScreenDataType {
       isFromChat?: boolean;
       lastLatitude?: number;
       lastLongitude?: number;
+      currentLatitude?: number;
+      currentLongitude?: number;
     };
   };
 }
@@ -485,7 +501,6 @@ export interface ChatListSagaDataType {
 }
 
 export interface StaggerDataType {
-  cameraModal?: boolean;
   imagePath?: string;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setImagePath: Dispatch<React.SetStateAction<string>>;
@@ -493,8 +508,10 @@ export interface StaggerDataType {
 
 export interface MessageListDataType {
   chatId: string;
+  username: string;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
+  setIsAttach: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface SetWallpaperDataType {
@@ -539,8 +556,7 @@ export interface CustomButtonProps {
   isFromChat: boolean;
   longitude: number;
   latitude: number;
-  chatId?: string;
-  username?: string;
+  chatId: string;
 }
 
 export interface ShareLocationDataProps {
@@ -558,9 +574,68 @@ export interface CustomHyperlinkDataType {
 
 export interface ShareDocumentProps {
   fileType: string;
+  isLeft: boolean;
+  message: string;
+  documentName: string;
+  time: string;
 }
 
 export interface DocumentFooterProps {
   page: boolean;
   fileType: string;
+  time: string;
+}
+export interface ImageModalDataType {
+  message: string;
+  chatUsername: string;
+  time: string;
+  imageVisible: boolean;
+  setImageVisible: Dispatch<React.SetStateAction<boolean>>;
+  showImageDetail: boolean;
+  setShowImageDetail: Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface AttachDataType {
+  setIsAttach: Dispatch<React.SetStateAction<boolean>>;
+  setImagePath: Dispatch<React.SetStateAction<string>>;
+  setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>;
+  chatId: string;
+  username: string;
+}
+
+export interface CustomIconRounderDataType {
+  path: ImageSourcePropType;
+  iconName: string;
+  tintColor?: ImageStyle;
+  onPress: () => void;
+}
+
+export interface ShareLocationDataType {
+  chatId: string;
+  username: string;
+}
+
+export interface LocationPropsType {
+  chatUsername: string;
+  message: string;
+  isLeft: boolean;
+  time: string;
+}
+
+export interface DocumentStateDataType {
+  documentUrl: string;
+  documentName: string;
+}
+
+export interface ImageMessageDataType {
+  isLeft: boolean;
+  message: string;
+  time: string;
+  chatUsername: string;
+}
+
+export interface TextMessageDataType {
+  isLeft: boolean;
+  message: string;
+  time: string;
 }

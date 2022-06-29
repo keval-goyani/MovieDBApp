@@ -92,7 +92,7 @@ const LocationScreen = ({ route }: ChatScreenDataType) => {
       </View>
       <CustomShareLocationButton
         isFromChat={chatValue}
-        {...{ chatId, username, latitude, longitude }}
+        {...{ chatId, latitude, longitude }}
       />
     </View>
   );

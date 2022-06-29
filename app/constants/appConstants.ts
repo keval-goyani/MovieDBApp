@@ -34,6 +34,8 @@ export default {
   appendResponseOfCredit: '&append_to_response=credits',
   androidFolder: `${RNFetchBlob.fs.dirs.DCIMDir}/MovieDB`,
   iosFolder: `${RNFetchBlob.fs.dirs.DocumentDir}/MovieDB`,
+  androidDocumentFolder: `${RNFetchBlob.fs.dirs.DCIMDir}/MovieDB/Documents`,
+  iosDocumentFolder: `${RNFetchBlob.fs.dirs.DocumentDir}/MovieDB/Documents`,
   timestamp: new Date().getTime(),
   cameraPermission: Metrics.isAndroid
     ? PERMISSIONS.ANDROID.CAMERA
@@ -41,4 +43,7 @@ export default {
   galleryPermission: Metrics.isAndroid
     ? PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
     : PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY,
+  documentWritePermission: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+  storageDocumentPath: 'Documents/',
+  storageImagePath: 'Images/',
 };
