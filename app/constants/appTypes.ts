@@ -265,6 +265,7 @@ export interface NavigationDataType {
       currentLongitude?: number;
       lastLatitude?: number;
       lastLongitude?: number;
+      receiverId?: string;
     },
   ) => void;
   openDrawer: () => void;
@@ -308,11 +309,13 @@ export interface AuthDataType {
 
 interface AuthPayloadDataType {
   user: { _user: AuthDataType };
+  token?: 'string';
   username?: string;
 }
 
 export interface AuthSagaDataType {
   payload: AuthPayloadDataType;
+  token: string;
   type: string;
 }
 
@@ -406,6 +409,7 @@ export interface UserListDataType {
   time: number;
   senderId: string;
   userId: string;
+  token: string;
 }
 export interface UserListStateDataType {
   userList: UserListDataType[];
@@ -450,6 +454,7 @@ export interface ChatInputDataType {
   chatId: string;
   username: string;
   imageUrl: string;
+  receiverId: string;
 }
 
 export interface LatestMessageDataType {
@@ -480,6 +485,7 @@ export interface ChatScreenDataType {
       lastLongitude?: number;
       currentLatitude?: number;
       currentLongitude?: number;
+      receiverId?: string;
     };
   };
 }
@@ -638,4 +644,12 @@ export interface TextMessageDataType {
   isLeft: boolean;
   message: string;
   time: string;
+}
+
+export interface FcmTokenProps {
+  fcmToken: string;
+}
+
+export interface FcmTokenDataType {
+  data: string;
 }

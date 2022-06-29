@@ -124,6 +124,7 @@ const UsersList = () => {
       navigation.navigate(navigationStrings.Chat, {
         chatId,
         username: item?.username,
+        receiverId: item?.uid,
       });
       dispatch(chatAction.chatDataRequest(chatId));
     };

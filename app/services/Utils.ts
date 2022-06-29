@@ -443,6 +443,8 @@ export const chatCreation = async (
   content: string,
   type: string,
   documentData: DocumentStateDataType,
+  receiverToken: string,
+  senderName: string,
   setMessageList: Dispatch<React.SetStateAction<ChatDataType[]>>,
 ) => {
   const timeStamp = Date.now();
@@ -470,6 +472,14 @@ export const chatCreation = async (
     .doc(chatId)
     .get()
     .then(documentSnapshot => documentSnapshot.data());
+
+  await firestore().collection(strings.notificationCollection).doc(chatId).set({
+    content,
+    token: receiverToken,
+    time: timeStamp,
+    chatId,
+    senderName,
+  });
 
   setMessageList([...(previousMessage?.messageList ?? ''), data]);
 };

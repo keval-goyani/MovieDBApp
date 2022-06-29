@@ -13,8 +13,9 @@ function* handleSignUpRequest({ payload }: AuthSagaDataType) {
       _user: { email, uid },
     },
     username,
+    token,
   } = payload;
-  const userData = { email, uid, username };
+  const userData = { email, uid, username, token };
 
   email !== '' &&
     firestore().collection(strings.chatUsers).doc(uid).set(userData);
@@ -26,7 +27,11 @@ function* handleLoginRequest({ payload }: AuthSagaDataType) {
     user: {
       _user: { uid },
     },
+    token,
   } = payload;
+  yield firestore().collection(strings.chatUsers).doc(uid).update({ token });
+  // .then(res => console.log(res, '<====Response'));
+
   const fireStoreResponse: FireStoreResponseDataType = yield firestore()
     .collection(strings.chatUsers)
     .doc(uid)

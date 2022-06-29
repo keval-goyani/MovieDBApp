@@ -13,6 +13,7 @@ import { ChatDataType, ChatInputDataType, strings } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import { addChatToFirestore, chatCreation } from '../services';
 import { styles } from './styles/ChatInputStyles';
+import { chatUserListSelector } from '../redux/ChatUserListRedux';
 
 const ChatInput: FC<ChatInputDataType> = ({
   chatId,
@@ -26,11 +27,17 @@ const ChatInput: FC<ChatInputDataType> = ({
   imageUrl,
   setShowMenu,
   username,
+  receiverId,
 }) => {
   const [message, setMessage] = useState<string>('');
   const [messageList, setMessageList] = useState<ChatDataType[]>([]);
   const { user } = useSelector(authDataSelectors.getData);
+  const { userList } = useSelector(chatUserListSelector.getData);
   const messageInput = useRef<TextInput>(null);
+  const receiverTokenData = userList.filter(item => item.uid === receiverId);
+  const receiverToken = receiverTokenData?.[0].token;
+  const receiverName = receiverTokenData?.[0].username;
+  // console.log(receiverTokenData, 'This is token');
 
   const addToFireStore = useCallback(() => {
     addChatToFirestore(chatId, messageList);
@@ -45,9 +52,11 @@ const ChatInput: FC<ChatInputDataType> = ({
       message.trim(),
       strings.textMessageType,
       emptyDocument,
+      receiverToken,
+      user?.username ?? '',
       setMessageList,
     );
-  }, [chatId, message, user]);
+  }, [chatId, message, receiverToken, user]);
 
   const imageMessageCreation = useCallback(() => {
     const emptyDocument = { documentUrl: '', documentName: '' };
@@ -58,9 +67,11 @@ const ChatInput: FC<ChatInputDataType> = ({
       imageUrl,
       strings.imageType,
       emptyDocument,
+      receiverToken,
+      user?.username ?? '',
       setMessageList,
     );
-  }, [chatId, imageUrl, user]);
+  }, [chatId, imageUrl, receiverToken, user]);
 
   const documentMessageCreation = useCallback(() => {
     const content = '';
@@ -71,9 +82,11 @@ const ChatInput: FC<ChatInputDataType> = ({
       content,
       strings.document,
       documentData,
+      receiverToken,
+      user?.username ?? '',
       setMessageList,
     );
-  }, [chatId, documentData, user]);
+  }, [chatId, documentData, receiverToken, user]);
 
   const sendMessageHandler = useCallback(() => {
     if (message.trim().length !== 0) {

@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Image,
@@ -34,6 +35,7 @@ const SignUpScreen = () => {
 
   const signUpHandler = useCallback(async () => {
     if (username && email && password) {
+      const token = await messaging().getToken();
       await auth()
         .createUserWithEmailAndPassword(email, password)
         .then(userData =>
@@ -41,6 +43,7 @@ const SignUpScreen = () => {
             authAction.authRequest({
               user: userData.user,
               username,
+              token,
             }),
           ),
         )

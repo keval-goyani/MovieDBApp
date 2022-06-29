@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +9,12 @@ import {
   MovieTrailer,
   SearchModal,
 } from '../../components';
-import { filterData, NavigationDataType, strings } from '../../constants';
+import {
+  filterData,
+  NavigationDataType,
+  navigationStrings,
+  strings,
+} from '../../constants';
 import { freeMovieSelectors } from '../../redux/FreeMovieRedux';
 import popularAction, { popularDataSelectors } from '../../redux/PopularRedux';
 import { trailerDataSelectors } from '../../redux/TrailerRedux';
@@ -67,7 +73,15 @@ const HomeScreen = () => {
   useEffect(() => {
     searchData();
   }, [searchData]);
-
+  useEffect(() => {
+    // messaging().onNotificationOpenedApp(remoteMessage => {
+    //   console.log(
+    //     'Notification caused app to open from background state:',
+    //     remoteMessage.notification,
+    //   );
+    //   navigation.navigate(navigationStrings.Home);
+    // });
+  }, []);
   const getSearchResult = useCallback(() => {
     if (searchQuery !== '') {
       setPopularData(whatsPopularSearch);

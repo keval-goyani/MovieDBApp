@@ -77,6 +77,7 @@ export default {
   chatUsers: 'ChatUsers',
   user: 'User',
   chatCollection: 'Chat',
+  notificationCollection: 'Notification',
   you: 'You',
   startConversation: 'Start Conversation',
   yesterday: 'Yesterday',

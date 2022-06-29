@@ -1,4 +1,5 @@
 import auth from '@react-native-firebase/auth';
+import messaging from '@react-native-firebase/messaging';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
@@ -17,6 +18,7 @@ import {
   strings,
 } from '../../constants';
 import authAction, { authDataSelectors } from '../../redux/AuthRedux';
+import fcmTokenAction from '../../redux/FcmTokenRedux';
 import { Color, Metrics, styles as appStyles } from '../../theme';
 import { Form } from './components';
 import { styles } from './styles/LoginScreenStyles';
@@ -34,17 +36,28 @@ const LoginScreen = () => {
 
   const loginHandler = useCallback(async () => {
     if (email && password) {
+      // await messaging().registerDeviceForRemoteMessages();
+      const token = await messaging().getToken();
       await auth()
         .signInWithEmailAndPassword(email, password)
         .then(userCredential =>
-          dispatch(authAction.loginRequest({ user: userCredential.user })),
+          dispatch(
+            authAction.loginRequest({ user: userCredential.user, token }),
+          ),
         )
         .catch(() => dispatch(authAction.authFailure(strings.loginError)));
     }
   }, [dispatch, email, password]);
 
+  // const onDisplayNotification = useCallback(async () => {
+  //   await messaging().registerDeviceForRemoteMessages();
+  //   const token = await messaging().getToken();
+  //   dispatch(fcmTokenAction.fcmTokenSuccess(token));
+  // }, [dispatch]);
+
   useEffect(() => {
     loginHandler();
+    // onDisplayNotification();
   }, [loginHandler]);
 
   return (
