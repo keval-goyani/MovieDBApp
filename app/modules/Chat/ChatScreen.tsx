@@ -1,9 +1,14 @@
 import storage from '@react-native-firebase/storage';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ImageBackground, KeyboardAvoidingView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChatHeader, ChatInput, MessageList } from '../../components';
-import { appConstants, ChatScreenDataType, strings } from '../../constants';
+import {
+  appConstants,
+  ChatScreenDataType,
+  DocumentStateDataType,
+  strings,
+} from '../../constants';
 import wallpaperActions, {
   wallpaperSelectors,
 } from '../../redux/ChatWallpaperRedux';
@@ -17,12 +22,18 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
     ? verticalScale(25)
     : verticalScale(45);
   const { chatId, username } = route.params;
-  const [cameraModal, setCameraModal] = useState(false);
-  const [imagePath, setImagePath] = useState('');
-  const dispatch = useDispatch();
   const { wallpaperPath } = useSelector(wallpaperSelectors.getData);
+  const [cameraModal, setCameraModal] = useState(false);
+  const [isAttach, setIsAttach] = useState(false);
+  const [imagePath, setImagePath] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const [chatWallpaper, setChatWallpaper] = useState(wallpaperPath);
+  const [imageUrl, setImageUrl] = useState('');
+  const [documentData, setDocumentData] = useState<DocumentStateDataType>({
+    documentUrl: '',
+    documentName: '',
+  });
+  const dispatch = useDispatch();
   const chatBackground = chatWallpaper
     ? { uri: `${strings.files}${chatWallpaper}` }
     : Icons.chatBackground;
@@ -31,7 +42,7 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
     chatWallpaper && dispatch(wallpaperActions.setWallpaper(chatWallpaper));
   }, [chatWallpaper, dispatch]);
 
-  useEffect(() => {
+  const chatImageHandler = useCallback(async () => {
     if (imagePath) {
       const selectedImage = imagePath?.split('/');
       const imageName = selectedImage?.[selectedImage?.length - 1];
@@ -40,10 +51,23 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
       storage()
         .ref(storagePath)
         .putFile(imagePath)
-        .then(response => response)
+        .then(response => {
+          const stroredImagePath = Metrics.isAndroid
+            ? `${appConstants.storageImagePath}${response.metadata.name}`
+            : `${response.metadata.name}`;
+
+          storage()
+            .ref(stroredImagePath)
+            .getDownloadURL()
+            .then(remoteImage => setImageUrl(remoteImage));
+        })
         .catch(error => alertMessage(error));
     }
   }, [imagePath]);
+
+  useEffect(() => {
+    chatImageHandler();
+  }, [chatImageHandler]);
 
   return (
     <KeyboardAvoidingView
@@ -57,6 +81,8 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
           onlineStatus: strings.onlineStatus,
           showMenu,
           setShowMenu,
+          setIsAttach,
+          setCameraModal,
           setChatWallpaper,
           chatId,
         }}
@@ -66,12 +92,28 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
           {...{
             setCameraModal,
             setImagePath,
+            setIsAttach,
+            username,
             imagePath,
             chatId,
             setShowMenu,
           }}
         />
-        <ChatInput {...{ cameraModal, setCameraModal, setImagePath, chatId }} />
+        <ChatInput
+          {...{
+            cameraModal,
+            setCameraModal,
+            isAttach,
+            setIsAttach,
+            setImagePath,
+            documentData,
+            setDocumentData,
+            setShowMenu,
+            chatId,
+            imageUrl,
+            username,
+          }}
+        />
       </ImageBackground>
     </KeyboardAvoidingView>
   );

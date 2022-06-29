@@ -9,6 +9,7 @@ export const Color = {
   percentageDarkYellow: '#d2d531',
   percentageLightYellow: '#423d0f',
   gray: '#808080',
+  transparentGray: '#80808099',
   dropDownGradientStart: '#96f6ca',
   dropDownGradientEnd: '#0edbb0',
   lightBlackBackgroundColor: '#191918',
@@ -29,5 +30,5 @@ export const Color = {
   powderBlue: '#87cefa40',
   lightIndigo: '#5C5FE0',
   lightRed: '#E44041',
-  transparentGray: '#80808099',
+  transparent: 'transparent',
 };

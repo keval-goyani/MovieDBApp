@@ -1,7 +1,10 @@
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import apisauce from 'apisauce';
 import React, { Dispatch } from 'react';
 import { Alert } from 'react-native';
+import documentPicker from 'react-native-document-picker';
+import FileViewer from 'react-native-file-viewer';
 import {
   Asset,
   launchCamera,
@@ -18,8 +21,10 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { ImmutableObject } from 'seamless-immutable';
 import {
   appConstants,
+  ChatDataType,
   ClearChatDataType,
   DetailResponseGenerator,
+  DocumentStateDataType,
   genres,
   ListItemDataType,
   MovieDetailsDataType,
@@ -185,6 +190,10 @@ export const sortString = (input: string) => {
   return input.split('').sort().join('');
 };
 
+export const chatIdCreation = (userId: string, id: string) => {
+  return userId.localeCompare(id) > 0 ? userId + id : id + userId;
+};
+
 export const handleCameraPermission = (
   setImagePath: Dispatch<React.SetStateAction<string>>,
 ) => {
@@ -231,6 +240,87 @@ export const handleGalleryPermission = (
     .catch(error => {
       alertMessage(error.message);
     });
+};
+
+export const handleDocumentPermission = (
+  setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>,
+) => {
+  if (Metrics.isAndroid) {
+    check(appConstants.documentWritePermission).then(result => {
+      switch (result) {
+        case RESULTS.BLOCKED:
+          permissionAlert(strings.document);
+          break;
+        case RESULTS.DENIED:
+          request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE);
+          break;
+        case RESULTS.UNAVAILABLE || RESULTS.LIMITED:
+          alertMessage(strings.permissionUnavailable);
+          break;
+        default:
+          selectDocument(setDocumentData);
+      }
+    });
+  } else {
+    selectDocument(setDocumentData);
+  }
+};
+
+const selectDocument = async (
+  setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>,
+) => {
+  await documentPicker
+    .pickSingle({
+      type: [
+        documentPicker.types.pdf,
+        documentPicker.types.images,
+        documentPicker.types.pptx,
+        documentPicker.types.ppt,
+        documentPicker.types.doc,
+        documentPicker.types.docx,
+        documentPicker.types.csv,
+        documentPicker.types.zip,
+      ],
+      presentationStyle: 'fullScreen',
+      copyTo: 'documentDirectory',
+    })
+    .then(response => {
+      addDocumentToStorage(
+        response?.fileCopyUri ?? '',
+        response.name,
+        setDocumentData,
+      );
+    })
+    .catch(error => error);
+};
+
+const addDocumentToStorage = async (
+  url: string,
+  documentName: string,
+  setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>,
+) => {
+  const documentTitle = `${appConstants.timestamp}_${documentName}`;
+  const documentPath = `${appConstants.storageDocumentPath}${documentTitle}`;
+
+  await storage()
+    .ref(documentPath)
+    .putFile(url)
+    .then(response => {
+      const stroredDocumentPath = Metrics.isAndroid
+        ? `${appConstants.storageDocumentPath}${response.metadata.name}`
+        : `${response.metadata.name}`;
+
+      storage()
+        .ref(stroredDocumentPath)
+        .getDownloadURL()
+        .then(remoteDocumentUrl => {
+          setDocumentData({
+            documentUrl: remoteDocumentUrl,
+            documentName: documentTitle,
+          });
+        });
+    })
+    .catch(error => alertMessage(error.message));
 };
 
 const requestCameraPermission = () => {
@@ -345,4 +435,92 @@ export const clearChat = ({
       },
     },
   ]);
+};
+
+export const chatCreation = async (
+  chatId: string,
+  uid: string,
+  content: string,
+  type: string,
+  documentData: DocumentStateDataType,
+  setMessageList: Dispatch<React.SetStateAction<ChatDataType[]>>,
+) => {
+  const timeStamp = Date.now();
+  let data = {};
+  if (type === strings.document) {
+    const { documentUrl, documentName } = documentData;
+    data = {
+      content: documentUrl,
+      type,
+      user: uid,
+      time: timeStamp,
+      documentName,
+    };
+  } else {
+    data = {
+      content,
+      type,
+      user: uid,
+      time: timeStamp,
+    };
+  }
+
+  const previousMessage = await firestore()
+    .collection(strings.chatCollection)
+    .doc(chatId)
+    .get()
+    .then(documentSnapshot => documentSnapshot.data());
+
+  setMessageList([...(previousMessage?.messageList ?? ''), data]);
+};
+
+export const openDocument = (url: string, documentName: string) => {
+  const filePath = Metrics.isAndroid
+    ? `${appConstants.androidDocumentFolder}/${documentName}`
+    : `${appConstants.iosDocumentFolder}/${documentName}`;
+  const folderPath = Metrics.isAndroid
+    ? appConstants.androidDocumentFolder
+    : appConstants.iosDocumentFolder;
+
+  RNFetchBlob.fs.isDir(folderPath).then(isDir => {
+    if (!isDir) {
+      RNFetchBlob.fs.mkdir(folderPath);
+    }
+  });
+
+  RNFetchBlob.fs.exists(filePath).then(response => {
+    response
+      ? FileViewer.open(filePath)
+          .then(openFileResponse => openFileResponse)
+          .catch(() => alertMessage(strings.appCheck))
+      : RNFetchBlob.config({
+          addAndroidDownloads: {
+            useDownloadManager: true,
+            notification: false,
+            path: filePath,
+          },
+          path: filePath,
+        })
+          .fetch('GET', url)
+          .then(documentPathResponse => {
+            FileViewer.open(documentPathResponse?.data)
+              .then(openFileResponse => openFileResponse)
+              .catch(() => alertMessage(strings.appCheck));
+          })
+          .catch(error => {
+            alertMessage(error);
+          });
+  });
+};
+
+export const addChatToFirestore = async (
+  chatId: string,
+  messageList: ChatDataType[],
+) => {
+  messageList.length !== 0 &&
+    (await firestore()
+      .collection(strings.chatCollection)
+      .doc(chatId)
+      .set({ messageList })
+      .catch(error => error));
 };
