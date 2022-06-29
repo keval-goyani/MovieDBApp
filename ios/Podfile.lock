@@ -1042,6 +1042,8 @@ PODS:
   - React-jsinspector (0.67.1)
   - React-logger (0.67.1):
     - glog
+  - react-native-document-picker (8.1.1):
+    - React-Core
   - react-native-geolocation (2.1.0):
     - React-Core
   - react-native-google-maps (0.31.1):
@@ -1144,6 +1146,8 @@ PODS:
     - Firebase/Storage (= 8.15.0)
     - React-Core
     - RNFBApp
+  - RNFileViewer (2.1.5):
+    - React-Core
   - RNGestureHandler (2.4.2):
     - React-Core
   - RNPermissions (3.3.1):
@@ -1235,6 +1239,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
@@ -1259,6 +1264,7 @@ DEPENDENCIES:
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
+  - RNFileViewer (from `../node_modules/react-native-file-viewer`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -1355,6 +1361,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-document-picker:
+    :path: "../node_modules/react-native-document-picker"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-google-maps:
@@ -1403,6 +1411,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBStorage:
     :path: "../node_modules/@react-native-firebase/storage"
+  RNFileViewer:
+    :path: "../node_modules/react-native-file-viewer"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNPermissions:
@@ -1475,6 +1485,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 1af5de75a4c834c05d53a77c1512e5aa6c18412f
   React-jsinspector: ab80bcdb02f28cdfc0dbbaea6db1241565d59002
   React-logger: b08f354e4c928ff794ca477347fea0922aaf11c3
+  react-native-document-picker: f68191637788994baed5f57d12994aa32cf8bf88
   react-native-geolocation: 69f4fd37650b8e7fee91816d395e62dd16f5ab8d
   react-native-google-maps: 8231ffa015bf8b222c2e2661fa9163cdb609a224
   react-native-image-picker: cffb727cf2f59bd5c0408e30b3dbe0b935f88835
@@ -1499,6 +1510,7 @@ SPEC CHECKSUMS:
   RNFBAuth: e28fb7cd1b956086e68233b9ea19fb97c428f86b
   RNFBFirestore: 20b84abc6368c37297429f810705c203022d8110
   RNFBStorage: b96c566326d070860a9470858c6cf54d825b666b
+  RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNGestureHandler: 61628a2c859172551aa2100d3e73d1e57878392f
   RNPermissions: 34d678157c800b25b22a488e4d8babb57456e796
   RNReanimated: 46cdb89ca59ab7181334f4ed05a70e82ddb36751

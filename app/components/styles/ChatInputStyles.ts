@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   input: {
-    backgroundColor: 'transparent',
+    backgroundColor: Color.transparent,
     paddingLeft: horizontalScale(20),
     fontSize: moderateScale(15),
     height: inputHeight,
