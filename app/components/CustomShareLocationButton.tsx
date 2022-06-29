@@ -1,33 +1,54 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import {
+  ChatDataType,
   CustomButtonProps,
   NavigationDataType,
-  navigationStrings,
   ShareLocationDataProps,
   strings,
 } from '../constants';
+import { authDataSelectors } from '../redux/AuthRedux';
+import { addChatToFirestore, chatCreation } from '../services';
 import { Icons } from '../theme';
 import { styles } from './styles/CustomShareLocationButtonStyles';
 
 const CustomShareLocationButton = ({
   isFromChat,
   chatId,
-  username,
   latitude,
   longitude,
 }: CustomButtonProps) => {
   const navigation: NavigationDataType = useNavigation();
+  const [messageList, setMessageList] = useState<ChatDataType[]>([]);
+  const { user } = useSelector(authDataSelectors.getData);
 
-  const shareLocationHandler = ({
+  const addToFireStore = useCallback(async () => {
+    addChatToFirestore(chatId, messageList);
+  }, [chatId, messageList]);
+
+  const shareLocationHandler = async ({
     currentLatitude,
     currentLongitude,
   }: ShareLocationDataProps) => {
-    navigation.navigate(navigationStrings.Chat, {
-      ...{ chatId, username, currentLatitude, currentLongitude },
-    });
+    const location = `${currentLatitude},${currentLongitude}`;
+    const emptyDocument = { documentUrl: '', documentName: '' };
+
+    await chatCreation(
+      chatId,
+      user?.uid ?? '',
+      location,
+      strings.locationType,
+      emptyDocument,
+      setMessageList,
+    );
+    navigation.goBack();
   };
+
+  useEffect(() => {
+    addToFireStore();
+  }, [addToFireStore]);
 
   return (
     <>

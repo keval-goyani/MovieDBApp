@@ -27,8 +27,10 @@ export default {
   dotMenu: require('./dots.png'),
   documentIcon: require('./documentIcon.png'),
   fullStop: require('./fullStop.png'),
-  imageDocument: require('./jpgDocument.png'),
+  imageDocument: require('./imageIcon.png'),
   videoDocument: require('./mp4Document.png'),
   pdfDocument: require('./pdfDocument.png'),
   pptDocument: require('./pptDocument.png'),
+  document: require('./documentIcon.png'),
+  map: require('./mapIcon.png'),
 };

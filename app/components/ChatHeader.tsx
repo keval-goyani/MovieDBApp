@@ -12,6 +12,8 @@ const ChatHeader = ({
   onlineStatus,
   showMenu,
   setShowMenu,
+  setIsAttach,
+  setCameraModal,
   setChatWallpaper,
   chatId,
 }: ChatHeaderDataType) => {
@@ -32,7 +34,12 @@ const ChatHeader = ({
             </View>
           </View>
         </View>
-        <Pressable onPress={() => setShowMenu(!showMenu)}>
+        <Pressable
+          onPress={() => {
+            setShowMenu(!showMenu);
+            setIsAttach(false);
+            setCameraModal(false);
+          }}>
           <Image source={Icons.dotMenu} style={styles.dotsMenu} />
         </Pressable>
       </View>

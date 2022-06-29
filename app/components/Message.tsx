@@ -1,45 +1,43 @@
 import React from 'react';
+import { View } from 'react-native';
 import {
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { MessageDataType } from '../constants';
-import { Color } from '../theme';
-import { styles } from './styles/MessageStyles';
+  ImageMessage,
+  Location,
+  ShareDocument,
+  TextMessage,
+} from '../components';
+import { MessageDataType, strings } from '../constants';
+import styles from './styles/MessageStyles';
 
-const Message = ({ time, isLeft, message }: MessageDataType) => {
-  const messageContainerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
-    styles.messageContainer,
-    isLeft && {
-      alignSelf: 'flex-start',
-      backgroundColor: Color.pistachioDark,
-    },
-  ]);
-  const messageStyle: StyleProp<TextStyle> = StyleSheet.flatten([
-    styles.message,
-    isLeft && { color: Color.black },
-  ]);
-  const timeStyle: StyleProp<TextStyle> = StyleSheet.flatten([
-    styles.time,
-    isLeft && { color: Color.gray },
-  ]);
+const Message = ({
+  time,
+  isLeft,
+  message,
+  documentName,
+  type,
+  chatUsername,
+}: MessageDataType) => {
+  const file = documentName?.split('.');
+  const fileType = file?.[file?.length - 1];
 
-  return (
-    <View style={styles.container}>
-      <View style={messageContainerStyle}>
-        <View style={styles.messageView}>
-          <Text style={messageStyle}>{message}</Text>
-        </View>
-        <View style={styles.timeView}>
-          <Text style={timeStyle}>{time}</Text>
-        </View>
-      </View>
-    </View>
-  );
+  const showChatMessage = (messageType: string) => {
+    switch (messageType) {
+      case strings.imageType:
+        return <ImageMessage {...{ isLeft, message, time, chatUsername }} />;
+      case strings.locationType:
+        return <Location {...{ message, isLeft, time, chatUsername }} />;
+      case strings.textMessageType:
+        return <TextMessage {...{ isLeft, message, time }} />;
+      case strings.document:
+        return (
+          <ShareDocument
+            {...{ isLeft, message, documentName, fileType, time }}
+          />
+        );
+    }
+  };
+
+  return <View style={styles.container}>{showChatMessage(type)}</View>;
 };
 
 export default Message;

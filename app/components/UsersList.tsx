@@ -4,7 +4,6 @@ import React, { useCallback } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { asMutable } from 'seamless-immutable';
-import { Icons } from '../assets';
 import { UserListEmpty } from '../components';
 import {
   ChatDataType,
@@ -20,7 +19,8 @@ import chatAction from '../redux/ChatRedux';
 import userListDataAction, {
   chatUserListSelector,
 } from '../redux/ChatUserListRedux';
-import { getChatTime, sortString } from '../services';
+import { chatIdCreation, getChatTime } from '../services';
+import { Icons } from '../theme';
 import { styles } from './styles/UsersListStyles';
 
 const UsersList = () => {
@@ -71,8 +71,10 @@ const UsersList = () => {
       .collection(strings.chatUsers)
       .onSnapshot(userSnapshot => {
         userSnapshot.forEach(userDocument => {
-          const concatId = user?.uid + userDocument.data().uid;
-          const chatId: string = sortString(concatId);
+          const chatId: string = chatIdCreation(
+            user?.uid ?? '',
+            userDocument.data().uid,
+          );
 
           if (userDocument?.data().uid !== user?.uid) {
             fireStoreUserList.push(userDocument?.data());
@@ -108,27 +110,28 @@ const UsersList = () => {
   );
 
   const renderUserList = (item: UserListDataType) => {
-    const concatId = user?.uid + item?.uid;
-    const chatId: string = sortString(concatId);
+    const chatId: string = chatIdCreation(user?.uid ?? '', item?.uid);
     const chatUsername =
       item?.uid !== item?.senderId
-        ? `${strings.you}${item?.content}`
+        ? `${strings.you}: ${item?.content}`
         : `${item?.username}: ${item?.content}`;
     const latestMessage = item?.content
       ? chatUsername
       : `${strings.startConversation}`;
     const time = getChatTime(item?.time);
 
+    const navigateToChatScreen = () => {
+      navigation.navigate(navigationStrings.Chat, {
+        chatId,
+        username: item?.username,
+      });
+      dispatch(chatAction.chatDataRequest(chatId));
+    };
+
     return (
       <TouchableOpacity
         style={styles.listItem}
-        onPress={() => {
-          navigation.navigate(navigationStrings.Chat, {
-            chatId,
-            username: item?.username,
-          });
-          dispatch(chatAction.chatDataRequest(chatId));
-        }}
+        onPress={navigateToChatScreen}
         activeOpacity={0.5}>
         <View style={styles.avatarGroup}>
           <Image source={Icons.avatar} style={styles.avatar} />
