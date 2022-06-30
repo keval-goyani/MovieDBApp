@@ -1,6 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import apisauce from 'apisauce';
+import CryptoJS from 'crypto-js';
 import React, { Dispatch } from 'react';
 import { Alert } from 'react-native';
 import documentPicker from 'react-native-document-picker';
@@ -450,16 +451,16 @@ export const chatCreation = async (
   if (type === strings.document) {
     const { documentUrl, documentName } = documentData;
     data = {
-      content: documentUrl,
-      type,
+      content: encryptData(documentUrl),
+      type: encryptData(type),
       user: uid,
       time: timeStamp,
-      documentName,
+      documentName: encryptData(documentName),
     };
   } else {
     data = {
-      content,
-      type,
+      content: encryptData(content),
+      type: encryptData(type),
       user: uid,
       time: timeStamp,
     };
@@ -523,4 +524,14 @@ export const addChatToFirestore = async (
       .doc(chatId)
       .set({ messageList })
       .catch(error => error));
+};
+
+export const encryptData = (data: string) => {
+  return CryptoJS.AES.encrypt(data, appConstants.key).toString();
+};
+
+export const decryptData = (cipherText: string) => {
+  return CryptoJS.AES.decrypt(cipherText, appConstants.key).toString(
+    CryptoJS.enc.Utf8,
+  );
 };

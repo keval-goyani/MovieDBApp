@@ -1,11 +1,14 @@
 import { getPopularMovieData } from './Api';
 import immutablePersistenceTransform from './immutablePersistenceTransform';
 import {
+  addChatToFirestore,
   alertMessage,
   apiConfig,
   chatCreation,
   chatIdCreation,
   clearChat,
+  decryptData,
+  encryptData,
   getChatTime,
   getDetails,
   getError,
@@ -13,11 +16,10 @@ import {
   handleCameraPermission,
   handleDocumentPermission,
   handleGalleryPermission,
+  openDocument,
   searchMovie,
   sortString,
   timestampToTime,
-  openDocument,
-  addChatToFirestore,
 } from './Utils';
 
 export {
@@ -40,4 +42,6 @@ export {
   chatIdCreation,
   openDocument,
   addChatToFirestore,
+  encryptData,
+  decryptData,
 };

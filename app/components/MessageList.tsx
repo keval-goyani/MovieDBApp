@@ -7,7 +7,7 @@ import { Message } from '../components';
 import { ChatDataType, MessageListDataType, strings } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import chatAction, { chatDataSelector } from '../redux/ChatRedux';
-import { timestampToTime } from '../services';
+import { decryptData, timestampToTime } from '../services';
 
 const MessageList = ({
   chatId,
@@ -56,9 +56,9 @@ const MessageList = ({
           <Message
             key={index}
             isLeft={item?.user !== currentUser.current}
-            message={item?.content}
-            documentName={item?.documentName ?? ''}
-            type={item?.type}
+            message={decryptData(item?.content)}
+            documentName={decryptData(item?.documentName ?? '')}
+            type={decryptData(item?.type)}
             {...{ chatUsername, time }}
           />
         );

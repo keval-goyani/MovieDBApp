@@ -7,11 +7,11 @@ import {
   View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Icons } from '../theme';
 import { Attach, Stagger } from '../components';
 import { ChatDataType, ChatInputDataType, strings } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import { addChatToFirestore, chatCreation } from '../services';
+import { Icons } from '../theme';
 import { styles } from './styles/ChatInputStyles';
 
 const ChatInput: FC<ChatInputDataType> = ({
