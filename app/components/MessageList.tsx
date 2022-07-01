@@ -4,7 +4,12 @@ import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { asMutable } from 'seamless-immutable';
 import { Message } from '../components';
-import { ChatDataType, MessageListDataType, strings } from '../constants';
+import {
+  appConstants,
+  ChatDataType,
+  MessageListDataType,
+  strings,
+} from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import chatAction, { chatDataSelector } from '../redux/ChatRedux';
 import { decryptData, timestampToTime } from '../services';
@@ -23,18 +28,19 @@ const MessageList = ({
   const currentUser = useRef(user?.uid);
 
   const fetchRealTimeMessages = useCallback(() => {
-    const subscriber = firestore()
-      .collection(strings.chatCollection)
+    const subscriber = appConstants.chatRef
       .doc(chatId)
+      .collection(strings.messageCollection)
+      .orderBy('time', 'asc')
       .onSnapshot(documentSnapshot => {
-        return dispatch(
-          chatAction.chatDataSuccess(
-            documentSnapshot?.data()?.messageList ?? [],
-          ),
-        );
+        console.log(documentSnapshot?.docs, 'Data');
+
+        // return dispatch(
+        //   chatAction.chatDataSuccess(documentSnapshot?.data() ?? []),
+        // );
       });
     return () => subscriber();
-  }, [chatId, dispatch]);
+  }, [chatId]);
 
   useEffect(() => {
     fetchRealTimeMessages();

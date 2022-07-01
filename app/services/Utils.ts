@@ -441,38 +441,45 @@ export const clearChat = ({
 export const chatCreation = async (
   chatId: string,
   uid: string,
+  receiverId: string,
   content: string,
   type: string,
   documentData: DocumentStateDataType,
-  setMessageList: Dispatch<React.SetStateAction<ChatDataType[]>>,
 ) => {
-  const timeStamp = Date.now();
+  const timeStamp = firestore.FieldValue.serverTimestamp();
   let data = {};
   if (type === strings.document) {
     const { documentUrl, documentName } = documentData;
     data = {
-      content: encryptData(documentUrl),
-      type: encryptData(type),
-      user: uid,
+      content: documentUrl,
+      type,
+      receiverId,
+      senderId: uid,
       time: timeStamp,
-      documentName: encryptData(documentName),
+      documentName: documentName,
     };
   } else {
     data = {
-      content: encryptData(content),
-      type: encryptData(type),
-      user: uid,
+      content,
+      type,
+      senderId: uid,
+      receiverId,
       time: timeStamp,
     };
   }
 
-  const previousMessage = await firestore()
-    .collection(strings.chatCollection)
+  appConstants.chatRef
     .doc(chatId)
-    .get()
-    .then(documentSnapshot => documentSnapshot.data());
+    .collection(strings.messageCollection)
+    .add(data);
 
-  setMessageList([...(previousMessage?.messageList ?? ''), data]);
+  // const previousMessage = await firestore()
+  //   .collection(strings.chatCollection)
+  //   .doc(chatId)
+  //   .get()
+  //   .then(documentSnapshot => documentSnapshot.data());
+
+  // setMessageList([...(previousMessage?.messageList ?? ''), data]);
 };
 
 export const openDocument = (url: string, documentName: string) => {

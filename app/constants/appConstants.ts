@@ -1,6 +1,7 @@
 import { PERMISSIONS } from 'react-native-permissions';
 import RNFetchBlob from 'rn-fetch-blob';
 import { Metrics } from '../theme';
+import firestore from '@react-native-firebase/firestore';
 
 export default {
   posterImageUrl: 'https://image.tmdb.org/t/p/w342',
@@ -47,4 +48,6 @@ export default {
   storageDocumentPath: 'Documents/',
   storageImagePath: 'Images/',
   key: 'R@v!RnP@r3|!y@:V!kr@U|-Knk@b!y@:|-|!r3uL@|k!y@',
+  chatUserRef: firestore().collection('ChatUsers'),
+  chatRef: firestore().collection('Chat'),
 };

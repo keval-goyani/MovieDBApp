@@ -265,6 +265,7 @@ export interface NavigationDataType {
       currentLongitude?: number;
       lastLatitude?: number;
       lastLongitude?: number;
+      receiverId?: string;
     },
   ) => void;
   openDrawer: () => void;
@@ -402,13 +403,13 @@ export interface UserListDataType {
   username: string;
   email: string;
   uid: string;
-  content: string;
-  time: number;
-  senderId: string;
-  userId: string;
+  content?: string;
+  time?: number;
+  senderId?: string;
+  userId?: string;
 }
 export interface UserListStateDataType {
-  userList: UserListDataType[];
+  userList: UserListDataType[] | [];
   fetchingUserList: boolean;
 }
 
@@ -450,6 +451,7 @@ export interface ChatInputDataType {
   chatId: string;
   username: string;
   imageUrl: string;
+  receiverId: string | undefined;
 }
 
 export interface LatestMessageDataType {
@@ -460,7 +462,7 @@ export interface LatestMessageDataType {
 }
 
 export interface ChatListDataType {
-  time: number;
+  time?: number;
   username?: string;
   email?: string;
   uid?: string;
@@ -480,6 +482,7 @@ export interface ChatScreenDataType {
       lastLongitude?: number;
       currentLatitude?: number;
       currentLongitude?: number;
+      receiverId?: string;
     };
   };
 }
@@ -493,11 +496,8 @@ export interface FireStoreResponseDataType {
 }
 
 export interface ChatListSagaDataType {
-  messageList: {
-    content: string;
-    time: number;
-    user: string;
-  };
+  payload: ChatListDataType[];
+  type: string;
 }
 
 export interface StaggerDataType {

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { asMutable } from 'seamless-immutable';
 import { UserListEmpty } from '../components';
 import {
+  appConstants,
   ChatDataType,
   ChatListDataType,
   LatestMessageDataType,
@@ -23,83 +24,104 @@ import { chatIdCreation, getChatTime } from '../services';
 import { Icons } from '../theme';
 import { styles } from './styles/UsersListStyles';
 
+interface UserToChatNavigationDataType {
+  navigate: (
+    screen: string,
+    params: {
+      chatId: string;
+      username: string;
+      receiverId: string;
+    },
+  ) => void;
+}
+
 const UsersList = () => {
-  const navigation: NavigationDataType = useNavigation();
+  const navigation: UserToChatNavigationDataType = useNavigation();
   const dispatch = useDispatch();
   const { user } = useSelector(authDataSelectors.getData);
   const { userList, fetchingUserList } = useSelector(
     chatUserListSelector.getData,
   );
+  // const fireStoreUserList: ChatListDataType[] = [];
 
-  const userListCombiner = (
-    fireStoreUserList: ChatListDataType[],
-    fireStoreChatList: LatestMessageDataType[],
-  ) => {
-    return fireStoreUserList.map((item, index: number) => {
-      if (item?.uid === fireStoreChatList?.[index]?.userId) {
-        return { ...item, ...fireStoreChatList?.[index] };
-      } else {
-        return item;
-      }
-    });
-  };
+  // const userListCombiner = (
+  //   fireStoreUserList: ChatListDataType[],
+  //   fireStoreChatList: LatestMessageDataType[],
+  // ) => {
+  //   return fireStoreUserList.map((item, index: number) => {
+  //     if (item?.uid === fireStoreChatList?.[index]?.userId) {
+  //       return { ...item, ...fireStoreChatList?.[index] };
+  //     } else {
+  //       return item;
+  //     }
+  //   });
+  // };
 
-  const fetchingLastMessage = (chatId: string, uid: string) => {
-    return new Promise(resolve => {
-      firestore()
-        .collection(strings.chatCollection)
-        .doc(chatId)
-        .onSnapshot(chatDocument => {
-          const messageList: ChatDataType[] =
-            chatDocument?.data()?.messageList ?? [];
+  // const fetchingLastMessage = (chatId: string, uid: string) => {
+  //   return new Promise(resolve => {
+  //     firestore()
+  //       .collection(strings.chatCollection)
+  //       .doc(chatId)
+  //       .onSnapshot(chatDocument => {
+  //         const messageList: ChatDataType[] =
+  //           chatDocument?.data()?.messageList ?? [];
 
-          resolve({
-            content: messageList[messageList?.length - 1]?.content ?? '',
-            time: messageList[messageList?.length - 1]?.time ?? 0,
-            senderId: messageList[messageList?.length - 1]?.user ?? '',
-            userId: uid ?? '',
-          });
-        });
-    });
-  };
+  //         resolve({
+  //           content: messageList[messageList?.length - 1]?.content ?? '',
+  //           time: messageList[messageList?.length - 1]?.time ?? 0,
+  //           senderId: messageList[messageList?.length - 1]?.user ?? '',
+  //           userId: uid ?? '',
+  //         });
+  //       });
+  //   });
+  // };
 
-  const fetchingUser = useCallback(() => {
-    const fireStoreUserList: ChatListDataType[] = [];
-    const fireStoreChatList: LatestMessageDataType[] = [];
+  const fetchingUser = useCallback(async () => {
+    // firestore()
+    //   .collection(strings.chatUsers)
+    appConstants.chatUserRef.onSnapshot(userSnapshot => {
+      const fireStoreUserList: ChatListDataType[] = [];
 
-    firestore()
-      .collection(strings.chatUsers)
-      .onSnapshot(userSnapshot => {
-        userSnapshot.forEach(userDocument => {
-          const chatId: string = chatIdCreation(
-            user?.uid ?? '',
-            userDocument.data().uid,
-          );
-
-          if (userDocument?.data().uid !== user?.uid) {
-            fireStoreUserList.push(userDocument?.data());
-          }
-          userDocument?.data().uid !== user?.uid &&
-            fireStoreChatList.push(
-              fetchingLastMessage(chatId, userDocument.data().uid),
-            );
-        });
-
-        Promise.all(fireStoreChatList).then(chatDataResponse => {
-          const chatUserList = userListCombiner(
-            fireStoreUserList,
-            chatDataResponse,
-          );
-          const uniqueData = [
-            ...new Map(chatUserList.map(item => [item.uid, item])).values(),
-          ];
-
-          uniqueData.sort((a, b) => {
-            return a.time === 0 ? b.time : b.time - a.time;
-          });
-          dispatch(userListDataAction.userListSuccess(uniqueData));
-        });
+      userSnapshot.forEach(userDocument => {
+        if (userDocument?.data()?.uid !== user?.uid) {
+          const userData = userDocument?.data();
+          fireStoreUserList.push(userData);
+        }
       });
+      console.log(fireStoreUserList, 'fireStoreUserList');
+      dispatch(userListDataAction.userListRequest(fireStoreUserList));
+    });
+    // userSnapshot.forEach(userDocument => {
+    //   const chatId: string = chatIdCreation(
+    //     user?.uid ?? '',
+    //     userDocument.data().uid,
+    //   );
+    //   if (userDocument?.data().uid !== user?.uid) {
+    //     const data = userDocument?.data()
+    //     fireStoreUserList.push(data);
+    //   }
+    //       userDocument?.data().uid !== user?.uid &&
+    //         fireStoreChatList.push(
+    //           fetchingLastMessage(chatId, userDocument.data().uid),
+    //         );
+    //     });
+    //     Promise.all(fireStoreChatList).then(chatDataResponse => {
+    //       const chatUserList = userListCombiner(
+    //         fireStoreUserList,
+    //         chatDataResponse,
+    //       );
+    //       const uniqueData = [
+    //         ...new Map(chatUserList.map(item => [item.uid, item])).values(),
+    //       ];
+    //       uniqueData.sort((a, b) => {
+    //         return a.time === 0 ? b.time : b.time - a.time;
+    //       });
+    //       dispatch(userListDataAction.userListSuccess(uniqueData));
+    //     });
+    //   });
+    // dispatch(userListDataAction.userListRequest());
+    // console.log(fireStoreUserList, 'fireStoreUserList');
+    // console.log(fireStoreUserList, 'fireStoreUserList');
   }, [dispatch, user]);
 
   useFocusEffect(
@@ -111,19 +133,20 @@ const UsersList = () => {
 
   const renderUserList = (item: UserListDataType) => {
     const chatId: string = chatIdCreation(user?.uid ?? '', item?.uid);
-    const chatUsername =
-      item?.uid !== item?.senderId
-        ? `${strings.you}: ${item?.content}`
-        : `${item?.username}: ${item?.content}`;
-    const latestMessage = item?.content
-      ? chatUsername
-      : `${strings.startConversation}`;
-    const time = getChatTime(item?.time);
+    // const chatUsername =
+    //   item?.uid !== item?.senderId
+    //     ? `${strings.you}: ${item?.content}`
+    //     : `${item?.username}: ${item?.content}`;
+    // const latestMessage = item?.content
+    //   ? chatUsername
+    //   : `${strings.startConversation}`;
+    // const time = getChatTime(item?.time);
 
     const navigateToChatScreen = () => {
       navigation.navigate(navigationStrings.Chat, {
         chatId,
         username: item?.username,
+        receiverId: item?.uid,
       });
       dispatch(chatAction.chatDataRequest(chatId));
     };
@@ -141,12 +164,12 @@ const UsersList = () => {
               style={styles.lastChatText}
               ellipsizeMode="tail"
               numberOfLines={1}>
-              {latestMessage}
+              Hello
             </Text>
           </View>
         </View>
         <View style={styles.dateView}>
-          <Text style={styles.dateText}>{time}</Text>
+          <Text style={styles.dateText}>x</Text>
         </View>
       </TouchableOpacity>
     );

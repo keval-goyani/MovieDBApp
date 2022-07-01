@@ -21,7 +21,7 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
   const verticalOffset = Metrics.isAndroid
     ? verticalScale(25)
     : verticalScale(45);
-  const { chatId, username } = route.params;
+  const { chatId, username, receiverId } = route.params;
   const { wallpaperPath } = useSelector(wallpaperSelectors.getData);
   const [cameraModal, setCameraModal] = useState(false);
   const [isAttach, setIsAttach] = useState(false);
@@ -112,6 +112,7 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
             chatId,
             imageUrl,
             username,
+            receiverId,
           }}
         />
       </ImageBackground>
