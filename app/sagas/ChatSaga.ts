@@ -5,14 +5,22 @@ import chatAction, { ChatDataType } from '../redux/ChatRedux';
 import { alertMessage } from '../services';
 
 function* chatDataHandler({ payload }: { payload: string; type: string }) {
-  const chatList: ChatListSagaDataType = yield firestore()
+  const firestoreChatList: any = [];
+
+  yield firestore()
     .collection(strings.chatCollection)
     .doc(payload)
+    .collection(strings.messageCollection)
+    .orderBy('createdAt', 'asc')
     .get()
-    .then(documentSnapshot => documentSnapshot?.data())
+    .then(documentSnapshot => {
+      documentSnapshot.forEach(document =>
+        firestoreChatList.push(document.data()),
+      );
+      console.log(firestoreChatList, 'chat history');
+    })
     .catch(error => alertMessage(error));
-
-  yield put(chatAction.chatDataSuccess(chatList?.messageList ?? []));
+  yield put(chatAction.chatDataSuccess(firestoreChatList));
 }
 
 export default [takeLatest(ChatDataType.CHAT_DATA_REQUEST, chatDataHandler)];

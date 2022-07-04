@@ -1,4 +1,3 @@
-import firestore from '@react-native-firebase/firestore';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +6,7 @@ import { Message } from '../components';
 import {
   appConstants,
   ChatDataType,
+  LatestMessageDataType,
   MessageListDataType,
   strings,
 } from '../constants';
@@ -31,16 +31,17 @@ const MessageList = ({
     const subscriber = appConstants.chatRef
       .doc(chatId)
       .collection(strings.messageCollection)
-      .orderBy('time', 'asc')
+      .orderBy('createdAt', 'asc')
       .onSnapshot(documentSnapshot => {
-        console.log(documentSnapshot?.docs, 'Data');
-
-        // return dispatch(
-        //   chatAction.chatDataSuccess(documentSnapshot?.data() ?? []),
-        // );
+        const firestoreChatList: LatestMessageDataType[] = [];
+        documentSnapshot.forEach(document => {
+          const datas = document?.data();
+          firestoreChatList.push(datas);
+        });
+        dispatch(chatAction.chatDataSuccess(firestoreChatList));
       });
     return () => subscriber();
-  }, [chatId]);
+  }, [chatId, dispatch]);
 
   useEffect(() => {
     fetchRealTimeMessages();
@@ -56,15 +57,15 @@ const MessageList = ({
       renderItem={({ item, index }: { item: ChatDataType; index: number }) => {
         const time: string = timestampToTime(item?.time);
         const chatUsername =
-          user?.uid === item?.user ? `${strings.you}` : `${username}`;
+          user?.uid === item?.senderId ? `${strings.you}` : `${username}`;
 
         return (
           <Message
             key={index}
-            isLeft={item?.user !== currentUser.current}
-            message={decryptData(item?.content)}
-            documentName={decryptData(item?.documentName ?? '')}
-            type={decryptData(item?.type)}
+            isLeft={item?.senderId !== currentUser.current}
+            message={item?.content}
+            documentName={item?.documentName ?? ''}
+            type={item?.type}
             {...{ chatUsername, time }}
           />
         );

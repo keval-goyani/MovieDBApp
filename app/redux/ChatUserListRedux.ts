@@ -33,8 +33,6 @@ const listData = (
   state: ImmutableObject<UserListStateDataType>,
   { data }: ChatUserListType,
 ) => {
-  console.log(data, 'Fire');
-
   return state.merge({
     userList: data,
     fetchingUserList: false,

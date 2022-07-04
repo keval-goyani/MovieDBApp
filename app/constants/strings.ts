@@ -133,4 +133,5 @@ export default {
   appCheck:
     'Please check, Is there any app exist in device to handle this type of file',
   messageCollection: 'Message',
+  lastMessageCollection: 'RecentMessage',
 };

@@ -77,18 +77,30 @@ const UsersList = () => {
   // };
 
   const fetchingUser = useCallback(async () => {
-    // firestore()
-    //   .collection(strings.chatUsers)
     appConstants.chatUserRef.onSnapshot(userSnapshot => {
       const fireStoreUserList: ChatListDataType[] = [];
 
       userSnapshot.forEach(userDocument => {
         if (userDocument?.data()?.uid !== user?.uid) {
           const userData = userDocument?.data();
-          fireStoreUserList.push(userData);
+
+          console.log(userDocument?.data()?.uid, 'User?');
+          // fireStoreUserList.push({ ...userData });
+          appConstants.chatUserRef
+            .doc(user?.uid)
+            .collection(strings.lastMessageCollection)
+            .doc(userDocument?.data()?.uid)
+            .get()
+            .then(async res => {
+              // console.log(res.data(), 'ChatData?');
+              const finalData = { ...userData, ...res.data() };
+              await fireStoreUserList.push(finalData);
+            });
+          console.log(fireStoreUserList, 'Full Data');
         }
       });
-      console.log(fireStoreUserList, 'fireStoreUserList');
+      console.log(fireStoreUserList, '?Full Data?');
+
       dispatch(userListDataAction.userListRequest(fireStoreUserList));
     });
     // userSnapshot.forEach(userDocument => {
@@ -148,7 +160,7 @@ const UsersList = () => {
         username: item?.username,
         receiverId: item?.uid,
       });
-      dispatch(chatAction.chatDataRequest(chatId));
+      // dispatch(chatAction.chatDataRequest(chatId));
     };
 
     return (

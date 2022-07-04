@@ -37,7 +37,6 @@ const ChatInput: FC<ChatInputDataType> = ({
   // const [messageList, setMessageList] = useState<ChatDataType[]>([]);
   const { user } = useSelector(authDataSelectors.getData);
   const messageInput = useRef<TextInput>(null);
-  console.log(receiverId, 'receiverId');
 
   // const addToFireStore = useCallback(() => {
   //   addChatToFirestore(chatId, messageList);
@@ -175,6 +174,7 @@ const ChatInput: FC<ChatInputDataType> = ({
             setDocumentData,
             chatId,
             username,
+            receiverId,
           }}
         />
       )}

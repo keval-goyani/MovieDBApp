@@ -446,25 +446,27 @@ export const chatCreation = async (
   type: string,
   documentData: DocumentStateDataType,
 ) => {
-  const timeStamp = firestore.FieldValue.serverTimestamp();
+  const timeStamp = Date.now();
   let data = {};
+  const fixedData = {
+    content,
+    type,
+    senderId: uid,
+    receiverId,
+    createdAt: firestore.FieldValue.serverTimestamp(),
+    time: timeStamp,
+  };
+
   if (type === strings.document) {
     const { documentUrl, documentName } = documentData;
     data = {
+      ...fixedData,
       content: documentUrl,
-      type,
-      receiverId,
-      senderId: uid,
-      time: timeStamp,
       documentName: documentName,
     };
   } else {
     data = {
-      content,
-      type,
-      senderId: uid,
-      receiverId,
-      time: timeStamp,
+      ...fixedData,
     };
   }
 
@@ -473,13 +475,29 @@ export const chatCreation = async (
     .collection(strings.messageCollection)
     .add(data);
 
-  // const previousMessage = await firestore()
-  //   .collection(strings.chatCollection)
-  //   .doc(chatId)
-  //   .get()
-  //   .then(documentSnapshot => documentSnapshot.data());
+  addRecentMessageToUserList(uid, receiverId, data);
+  addRecentMessageToUserList(receiverId, uid, data);
+};
 
-  // setMessageList([...(previousMessage?.messageList ?? ''), data]);
+interface recentMessageDataType {
+  chatId: string;
+  uid: string;
+  receiverId: string;
+  content: string;
+  type: string;
+  documentName?: string;
+}
+
+export const addRecentMessageToUserList = (
+  senderId: string,
+  receiverId: string,
+  data: recentMessageDataType | {},
+) => {
+  appConstants.chatUserRef
+    .doc(senderId)
+    .collection(strings.lastMessageCollection)
+    .doc(receiverId)
+    .set(data);
 };
 
 export const openDocument = (url: string, documentName: string) => {

@@ -19,8 +19,14 @@ import { Icons, Metrics } from '../../theme';
 import { styles } from './styles/LocationScreenStyle';
 
 const LocationScreen = ({ route }: ChatScreenDataType) => {
-  const { isFromChat, chatId, username, lastLatitude, lastLongitude } =
-    route.params;
+  const {
+    isFromChat,
+    chatId,
+    username,
+    lastLatitude,
+    lastLongitude,
+    receiverId,
+  } = route.params;
   const navigation: NavigationDataType = useNavigation();
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -92,7 +98,7 @@ const LocationScreen = ({ route }: ChatScreenDataType) => {
       </View>
       <CustomShareLocationButton
         isFromChat={chatValue}
-        {...{ chatId, latitude, longitude }}
+        {...{ chatId, latitude, longitude, receiverId }}
       />
     </View>
   );

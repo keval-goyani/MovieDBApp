@@ -37,7 +37,7 @@ const Message = ({
     }
   };
 
-  return <View style={styles.container}>{/* {showChatMessage(type)} */}</View>;
+  return <View style={styles.container}>{showChatMessage(type)}</View>;
 };
 
 export default Message;

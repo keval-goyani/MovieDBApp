@@ -419,8 +419,10 @@ export interface ChatUserListType {
 
 export interface ChatDataType {
   content: string;
+  createdAt: { _seconds: number; _nanoseconds: number };
   time: number;
-  user: string;
+  senderId: string;
+  receiverId: string;
   type: string;
   documentName?: string;
 }
@@ -455,10 +457,11 @@ export interface ChatInputDataType {
 }
 
 export interface LatestMessageDataType {
-  content: string;
-  time: number;
-  senderId: string;
-  userId: string;
+  content?: string;
+  time?: number;
+  senderId?: string;
+  userId?: string;
+  type?: string;
 }
 
 export interface ChatListDataType {
@@ -557,6 +560,7 @@ export interface CustomButtonProps {
   longitude: number;
   latitude: number;
   chatId: string;
+  receiverId: string | undefined;
 }
 
 export interface ShareLocationDataProps {
@@ -601,6 +605,7 @@ export interface AttachDataType {
   setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>;
   chatId: string;
   username: string;
+  receiverId: string | undefined;
 }
 
 export interface CustomIconRounderDataType {
