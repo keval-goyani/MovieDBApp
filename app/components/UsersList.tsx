@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { asMutable } from 'seamless-immutable';
@@ -16,7 +16,7 @@ import {
   UserListDataType,
 } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
-import chatAction from '../redux/ChatRedux';
+import chatAction, { chatDataSelector } from '../redux/ChatRedux';
 import userListDataAction, {
   chatUserListSelector,
 } from '../redux/ChatUserListRedux';
@@ -42,6 +42,10 @@ const UsersList = () => {
   const { userList, fetchingUserList } = useSelector(
     chatUserListSelector.getData,
   );
+  // const { chatData } = useSelector(chatDataSelector.getData);
+  // const message = chatData?.[chatData?.length - 1]?.content;
+
+  // const [user, setUser] = useState()
   // const fireStoreUserList: ChatListDataType[] = [];
 
   // const userListCombiner = (
@@ -76,65 +80,98 @@ const UsersList = () => {
   //   });
   // };
 
+  /** Vikrant Bhai Solution
+  // const addLastMessage = async (
+  //   senderId: string,
+  //   receiverId: string,
+  //   userData,
+  // ) => {
+  //   return await appConstants.chatUserRef
+  //     .doc(senderId)
+  //     .collection(strings.lastMessageCollection)
+  //     .doc(receiverId)
+  //     .get()
+  //     .then(lastMessage => {
+  //       return { ...lastMessage?.data(), user: userData };
+  //     });
+  // };
+
+  // const getMessage = () => {
+  //   return new Promise((resolve, reject) => {
+  //     appConstants.chatUserRef.onSnapshot(async userSnapshot => {
+  //       let fireStoreUserList: any = [];
+  //       try {
+  //         userSnapshot.forEach(async userDocument => {
+  //           if (userDocument?.data()?.uid !== user?.uid) {
+  //             const userData = userDocument?.data();
+
+  //             const lastMessage = await addLastMessage(
+  //               user?.uid ?? '',
+  //               userDocument?.data()?.uid,
+  //               userData,
+  //             );
+
+  //             fireStoreUserList.push(lastMessage);
+  //           }
+  //         });
+  //         resolve(fireStoreUserList);
+  //       } finally {
+  //         reject([]);
+  //       }
+  //     });
+  //   });
+  // };
+
+  // const fetchingUser = () => {
+  //   getMessage()
+  //     .then(result => {
+  //       console.log('result', result);
+  //       Promise.all(result)
+  //         .then(message => {
+  //           console.log('message', message);
+  //         })
+  //         .catch(e => {
+  //           console.log('message e', e);
+  //         });
+  //     })
+  //     .catch(e => {
+  //       console.log('e', e);
+  //     });
+  //   // dispatch(userListDataAction.userListRequest(fireStoreUserList));
+  // };
+*/
+
+  const addLastMessage = async (senderId: string, receiverId: string) => {
+    return await appConstants.chatUserRef
+      .doc(senderId)
+      .collection(strings.lastMessageCollection)
+      .doc(receiverId)
+      .get()
+      .then(lastMessage => {
+        return lastMessage?.data();
+      });
+  };
+
   const fetchingUser = useCallback(async () => {
     appConstants.chatUserRef.onSnapshot(userSnapshot => {
-      const fireStoreUserList: ChatListDataType[] = [];
-
-      userSnapshot.forEach(userDocument => {
+      let fireStoreUserList: any = [];
+      userSnapshot.forEach(async (userDocument: any) => {
         if (userDocument?.data()?.uid !== user?.uid) {
           const userData = userDocument?.data();
 
-          console.log(userDocument?.data()?.uid, 'User?');
-          // fireStoreUserList.push({ ...userData });
-          appConstants.chatUserRef
-            .doc(user?.uid)
-            .collection(strings.lastMessageCollection)
-            .doc(userDocument?.data()?.uid)
-            .get()
-            .then(async res => {
-              // console.log(res.data(), 'ChatData?');
-              const finalData = { ...userData, ...res.data() };
-              await fireStoreUserList.push(finalData);
-            });
-          console.log(fireStoreUserList, 'Full Data');
+          // const lastMessage = await addLastMessage(
+          //   user?.uid ?? '',
+          //   userDocument?.data()?.uid,
+          // );
+          // console.log(lastMessage, '>>===lastMessage');
+
+          fireStoreUserList.push(userData);
         }
       });
-      console.log(fireStoreUserList, '?Full Data?');
 
       dispatch(userListDataAction.userListRequest(fireStoreUserList));
     });
-    // userSnapshot.forEach(userDocument => {
-    //   const chatId: string = chatIdCreation(
-    //     user?.uid ?? '',
-    //     userDocument.data().uid,
-    //   );
-    //   if (userDocument?.data().uid !== user?.uid) {
-    //     const data = userDocument?.data()
-    //     fireStoreUserList.push(data);
-    //   }
-    //       userDocument?.data().uid !== user?.uid &&
-    //         fireStoreChatList.push(
-    //           fetchingLastMessage(chatId, userDocument.data().uid),
-    //         );
-    //     });
-    //     Promise.all(fireStoreChatList).then(chatDataResponse => {
-    //       const chatUserList = userListCombiner(
-    //         fireStoreUserList,
-    //         chatDataResponse,
-    //       );
-    //       const uniqueData = [
-    //         ...new Map(chatUserList.map(item => [item.uid, item])).values(),
-    //       ];
-    //       uniqueData.sort((a, b) => {
-    //         return a.time === 0 ? b.time : b.time - a.time;
-    //       });
-    //       dispatch(userListDataAction.userListSuccess(uniqueData));
-    //     });
-    //   });
-    // dispatch(userListDataAction.userListRequest());
-    // console.log(fireStoreUserList, 'fireStoreUserList');
-    // console.log(fireStoreUserList, 'fireStoreUserList');
-  }, [dispatch, user]);
+  }, [dispatch, user?.uid]);
 
   useFocusEffect(
     useCallback(() => {
@@ -142,17 +179,50 @@ const UsersList = () => {
       return () => sub;
     }, [fetchingUser]),
   );
+  // const addLastMessage = async (
+  //   senderId: string,
+  //   receiverId: string,
+  //   userData,
+  // ) => {
+  //   return await appConstants.chatUserRef
+  //     .doc(senderId)
+  //     .collection(strings.lastMessageCollection)
+  //     .doc(receiverId)
+  //     .get()
+  //     .then(lastMessage => {
+  //       return { ...lastMessage?.data(), user: userData };
+  //     });
+  // };
+
+  // const fetchingLastMessage = useCallback(() => {
+  //   const x = [];
+  //   userList.map(userData => {
+  //     addLastMessage(user?.uid ?? '', userData.uid).then(res => {
+  //       // console.log(res);
+  //       x.push({ ...userData, ...res });
+  //     });
+  //     console.log(x, '<====Data');
+  //   });
+  // }, [user, userList]);
+
+  // useEffect(() => {
+  //   fetchingLastMessage();
+  // }, [fetchingLastMessage]);
 
   const renderUserList = (item: UserListDataType) => {
     const chatId: string = chatIdCreation(user?.uid ?? '', item?.uid);
-    // const chatUsername =
-    //   item?.uid !== item?.senderId
-    //     ? `${strings.you}: ${item?.content}`
-    //     : `${item?.username}: ${item?.content}`;
-    // const latestMessage = item?.content
-    //   ? chatUsername
-    //   : `${strings.startConversation}`;
-    // const time = getChatTime(item?.time);
+    const chatUsername =
+      item?.uid !== item?.senderId
+        ? `${strings.you}: ${item?.content}`
+        : `${item?.username}: ${item?.content}`;
+    const latestMessage = item?.content
+      ? chatUsername
+      : `${strings.startConversation}`;
+    const time = getChatTime(item?.time ?? 0);
+    // console.log(item?.uid, 'iddff');
+
+    // const lastMessage = await addLastMessage(user?.uid ?? '', item?.uid);
+    // console.log(item?.content, 'Message');
 
     const navigateToChatScreen = () => {
       navigation.navigate(navigationStrings.Chat, {
@@ -160,7 +230,6 @@ const UsersList = () => {
         username: item?.username,
         receiverId: item?.uid,
       });
-      // dispatch(chatAction.chatDataRequest(chatId));
     };
 
     return (
@@ -176,12 +245,12 @@ const UsersList = () => {
               style={styles.lastChatText}
               ellipsizeMode="tail"
               numberOfLines={1}>
-              Hello
+              {latestMessage}
             </Text>
           </View>
         </View>
         <View style={styles.dateView}>
-          <Text style={styles.dateText}>x</Text>
+          <Text style={styles.dateText}>{time}</Text>
         </View>
       </TouchableOpacity>
     );

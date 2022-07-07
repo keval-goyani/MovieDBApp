@@ -400,13 +400,15 @@ export interface LoadingStateProps {
 }
 
 export interface UserListDataType {
-  username: string;
   email: string;
   uid: string;
+  username: string;
+  type?: string;
+  createdAt?: { _seconds: number; _nanoseconds: number };
   content?: string;
   time?: number;
   senderId?: string;
-  userId?: string;
+  receiverId?: string;
 }
 export interface UserListStateDataType {
   userList: UserListDataType[] | [];
@@ -465,10 +467,21 @@ export interface LatestMessageDataType {
 }
 
 export interface ChatListDataType {
-  time?: number;
-  username?: string;
-  email?: string;
-  uid?: string;
+  // time: number;
+  // username?: string;
+  // email?: string;
+  // uid?: string;
+
+  email: string;
+  uid: string;
+  username: string;
+  type: string;
+  createdAt: { _seconds: number; _nanoseconds: number };
+  content: string;
+  time: number;
+  senderId: string;
+  receiverId: string;
+  // [x: string]: any;
 }
 
 export interface ChatUserListDataType {

@@ -12,7 +12,7 @@ import {
 } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import chatAction, { chatDataSelector } from '../redux/ChatRedux';
-import { decryptData, timestampToTime } from '../services';
+import { timestampToTime } from '../services';
 
 const MessageList = ({
   chatId,
