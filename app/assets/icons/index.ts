@@ -33,4 +33,11 @@ export default {
   pptDocument: require('./pptDocument.png'),
   document: require('./documentIcon.png'),
   map: require('./mapIcon.png'),
+  plus: require('./plusSign.png'),
+  close: require('./close.png'),
+  noItemFound: require('./noItemFound.png'),
+  locationIcon: require('./locationIcon.png'),
+  fileIcon: require('./fileIcon.png'),
+  cameraIcon: require('./cameraIcon.png'),
+  galleryIcon: require('./galleryIcon.png'),
 };

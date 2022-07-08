@@ -519,7 +519,10 @@ export interface ChatListSagaDataType {
   payload: ChatListDataType[];
   type: string;
 }
-
+export interface UsersListSagaDataType {
+  payload: UsersListDataType[];
+  type: string;
+}
 export interface StaggerDataType {
   imagePath?: string;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
@@ -630,6 +633,7 @@ export interface CustomIconRounderDataType {
   iconName: string;
   tintColor?: ImageStyle;
   onPress: () => void;
+  backGroundColor: string;
 }
 
 export interface ShareLocationDataType {
@@ -671,4 +675,39 @@ export interface UserToChatNavigationDataType {
       receiverId: string;
     },
   ) => void;
+}
+export interface SearchUserProps {
+  setUsersList: Dispatch<
+    React.SetStateAction<ImmutableArray<UsersListDataType>>
+  >;
+}
+
+export interface AddUserListProps {
+  userListData: ImmutableArray<UsersListDataType>;
+}
+
+export interface UsersListStateDataType {
+  userList: UsersListDataType[] | [];
+  fetchingUserList: boolean;
+}
+export interface UsersListDataType {
+  email: string;
+  uid: string;
+  username: string;
+  profileImage: string;
+}
+
+export interface UsersDocumentDataType {
+  email?: string;
+  uid?: string;
+  username?: string;
+  profileImage?: string;
+}
+export interface ChatUsersListType {
+  data: UsersListDataType[];
+}
+
+export interface UserListEmptyType {
+  fetching: boolean | null;
+  userListLength: number;
 }

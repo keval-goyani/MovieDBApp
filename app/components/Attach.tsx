@@ -14,7 +14,7 @@ import {
   handleDocumentPermission,
   handleGalleryPermission,
 } from '../services';
-import { Icons } from '../theme';
+import { Color, Icons } from '../theme';
 import styles from './styles/AttachStyles';
 
 const Attach: FC<AttachDataType> = ({
@@ -57,15 +57,18 @@ const Attach: FC<AttachDataType> = ({
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <CustomIconRounder
-          path={Icons.document}
+          backGroundColor={Color.transparentPurple}
+          path={Icons.fileIcon}
           iconName={strings.document}
+          tintColor={styles.documentTintColor}
           onPress={() => {
             setIsAttach(false);
             handleDocumentPermission(setDocumentData);
           }}
         />
         <CustomIconRounder
-          path={Icons.camera}
+          backGroundColor={Color.transparentSky}
+          path={Icons.cameraIcon}
           iconName={strings.camera}
           tintColor={styles.cameraTintColor}
           onPress={() => {
@@ -74,7 +77,8 @@ const Attach: FC<AttachDataType> = ({
           }}
         />
         <CustomIconRounder
-          path={Icons.gallery}
+          backGroundColor={Color.transparentRoyalBlue}
+          path={Icons.galleryIcon}
           iconName={strings.gallery}
           tintColor={styles.galleryTintColor}
           onPress={() => {
@@ -83,8 +87,10 @@ const Attach: FC<AttachDataType> = ({
           }}
         />
         <CustomIconRounder
-          path={Icons.map}
+          backGroundColor={Color.transparentPink}
+          path={Icons.locationIcon}
           iconName={strings.map}
+          tintColor={styles.locationTintColor}
           onPress={locationHandler}
         />
       </View>

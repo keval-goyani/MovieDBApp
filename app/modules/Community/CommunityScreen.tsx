@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
-import { Header, UsersList } from '../../components';
+import { CustomFloatingButton, Header, UsersList } from '../../components';
 import { NavigationDataType } from '../../constants';
 import { Icons } from '../../theme';
 import styles from './styles/CommunityScreenStyles';
@@ -17,6 +17,7 @@ const CommunityScreen = () => {
         onPress={() => navigation.openDrawer()}
       />
       <UsersList />
+      <CustomFloatingButton />
     </View>
   );
 };

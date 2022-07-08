@@ -10,4 +10,5 @@ export default {
   HomeDrawer: 'HomeDrawer',
   Chat: 'Chat',
   Location: 'Location',
+  ChatMessage: 'ChatMessage',
 };

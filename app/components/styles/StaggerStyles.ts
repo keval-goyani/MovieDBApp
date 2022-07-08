@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: verticalScale(70),
     right: horizontalScale(80),
+    backgroundColor: Color.red,
   },
   iconCamera: {
     backgroundColor: Color.lightIndigo,
