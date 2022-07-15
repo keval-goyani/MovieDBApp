@@ -442,14 +442,21 @@ export const clearChat = ({
   ]);
 };
 
-export const chatCreation = async (
-  conversationId: string,
-  senderId: string,
-  receiverId: string,
-  content: string,
-  type: string,
-  documentData: DocumentStateDataType,
-) => {
+export const chatCreation = async ({
+  conversationId,
+  senderId,
+  receiverId,
+  content,
+  type,
+  documentName = '',
+}: {
+  conversationId: string;
+  senderId: string;
+  receiverId: string;
+  content: string;
+  type: string;
+  documentName?: string;
+}) => {
   const members = {
     [senderId]: await userData(senderId),
     [receiverId]: await userData(receiverId),
@@ -457,12 +464,10 @@ export const chatCreation = async (
   let message = {};
   const fixedMessage = { content, type };
 
-  if (type === strings.document) {
-    const { documentUrl, documentName } = documentData;
+  if (documentName) {
     message = {
       ...fixedMessage,
-      content: documentUrl,
-      documentName: documentName,
+      documentName,
     };
   } else {
     message = fixedMessage;

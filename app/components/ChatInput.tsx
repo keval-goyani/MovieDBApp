@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   Image,
   Keyboard,
@@ -7,15 +14,15 @@ import {
   View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Icons } from '../theme';
 import { Attach, Stagger } from '../components';
-import { ChatDataType, ChatInputDataType, strings } from '../constants';
+import { ChatInputDataType, strings } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
-import { addChatToFirestore, chatCreation } from '../services';
+import { chatCreation } from '../services';
+import { Icons } from '../theme';
 import { styles } from './styles/ChatInputStyles';
 
 const ChatInput: FC<ChatInputDataType> = ({
-  chatId,
+  conversationId,
   cameraModal,
   setCameraModal,
   isAttach,
@@ -26,65 +33,57 @@ const ChatInput: FC<ChatInputDataType> = ({
   imageUrl,
   setShowMenu,
   username,
+  receiverId,
 }) => {
   const [message, setMessage] = useState<string>('');
-  const [messageList, setMessageList] = useState<ChatDataType[]>([]);
   const { user } = useSelector(authDataSelectors.getData);
   const messageInput = useRef<TextInput>(null);
-
-  const addToFireStore = useCallback(() => {
-    addChatToFirestore(chatId, messageList);
-  }, [chatId, messageList]);
-
-  const messageCreation = useCallback(() => {
-    const emptyDocument = { documentUrl: '', documentName: '' };
-
-    chatCreation(
-      chatId,
-      user?.uid ?? '',
-      message.trim(),
-      strings.textMessageType,
-      emptyDocument,
-      setMessageList,
-    );
-  }, [chatId, message, user]);
+  const fixedMessage = useMemo(() => {
+    return {
+      conversationId,
+      senderId: user?.uid ?? '',
+      receiverId: receiverId ?? '',
+    };
+  }, [conversationId, receiverId, user]);
 
   const imageMessageCreation = useCallback(() => {
-    const emptyDocument = { documentUrl: '', documentName: '' };
+    const imageMessage = {
+      ...fixedMessage,
+      content: imageUrl,
+      type: strings.imageType,
+    };
 
-    chatCreation(
-      chatId,
-      user?.uid ?? '',
-      imageUrl,
-      strings.imageType,
-      emptyDocument,
-      setMessageList,
-    );
-  }, [chatId, imageUrl, user]);
+    chatCreation(imageMessage);
+  }, [fixedMessage, imageUrl]);
 
   const documentMessageCreation = useCallback(() => {
-    const content = '';
+    const { documentName, documentUrl } = documentData;
+    const documentMessage = {
+      ...fixedMessage,
+      content: documentUrl,
+      type: strings.document,
+      documentName,
+    };
 
-    chatCreation(
-      chatId,
-      user?.uid ?? '',
-      content,
-      strings.document,
-      documentData,
-      setMessageList,
-    );
-  }, [chatId, documentData, user]);
+    chatCreation(documentMessage);
+  }, [documentData, fixedMessage]);
+
+  const textMessageCreation = useCallback(() => {
+    const textMessage = {
+      ...fixedMessage,
+      content: message.trim(),
+      type: strings.textMessageType,
+    };
+
+    chatCreation(textMessage);
+  }, [fixedMessage, message]);
 
   const sendMessageHandler = useCallback(() => {
     if (message.trim().length !== 0) {
-      messageCreation();
+      textMessageCreation();
       setMessage('');
     }
-  }, [messageCreation, message]);
-
-  useEffect(() => {
-    addToFireStore();
-  }, [addToFireStore]);
+  }, [textMessageCreation, message]);
 
   useEffect(() => {
     imageUrl && imageMessageCreation();
@@ -153,8 +152,9 @@ const ChatInput: FC<ChatInputDataType> = ({
             setIsAttach,
             setImagePath,
             setDocumentData,
-            chatId,
+            conversationId,
             username,
+            receiverId,
           }}
         />
       )}
