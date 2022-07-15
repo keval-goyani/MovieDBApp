@@ -1,16 +1,21 @@
-import firestore from '@react-native-firebase/firestore';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { asMutable } from 'seamless-immutable';
 import { Message } from '../components';
-import { ChatDataType, MessageListDataType, strings } from '../constants';
+import {
+  appConstants,
+  ChatDataType,
+  LatestMessageDataType,
+  MessageListDataType,
+  strings,
+} from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import chatAction, { chatDataSelector } from '../redux/ChatRedux';
-import { timestampToTime } from '../services';
+import { convertToTimestamp, timestampToTime } from '../services';
 
 const MessageList = ({
-  chatId,
+  conversationId,
   setCameraModal,
   setShowMenu,
   setIsAttach,
@@ -23,18 +28,23 @@ const MessageList = ({
   const currentUser = useRef(user?.uid);
 
   const fetchRealTimeMessages = useCallback(() => {
-    const subscriber = firestore()
-      .collection(strings.chatCollection)
-      .doc(chatId)
-      .onSnapshot(documentSnapshot => {
-        return dispatch(
-          chatAction.chatDataSuccess(
-            documentSnapshot?.data()?.messageList ?? [],
-          ),
-        );
+    const subscriber = appConstants.messageRef
+      .doc(conversationId)
+      .collection(strings.messageCollection)
+      .orderBy('createdAt', 'asc')
+      .onSnapshot(async documentSnapshot => {
+        const firestoreChatList: LatestMessageDataType[] = [];
+
+        documentSnapshot?.forEach(document => {
+          const chatMessages = document?.data();
+
+          firestoreChatList.push(chatMessages);
+        });
+        dispatch(chatAction.chatDataSuccess(firestoreChatList));
       });
+
     return () => subscriber();
-  }, [chatId, dispatch]);
+  }, [conversationId, dispatch]);
 
   useEffect(() => {
     fetchRealTimeMessages();
@@ -48,14 +58,16 @@ const MessageList = ({
         scrollRef?.current?.scrollToEnd({ animated: true });
       }}
       renderItem={({ item, index }: { item: ChatDataType; index: number }) => {
-        const time: string = timestampToTime(item?.time);
+        const senderId: string = item?.sender?.uid;
+        const timeStamp = convertToTimestamp(item?.createdAt);
+        const time: string = timestampToTime(timeStamp);
         const chatUsername =
-          user?.uid === item?.user ? `${strings.you}` : `${username}`;
+          user?.uid === senderId ? `${strings.you}` : `${username}`;
 
         return (
           <Message
             key={index}
-            isLeft={item?.user !== currentUser.current}
+            isLeft={senderId !== currentUser?.current}
             message={item?.content}
             documentName={item?.documentName ?? ''}
             type={item?.type}
