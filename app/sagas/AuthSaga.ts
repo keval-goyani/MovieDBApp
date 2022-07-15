@@ -1,9 +1,8 @@
-import firestore from '@react-native-firebase/firestore';
 import { put, takeLatest } from 'redux-saga/effects';
 import {
+  appConstants,
   AuthSagaDataType,
   FireStoreResponseDataType,
-  strings,
 } from '../constants';
 import authAction, { AuthTypes } from '../redux/AuthRedux';
 
@@ -14,10 +13,10 @@ function* handleSignUpRequest({ payload }: AuthSagaDataType) {
     },
     username,
   } = payload;
-  const userData = { email, uid, username };
+  const userData = { email, uid, username, profileImage: '' };
 
-  email !== '' &&
-    firestore().collection(strings.chatUsers).doc(uid).set(userData);
+  email !== '' && appConstants.userRef.doc(uid).set(userData);
+
   yield put(authAction.authSuccess(userData));
 }
 
@@ -27,10 +26,8 @@ function* handleLoginRequest({ payload }: AuthSagaDataType) {
       _user: { uid },
     },
   } = payload;
-  const fireStoreResponse: FireStoreResponseDataType = yield firestore()
-    .collection(strings.chatUsers)
-    .doc(uid)
-    .get();
+  const fireStoreResponse: FireStoreResponseDataType =
+    yield appConstants.userRef.doc(uid).get();
   const { _data } = fireStoreResponse;
 
   yield put(authAction.authSuccess(_data));

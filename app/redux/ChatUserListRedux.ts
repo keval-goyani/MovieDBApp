@@ -7,6 +7,7 @@ import {
 } from '../constants';
 
 const { Types, Creators } = createActions({
+  userListRequest: ['payload'],
   userListSuccess: ['data'],
 });
 
@@ -22,16 +23,23 @@ export const chatUserListSelector = {
   getData: (state: RootState) => state?.chatUser,
 };
 
+const request = (state: ImmutableObject<UserListStateDataType>) => {
+  return state.merge({
+    fetchingUserList: true,
+  });
+};
+
 const listData = (
   state: ImmutableObject<UserListStateDataType>,
   { data }: ChatUserListType,
 ) => {
-  return state.replace({
+  return state.merge({
     userList: data,
     fetchingUserList: false,
   });
 };
 
 export const userListReducer = createReducer(INITIAL_STATE, {
+  [Types.USER_LIST_REQUEST]: request,
   [Types.USER_LIST_SUCCESS]: listData,
 });

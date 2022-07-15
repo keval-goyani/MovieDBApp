@@ -1,6 +1,6 @@
-import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import apisauce from 'apisauce';
+import CryptoJS from 'crypto-js';
 import React, { Dispatch } from 'react';
 import { Alert } from 'react-native';
 import documentPicker from 'react-native-document-picker';
@@ -21,7 +21,6 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { ImmutableObject } from 'seamless-immutable';
 import {
   appConstants,
-  ChatDataType,
   ClearChatDataType,
   DetailResponseGenerator,
   DocumentStateDataType,
@@ -190,8 +189,14 @@ export const sortString = (input: string) => {
   return input.split('').sort().join('');
 };
 
-export const chatIdCreation = (userId: string, id: string) => {
-  return userId.localeCompare(id) > 0 ? userId + id : id + userId;
+export const conversationIdCreation = (...userIds: string[]) => {
+  let concatId = '';
+  userIds.sort().map(id => (concatId += id));
+  return getHashCode(concatId);
+};
+
+const getHashCode = (id: string) => {
+  return CryptoJS.MD5(id).toString();
 };
 
 export const handleCameraPermission = (
@@ -421,7 +426,7 @@ const selectImage = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
 
 export const clearChat = ({
   navigation,
-  chatId,
+  conversationId,
   setShowMenu,
 }: ClearChatDataType) => {
   Alert.alert(strings.areYouSure, strings.clearChatAlert, [
@@ -429,7 +434,7 @@ export const clearChat = ({
     {
       text: strings.ok,
       onPress: () => {
-        firestore().collection(strings.chatCollection).doc(chatId).delete();
+        appConstants.messageRef.doc(conversationId).delete();
         setShowMenu(false);
         navigation.goBack();
       },
@@ -438,40 +443,84 @@ export const clearChat = ({
 };
 
 export const chatCreation = async (
-  chatId: string,
-  uid: string,
+  conversationId: string,
+  senderId: string,
+  receiverId: string,
   content: string,
   type: string,
   documentData: DocumentStateDataType,
-  setMessageList: Dispatch<React.SetStateAction<ChatDataType[]>>,
 ) => {
-  const timeStamp = Date.now();
-  let data = {};
+  const members = {
+    [senderId]: await userData(senderId),
+    [receiverId]: await userData(receiverId),
+  };
+  let message = {};
+  const fixedMessage = { content, type };
+
   if (type === strings.document) {
     const { documentUrl, documentName } = documentData;
-    data = {
+    message = {
+      ...fixedMessage,
       content: documentUrl,
-      type,
-      user: uid,
-      time: timeStamp,
-      documentName,
+      documentName: documentName,
     };
   } else {
-    data = {
-      content,
-      type,
-      user: uid,
-      time: timeStamp,
-    };
+    message = fixedMessage;
   }
 
-  const previousMessage = await firestore()
-    .collection(strings.chatCollection)
-    .doc(chatId)
-    .get()
-    .then(documentSnapshot => documentSnapshot.data());
+  const latestMessage = {
+    members,
+    createdAt: appConstants.firebaseTimestamp,
+    latestMessage: { ...message, senderId },
+  };
 
-  setMessageList([...(previousMessage?.messageList ?? ''), data]);
+  await appConstants.conversationRef
+    .doc(conversationId)
+    .set(latestMessage)
+    .then(() => {
+      addRecentMessageToUserList(senderId, receiverId, conversationId, message);
+    });
+};
+
+export const addRecentMessageToUserList = async (
+  senderId: string,
+  receiverId: string,
+  conversationId: string,
+  message: { content: string; type: string; documentName?: string } | {},
+) => {
+  const data = {
+    ...message,
+    createdAt: appConstants.firebaseTimestamp,
+    sender: await userData(senderId),
+    status: strings.sentStatus,
+    read: [receiverId],
+    payload: strings.emptyString,
+  };
+
+  await appConstants.messageRef
+    .doc(conversationId)
+    .collection(strings.messageCollection)
+    .add(data)
+    .then(() => {
+      updateChatCollection(senderId, conversationId);
+      updateChatCollection(receiverId, conversationId);
+    })
+    .catch(error => error);
+};
+
+const updateChatCollection = async (id: string, conversationId: string) => {
+  await appConstants.chatRef
+    .doc(id)
+    .collection(strings.conversationsCollection)
+    .doc(conversationId)
+    .set({ unReadCount: 0 });
+};
+
+const userData = async (id: string) => {
+  return await appConstants.userRef
+    .doc(id)
+    .get()
+    .then(user => user.data());
 };
 
 export const openDocument = (url: string, documentName: string) => {
@@ -513,14 +562,21 @@ export const openDocument = (url: string, documentName: string) => {
   });
 };
 
-export const addChatToFirestore = async (
-  chatId: string,
-  messageList: ChatDataType[],
-) => {
-  messageList.length !== 0 &&
-    (await firestore()
-      .collection(strings.chatCollection)
-      .doc(chatId)
-      .set({ messageList })
-      .catch(error => error));
+export const convertToTimestamp = (createdAt: {
+  _seconds: number;
+  _nanoseconds: number;
+}) => {
+  return new Date(
+    (createdAt?._seconds + createdAt?._nanoseconds * 10 ** -9) * 1000,
+  ).getTime();
+};
+
+export const encryptData = (data: string) => {
+  return CryptoJS.AES.encrypt(data, appConstants.key).toString();
+};
+
+export const decryptData = (cipherText: string) => {
+  return CryptoJS.AES.decrypt(cipherText, appConstants.key).toString(
+    CryptoJS.enc.Utf8,
+  );
 };

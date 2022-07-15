@@ -15,7 +15,7 @@ const ChatHeader = ({
   setIsAttach,
   setCameraModal,
   setChatWallpaper,
-  chatId,
+  conversationId,
 }: ChatHeaderDataType) => {
   const navigation: NavigationDataType = useNavigation();
 
@@ -43,7 +43,9 @@ const ChatHeader = ({
           <Image source={Icons.dotMenu} style={styles.dotsMenu} />
         </Pressable>
       </View>
-      {showMenu && <ChatMenu {...{ setChatWallpaper, setShowMenu, chatId }} />}
+      {showMenu && (
+        <ChatMenu {...{ setChatWallpaper, setShowMenu, conversationId }} />
+      )}
     </>
   );
 };
