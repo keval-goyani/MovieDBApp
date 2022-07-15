@@ -258,13 +258,14 @@ export interface NavigationDataType {
     params?: {
       id?: number;
       data?: string;
-      chatId?: string;
+      conversationId?: string;
       username?: string;
       isFromChat?: boolean;
       currentLatitude?: number;
       currentLongitude?: number;
       lastLatitude?: number;
       lastLongitude?: number;
+      receiverId?: string;
     },
   ) => void;
   openDrawer: () => void;
@@ -376,7 +377,7 @@ export interface ChatHeaderDataType {
   setIsAttach: Dispatch<React.SetStateAction<boolean>>;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
-  chatId: string;
+  conversationId: string;
 }
 
 export interface MessageDataType {
@@ -399,16 +400,20 @@ export interface LoadingStateProps {
 }
 
 export interface UserListDataType {
-  username: string;
   email: string;
   uid: string;
-  content: string;
-  time: number;
-  senderId: string;
-  userId: string;
+  username: string;
+  profileImage: string;
+  createdAt: number;
+  latestMessage: {
+    type: string;
+    content: string;
+    senderId: string;
+    documentName?: string;
+  };
 }
 export interface UserListStateDataType {
-  userList: UserListDataType[];
+  userList: UserListDataType[] | [];
   fetchingUserList: boolean;
 }
 
@@ -416,12 +421,19 @@ export interface ChatUserListType {
   data: UserListDataType[];
 }
 
+export interface UserDataType extends AuthDataType {
+  profileImage: string;
+}
+
 export interface ChatDataType {
   content: string;
-  time: number;
-  user: string;
   type: string;
   documentName?: string;
+  createdAt: { _seconds: number; _nanoseconds: number };
+  payload: '';
+  sender: UserDataType;
+  read: string[];
+  status: string;
 }
 
 export interface ChatStateDataType {
@@ -447,23 +459,33 @@ export interface ChatInputDataType {
   setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   documentData: DocumentStateDataType;
-  chatId: string;
+  conversationId: string;
   username: string;
   imageUrl: string;
+  receiverId: string | undefined;
 }
 
 export interface LatestMessageDataType {
-  content: string;
-  time: number;
-  senderId: string;
-  userId: string;
+  content?: string;
+  type?: string;
+  documentName?: string;
+  createdAt?: { _seconds: number; _nanoseconds: number };
+  payload?: '';
+  sender?: UserDataType;
+  read?: string[];
+  status?: string;
 }
 
 export interface ChatListDataType {
+  email: string;
+  uid: string;
+  username: string;
+  type: string;
+  createdAt: { _seconds: number; _nanoseconds: number };
+  content: string;
   time: number;
-  username?: string;
-  email?: string;
-  uid?: string;
+  senderId: string;
+  receiverId: string;
 }
 
 export interface ChatUserListDataType {
@@ -473,13 +495,14 @@ export interface ChatUserListDataType {
 export interface ChatScreenDataType {
   route: {
     params: {
-      chatId: string;
+      conversationId: string;
       username: string;
       isFromChat?: boolean;
       lastLatitude?: number;
       lastLongitude?: number;
       currentLatitude?: number;
       currentLongitude?: number;
+      receiverId?: string;
     };
   };
 }
@@ -493,11 +516,8 @@ export interface FireStoreResponseDataType {
 }
 
 export interface ChatListSagaDataType {
-  messageList: {
-    content: string;
-    time: number;
-    user: string;
-  };
+  payload: ChatListDataType[];
+  type: string;
 }
 
 export interface StaggerDataType {
@@ -507,7 +527,7 @@ export interface StaggerDataType {
 }
 
 export interface MessageListDataType {
-  chatId: string;
+  conversationId: string;
   username: string;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
@@ -521,7 +541,7 @@ export interface SetWallpaperDataType {
 export interface ChatMenuDataType {
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
-  chatId: string;
+  conversationId: string;
 }
 
 export interface CustomButtonDataType {
@@ -534,7 +554,7 @@ export interface CustomButtonDataType {
 export interface ClearChatDataType {
   navigation: NavigationDataType;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
-  chatId: string;
+  conversationId: string;
 }
 
 export interface LocationCoordsProps {
@@ -548,7 +568,7 @@ export interface MapDataProps {
   latitude: number;
   lastLatitude: number;
   lastLongitude: number;
-  chatId?: string;
+  conversationId?: string;
   username?: string;
 }
 
@@ -556,11 +576,12 @@ export interface CustomButtonProps {
   isFromChat: boolean;
   longitude: number;
   latitude: number;
-  chatId: string;
+  conversationId: string;
+  receiverId: string | undefined;
 }
 
 export interface ShareLocationDataProps {
-  chatId?: string;
+  conversationId?: string;
   username?: string;
   currentLatitude?: number;
   currentLongitude?: number;
@@ -599,8 +620,9 @@ export interface AttachDataType {
   setIsAttach: Dispatch<React.SetStateAction<boolean>>;
   setImagePath: Dispatch<React.SetStateAction<string>>;
   setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>;
-  chatId: string;
+  conversationId: string;
   username: string;
+  receiverId: string | undefined;
 }
 
 export interface CustomIconRounderDataType {
@@ -611,7 +633,7 @@ export interface CustomIconRounderDataType {
 }
 
 export interface ShareLocationDataType {
-  chatId: string;
+  conversationId: string;
   username: string;
 }
 
@@ -638,4 +660,15 @@ export interface TextMessageDataType {
   isLeft: boolean;
   message: string;
   time: string;
+}
+
+export interface UserToChatNavigationDataType {
+  navigate: (
+    screen: string,
+    params: {
+      conversationId: string;
+      username: string;
+      receiverId: string;
+    },
+  ) => void;
 }

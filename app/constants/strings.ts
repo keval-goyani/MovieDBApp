@@ -74,7 +74,6 @@ export default {
   color: 'color',
   back: 'back',
   noUserFound: 'No Users Found!',
-  chatUsers: 'ChatUsers',
   user: 'User',
   chatCollection: 'Chat',
   you: 'You',
@@ -132,4 +131,7 @@ export default {
   locationType: 'Location',
   appCheck:
     'Please check, Is there any app exist in device to handle this type of file',
+  messageCollection: 'message',
+  conversationsCollection: 'conversation',
+  sentStatus: 'sent',
 };

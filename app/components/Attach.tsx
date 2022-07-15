@@ -21,8 +21,9 @@ const Attach: FC<AttachDataType> = ({
   setIsAttach,
   setImagePath,
   setDocumentData,
-  chatId,
+  conversationId,
   username,
+  receiverId,
 }) => {
   const navigation: NavigationDataType = useNavigation();
 
@@ -30,7 +31,7 @@ const Attach: FC<AttachDataType> = ({
     if (enable) {
       navigation.navigate(navigationStrings.Location, {
         isFromChat: false,
-        ...{ chatId, username },
+        ...{ conversationId, username, receiverId },
       });
       setIsAttach(false);
     } else {

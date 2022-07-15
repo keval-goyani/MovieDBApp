@@ -4,8 +4,11 @@ import {
   alertMessage,
   apiConfig,
   chatCreation,
-  chatIdCreation,
   clearChat,
+  conversationIdCreation,
+  convertToTimestamp,
+  decryptData,
+  encryptData,
   getChatTime,
   getDetails,
   getError,
@@ -13,11 +16,10 @@ import {
   handleCameraPermission,
   handleDocumentPermission,
   handleGalleryPermission,
+  openDocument,
   searchMovie,
   sortString,
   timestampToTime,
-  openDocument,
-  addChatToFirestore,
 } from './Utils';
 
 export {
@@ -37,7 +39,9 @@ export {
   clearChat,
   chatCreation,
   handleDocumentPermission,
-  chatIdCreation,
+  conversationIdCreation,
   openDocument,
-  addChatToFirestore,
+  encryptData,
+  decryptData,
+  convertToTimestamp,
 };

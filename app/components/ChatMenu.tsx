@@ -9,7 +9,7 @@ import { styles } from './styles/ChatMenuStyles';
 const ChatMenu = ({
   setChatWallpaper,
   setShowMenu,
-  chatId,
+  conversationId,
 }: ChatMenuDataType) => {
   const navigation: NavigationDataType = useNavigation();
 
@@ -33,7 +33,8 @@ const ChatMenu = ({
           buttonStyle: styles.menuListItem,
           buttonTextStyle: styles.menuItem,
           buttonText: strings.clearChat,
-          onPress: () => clearChat({ ...{ navigation, chatId, setShowMenu } }),
+          onPress: () =>
+            clearChat({ ...{ navigation, conversationId, setShowMenu } }),
         }}
       />
     </View>
