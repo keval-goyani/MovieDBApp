@@ -1,4 +1,5 @@
 import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
 import apisauce from 'apisauce';
 import CryptoJS from 'crypto-js';
 import React, { Dispatch } from 'react';
@@ -425,21 +426,71 @@ const selectImage = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
 };
 
 export const clearChat = ({
-  navigation,
   conversationId,
   setShowMenu,
+  receiverId,
+  senderId,
 }: ClearChatDataType) => {
   Alert.alert(strings.areYouSure, strings.clearChatAlert, [
     { text: strings.cancel, onPress: () => setShowMenu(false) },
     {
       text: strings.ok,
-      onPress: () => {
-        appConstants.messageRef.doc(conversationId).delete();
+      onPress: async () => {
+        await clearDataHandler(conversationId, receiverId, senderId);
         setShowMenu(false);
-        navigation.goBack();
       },
     },
   ]);
+};
+
+const clearDataHandler = async (
+  conversationId: string,
+  receiverId: string = '',
+  senderId: string,
+) => {
+  const messageBatch = firestore().batch();
+  const conversationBatch = firestore().batch();
+
+  await appConstants.messageRef
+    .doc(conversationId)
+    .collection(strings.messageCollection)
+    .get()
+    .then(async messages => {
+      messages.docs.forEach(messageData =>
+        messageBatch.delete(messageData.ref),
+      );
+      messageBatch.commit();
+
+      await appConstants.conversationRef
+        .doc(conversationId)
+        .get()
+        .then(conversation => {
+          conversationBatch.delete(conversation.ref);
+        })
+        .catch(error => error);
+
+      await appConstants.chatRef
+        .doc(senderId)
+        .collection(strings.conversationsCollection)
+        .doc(conversationId)
+        .get()
+        .then(chat => {
+          conversationBatch.delete(chat.ref);
+        })
+        .catch(error => error);
+
+      await appConstants.chatRef
+        .doc(receiverId)
+        .collection(strings.conversationsCollection)
+        .doc(conversationId)
+        .get()
+        .then(chat => {
+          conversationBatch.delete(chat.ref);
+        })
+        .catch(error => error);
+      conversationBatch.commit();
+    })
+    .catch(error => error);
 };
 
 export const chatCreation = async ({
@@ -525,7 +576,7 @@ const userData = async (id: string) => {
   return await appConstants.userRef
     .doc(id)
     .get()
-    .then(user => user.data());
+    .then(user => user?.data());
 };
 
 export const openDocument = (url: string, documentName: string) => {

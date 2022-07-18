@@ -377,6 +377,7 @@ export interface ChatHeaderDataType {
   setIsAttach: Dispatch<React.SetStateAction<boolean>>;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
+  receiverId: string | undefined;
   conversationId: string;
 }
 
@@ -545,6 +546,7 @@ export interface ChatMenuDataType {
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   conversationId: string;
+  receiverId: string | undefined;
 }
 
 export interface CustomButtonDataType {
@@ -555,9 +557,10 @@ export interface CustomButtonDataType {
 }
 
 export interface ClearChatDataType {
-  navigation: NavigationDataType;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   conversationId: string;
+  receiverId: string | undefined;
+  senderId: string;
 }
 
 export interface LocationCoordsProps {

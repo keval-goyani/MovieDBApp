@@ -1,17 +1,19 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
+import { useSelector } from 'react-redux';
 import { CustomButton } from '../components';
-import { ChatMenuDataType, NavigationDataType, strings } from '../constants';
+import { ChatMenuDataType, strings } from '../constants';
+import { authDataSelectors } from '../redux/AuthRedux';
 import { clearChat, handleGalleryPermission } from '../services';
 import { styles } from './styles/ChatMenuStyles';
 
 const ChatMenu = ({
+  conversationId,
+  receiverId,
   setChatWallpaper,
   setShowMenu,
-  conversationId,
 }: ChatMenuDataType) => {
-  const navigation: NavigationDataType = useNavigation();
+  const { user } = useSelector(authDataSelectors.getData);
 
   const changeWallpaper = () => {
     handleGalleryPermission(setChatWallpaper);
@@ -33,8 +35,12 @@ const ChatMenu = ({
           buttonStyle: styles.menuListItem,
           buttonTextStyle: styles.menuItem,
           buttonText: strings.clearChat,
-          onPress: () =>
-            clearChat({ ...{ navigation, conversationId, setShowMenu } }),
+          onPress: () => {
+            clearChat({
+              ...{ conversationId, setShowMenu, receiverId },
+              senderId: user?.uid ?? '',
+            });
+          },
         }}
       />
     </View>
