@@ -44,54 +44,58 @@ const UsersList = () => {
           conversationIds.push(conversation?.id);
         });
 
-        const userListData: Promise<UserListDataType[]> = new Promise(
-          resolve => {
-            conversationIds?.forEach(async (conversationId: string) => {
-              appConstants.conversationRef
-                .doc(conversationId)
-                .onSnapshot(async conversationData => {
-                  const members: UserDataType[] = await conversationData?.data()
-                    ?.members;
-                  const latestMessage = await conversationData?.data()
-                    ?.latestMessage;
-                  const createdAt = convertToTimestamp(
-                    await conversationData?.data()?.createdAt,
-                  );
-                  const userData = Object.values(members).filter(
-                    item => item?.uid !== user?.uid,
-                  )?.[0];
-                  const users = { ...userData, latestMessage, createdAt };
-                  const userIndex = conversationsList.findIndex(
-                    conversationUser => {
-                      return conversationUser?.uid === users?.uid;
-                    },
-                  );
+        if (conversationIds.length !== 0) {
+          const userListData: Promise<UserListDataType[]> = new Promise(
+            resolve => {
+              conversationIds?.forEach(async (conversationId: string) => {
+                appConstants.conversationRef
+                  .doc(conversationId)
+                  .onSnapshot(async conversationData => {
+                    const members: UserDataType[] =
+                      await conversationData?.data()?.members;
+                    const latestMessage = await conversationData?.data()
+                      ?.latestMessage;
+                    const createdAt = convertToTimestamp(
+                      await conversationData?.data()?.createdAt,
+                    );
+                    const userData = Object.values(members).filter(
+                      item => item?.uid !== user?.uid,
+                    )?.[0];
+                    const users = { ...userData, latestMessage, createdAt };
+                    const userIndex = conversationsList.findIndex(
+                      conversationUser => {
+                        return conversationUser?.uid === users?.uid;
+                      },
+                    );
 
-                  if (userIndex !== -1) {
-                    conversationsList[userIndex] = users;
-                  } else {
-                    conversationsList.push(users);
-                  }
+                    if (userIndex !== -1) {
+                      conversationsList[userIndex] = users;
+                    } else {
+                      conversationsList.push(users);
+                    }
 
-                  if (conversationIds.length === conversationsList.length) {
-                    resolve(conversationsList);
+                    if (conversationIds.length === conversationsList.length) {
+                      resolve(conversationsList);
 
-                    userListData.then(conversationsUser => {
-                      conversationsUser.sort((a, b) => {
-                        return a?.createdAt === 0
-                          ? b?.createdAt
-                          : b?.createdAt - a?.createdAt;
+                      userListData.then(conversationsUser => {
+                        conversationsUser.sort((a, b) => {
+                          return a?.createdAt === 0
+                            ? b?.createdAt
+                            : b?.createdAt - a?.createdAt;
+                        });
+
+                        dispatch(
+                          userListDataAction.userListRequest(conversationsUser),
+                        );
                       });
-
-                      dispatch(
-                        userListDataAction.userListRequest(conversationsUser),
-                      );
-                    });
-                  }
-                });
-            });
-          },
-        );
+                    }
+                  });
+              });
+            },
+          );
+        } else {
+          dispatch(userListDataAction.userListRequest(appConstants.emptyArray));
+        }
       });
   }, [dispatch, user]);
 
@@ -153,7 +157,12 @@ const UsersList = () => {
     <FlatList
       data={asMutable(userList)}
       renderItem={({ item }) => renderUserList(item)}
-      ListEmptyComponent={<UserListEmpty fetching={fetchingUserList} />}
+      ListEmptyComponent={
+        <UserListEmpty
+          fetching={fetchingUserList}
+          userListLength={userList.length}
+        />
+      }
       showsVerticalScrollIndicator={false}
       bounces={false}
     />

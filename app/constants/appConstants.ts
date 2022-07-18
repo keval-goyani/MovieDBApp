@@ -53,4 +53,5 @@ export default {
   conversationRef: firestore().collection('conversations'),
   messageRef: firestore().collection('messages'),
   firebaseTimestamp: firestore.FieldValue.serverTimestamp(),
+  emptyArray: [],
 };

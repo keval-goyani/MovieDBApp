@@ -414,7 +414,7 @@ export interface UserListDataType {
 }
 export interface UserListStateDataType {
   userList: UserListDataType[] | [];
-  fetchingUserList: boolean;
+  fetchingUserList: boolean | null;
 }
 
 export interface ChatUserListType {
