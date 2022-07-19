@@ -134,4 +134,7 @@ export default {
   messageCollection: 'message',
   conversationsCollection: 'conversation',
   sentStatus: 'sent',
+  communityMember: 'Community Members',
+  noItemFound: 'No User Found',
+  makeSure: 'Make sure that your friend is using MovieDB',
 };
