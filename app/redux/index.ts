@@ -9,6 +9,7 @@ import { detailReducer } from './MovieDetailRedux';
 import { popularReducer } from './PopularRedux';
 import { trailerReducer } from './TrailerRedux';
 import { trendingReducer } from './TrendingRedux';
+import { usersListReducer } from './UserListRedux';
 
 export default combineReducers({
   authData: authReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
   trendingData: trendingReducer,
   selectTab: selectTabReducer,
   chatWallpaper: wallpaperReducer,
+  user: usersListReducer,
 });

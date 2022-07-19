@@ -1,5 +1,6 @@
 import appConstants from './appConstants';
 import {
+  AddUserListProps,
   AttachDataType,
   AuthDataType,
   AuthReduxDataType,
@@ -63,6 +64,7 @@ import {
   RouteDataType,
   SearchFunctionDataType,
   SearchModalDataType,
+  SearchUserProps,
   SetWallpaperDataType,
   ShareDocumentProps,
   ShareLocationDataProps,
@@ -75,7 +77,11 @@ import {
   TrendingDataType,
   UserDataType,
   UserListDataType,
+  UserListEmptyType,
   UserListStateDataType,
+  UsersDocumentDataType,
+  UsersListDataType,
+  UsersListStateDataType,
   UserToChatNavigationDataType,
 } from './appTypes';
 import navigationStrings from './navigationStrings';
@@ -92,11 +98,13 @@ export {
 };
 export type {
   AttachDataType,
+  UserListEmptyType,
   AuthDataType,
   AuthReduxDataType,
   AuthSagaDataType,
   AuthStateDataType,
   ChatDataType,
+  UsersDocumentDataType,
   ChatHeaderDataType,
   ChatInputDataType,
   ChatListDataType,
@@ -104,6 +112,7 @@ export type {
   ChatLocalStoreDataType,
   ChatMenuDataType,
   ChatScreenDataType,
+  UsersListStateDataType,
   ChatStateDataType,
   ChatUserListDataType,
   ChatUserListType,
@@ -116,6 +125,7 @@ export type {
   CustomIconRounderDataType,
   DataType,
   DetailPathDataType,
+  UsersListDataType,
   DetailResponseGenerator,
   DetailStateDataType,
   DetailStoreDataType,
@@ -168,4 +178,6 @@ export type {
   UserListDataType,
   UserListStateDataType,
   UserToChatNavigationDataType,
+  AddUserListProps,
+  SearchUserProps,
 };
