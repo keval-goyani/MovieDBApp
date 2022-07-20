@@ -721,6 +721,6 @@ export interface ChatUsersListType {
 }
 
 export interface UserListEmptyType {
-  fetching: boolean;
+  fetching: boolean | null;
   userListLength: number;
 }
