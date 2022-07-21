@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SearchModalDataType, strings } from '../constants';
+import { Color } from '../theme';
 import { styles } from './styles/SearchModalStyles';
 
 const SearchModal = ({
@@ -20,6 +21,7 @@ const SearchModal = ({
       <TextInput
         ref={searchBox}
         placeholder={strings.search}
+        placeholderTextColor={Color.darkGray}
         style={styles.searchBox}
         onChangeText={search => setSearchQuery(search)}
         value={searchQuery}

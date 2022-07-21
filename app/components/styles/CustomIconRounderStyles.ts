@@ -6,9 +6,9 @@ const styles = StyleSheet.create({
     marginVertical: verticalScale(6),
     alignItems: 'center',
   },
-  iconWraper: {
+  iconWrapper: {
     borderRadius: 23,
-    backgroundColor: Color.blueGreen,
+    backgroundColor: Color.white,
     padding: moderateScale(8),
   },
   icon: {

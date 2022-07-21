@@ -57,15 +57,18 @@ const Attach: FC<AttachDataType> = ({
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <CustomIconRounder
-          path={Icons.document}
+          backgroundColor={styles.documentBackgroundColor}
+          path={Icons.fileIcon}
           iconName={strings.document}
+          tintColor={styles.documentTintColor}
           onPress={() => {
             setIsAttach(false);
             handleDocumentPermission(setDocumentData);
           }}
         />
         <CustomIconRounder
-          path={Icons.camera}
+          backgroundColor={styles.cameraBackgroundColor}
+          path={Icons.cameraIcon}
           iconName={strings.camera}
           tintColor={styles.cameraTintColor}
           onPress={() => {
@@ -74,7 +77,8 @@ const Attach: FC<AttachDataType> = ({
           }}
         />
         <CustomIconRounder
-          path={Icons.gallery}
+          backgroundColor={styles.galleryBackgroundColor}
+          path={Icons.galleryIcon}
           iconName={strings.gallery}
           tintColor={styles.galleryTintColor}
           onPress={() => {
@@ -83,8 +87,10 @@ const Attach: FC<AttachDataType> = ({
           }}
         />
         <CustomIconRounder
-          path={Icons.map}
+          backgroundColor={styles.locationBackgroundColor}
+          path={Icons.locationIcon}
           iconName={strings.map}
+          tintColor={styles.locationTintColor}
           onPress={locationHandler}
         />
       </View>
