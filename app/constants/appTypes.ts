@@ -1,5 +1,12 @@
 import React, { Dispatch } from 'react';
 import {
+  Control,
+  FormState,
+  UseFormGetValues,
+  UseFormHandleSubmit,
+  UseFormResetField,
+} from 'react-hook-form';
+import {
   ImageProps,
   ImageSourcePropType,
   ImageStyle,
@@ -33,11 +40,25 @@ interface SpokenLanguagesDataType {
   name: string;
 }
 
+export interface FormDataType {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export interface FormTypeProps {
   getCredentials: React.Dispatch<
     React.SetStateAction<{ userName?: string; email: string; password: string }>
   >;
   type: string;
+  form: {
+    control: Control<FormDataType>;
+    handleSubmit: UseFormHandleSubmit<FormDataType>;
+    formState: FormState<FormDataType>;
+    getValues: UseFormGetValues<FormDataType>;
+    resetField: UseFormResetField<FormDataType>;
+  };
 }
 
 interface CreditsDataType {

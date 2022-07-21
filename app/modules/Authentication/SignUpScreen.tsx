@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   Image,
   Keyboard,
@@ -11,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CustomHyperlink, Loader } from '../../components';
 import {
   Credentials,
+  defaultValues,
+  FormDataType,
   NavigationDataType,
   navigationStrings,
   strings,
@@ -25,6 +28,11 @@ const SignUpScreen = () => {
     username: '',
     email: '',
     password: '',
+  });
+  const form = useForm<FormDataType>({
+    defaultValues,
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
   });
   const dispatch = useDispatch();
   const navigation: NavigationDataType = useNavigation();
@@ -68,6 +76,7 @@ const SignUpScreen = () => {
         <Form
           getCredentials={setRegisterCredentials}
           type={strings.signUpCamel}
+          {...{ form }}
         />
         {loading && (
           <Loader color={Color.white} animating={true} size={'large'} />

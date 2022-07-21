@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   Image,
   Keyboard,
@@ -12,6 +13,8 @@ import { Icons } from '../../assets';
 import { CustomHyperlink, Loader } from '../../components';
 import {
   Credentials,
+  defaultValues,
+  FormDataType,
   NavigationScreenType,
   navigationStrings,
   strings,
@@ -26,11 +29,16 @@ const LoginScreen = () => {
     email: '',
     password: '',
   });
-  const { email, password } = loginCredentials;
+  const form = useForm<FormDataType>({
+    defaultValues,
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
+  });
   const dispatch = useDispatch();
   const navigation: NavigationScreenType = useNavigation();
-  const behavior = Metrics.isAndroid ? 'height' : 'padding';
   const { loading } = useSelector(authDataSelectors.getData);
+  const { email, password } = loginCredentials;
+  const behavior = Metrics.isAndroid ? 'height' : 'padding';
 
   const loginHandler = useCallback(async () => {
     if (email && password) {
@@ -39,9 +47,12 @@ const LoginScreen = () => {
         .then(userCredential =>
           dispatch(authAction.loginRequest({ user: userCredential.user })),
         )
-        .catch(() => dispatch(authAction.authFailure(strings.loginError)));
+        .catch(() => {
+          dispatch(authAction.authFailure(strings.loginError));
+          form.resetField('password');
+        });
     }
-  }, [dispatch, email, password]);
+  }, [dispatch, email, form, password]);
 
   useEffect(() => {
     loginHandler();
@@ -55,7 +66,11 @@ const LoginScreen = () => {
       <ScrollView
         contentContainerStyle={{ ...appStyles.container, ...styles.container }}>
         <Image source={Icons.movieDbIcon3x} style={styles.image} />
-        <Form getCredentials={setLoginCredentials} type={strings.loginCamel} />
+        <Form
+          getCredentials={setLoginCredentials}
+          type={strings.loginCamel}
+          {...{ form }}
+        />
         {loading && (
           <Loader color={Color.white} animating={true} size={'large'} />
         )}

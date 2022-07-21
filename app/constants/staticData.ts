@@ -156,3 +156,10 @@ export const pickerOptions = {
   includeBase64: true,
   includeExtra: true,
 };
+
+export const defaultValues = {
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
