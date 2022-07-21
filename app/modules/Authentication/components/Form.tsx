@@ -49,6 +49,7 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
               <TextInput
                 style={styles.input}
                 placeholder={strings.username}
+                placeholderTextColor={Color.darkGray}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -70,6 +71,7 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
             <TextInput
               style={styles.input}
               placeholder={strings.email}
+              placeholderTextColor={Color.darkGray}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -92,6 +94,7 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
             <TextInput
               style={styles.input}
               placeholder={strings.password}
+              placeholderTextColor={Color.darkGray}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -114,6 +117,7 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
               <TextInput
                 style={styles.input}
                 placeholder={strings.confirmPasswordPlaceholder}
+                placeholderTextColor={Color.darkGray}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}

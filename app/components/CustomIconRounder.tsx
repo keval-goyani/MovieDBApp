@@ -8,10 +8,13 @@ const CustomIconRounder: FC<CustomIconRounderDataType> = ({
   iconName,
   tintColor,
   onPress,
+  backgroundColor,
 }) => {
   return (
     <View style={styles.iconList}>
-      <TouchableOpacity style={styles.iconWraper} onPress={onPress}>
+      <TouchableOpacity
+        style={[styles.iconWrapper, backgroundColor]}
+        onPress={onPress}>
         <Image source={path} style={[styles.icon, tintColor]} />
       </TouchableOpacity>
       <Text style={styles.iconName}>{iconName}</Text>

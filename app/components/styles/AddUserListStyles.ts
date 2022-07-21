@@ -7,6 +7,8 @@ import {
   verticalScale,
 } from '../../theme';
 
+
+
 export const styles = StyleSheet.create({
   listItem: {
     flex: 1,
