@@ -3,7 +3,7 @@ import { Image, TextInput, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { SearchUserProps, strings } from '../constants';
 import { userListSelector } from '../redux/UserListRedux';
-import { Icons } from '../theme';
+import { Color, Icons } from '../theme';
 import { styles } from './styles/SearchUserStyles';
 
 const SearchUser = ({ setUsersList }: SearchUserProps) => {
@@ -32,6 +32,7 @@ const SearchUser = ({ setUsersList }: SearchUserProps) => {
     <View style={styles.searchView}>
       <TextInput
         placeholder={strings.search}
+        placeholderTextColor={Color.darkGray}
         style={styles.searchBox}
         onChangeText={search => onChangeHandler(search)}
         value={searchQuery}

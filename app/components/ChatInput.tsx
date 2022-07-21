@@ -18,7 +18,7 @@ import { Attach, Stagger } from '../components';
 import { ChatInputDataType, strings } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import { chatCreation } from '../services';
-import { Icons } from '../theme';
+import { Color, Icons } from '../theme';
 import { styles } from './styles/ChatInputStyles';
 
 const ChatInput: FC<ChatInputDataType> = ({
@@ -104,6 +104,7 @@ const ChatInput: FC<ChatInputDataType> = ({
           <TextInput
             multiline
             placeholder={strings.chatPlaceholder}
+            placeholderTextColor={Color.darkGray}
             style={styles.input}
             onChangeText={text => setMessage(text)}
             value={message}

@@ -633,6 +633,7 @@ export interface CustomIconRounderDataType {
   iconName: string;
   tintColor?: ImageStyle;
   onPress: () => void;
+  backgroundColor: ViewStyle;
 }
 
 export interface ShareLocationDataType {

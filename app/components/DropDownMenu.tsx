@@ -32,7 +32,8 @@ const DropDownMenu: FC<DropDownDataType> = ({
             urlMainPath: urlEndPoint,
             pageNo: appConstants.defaultPage,
           }),
-        );
+        ); 
+        
         break;
       case strings.freeToWatch:
         dispatch(
