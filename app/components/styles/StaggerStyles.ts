@@ -11,20 +11,31 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: verticalScale(70),
     right: horizontalScale(80),
+    marginVertical: verticalScale(1),
+    padding: moderateScale(1),
+    justifyContent: 'space-around',
+    borderRadius: 10,
   },
-  iconCamera: {
-    backgroundColor: Color.lightIndigo,
+  cameraContainer: {
+    backgroundColor: Color.transparentRoyalBlue,
     borderRadius: 30,
     padding: moderateScale(10),
+    margin: moderateScale(2),
   },
-  iconGallery: {
-    backgroundColor: Color.lightRed,
+  galleryContainer: {
+    backgroundColor: Color.transparentRoyalBlue,
     borderRadius: 30,
     padding: moderateScale(10),
+    margin: moderateScale(2),
   },
-  icon: {
+  cameraIconStyle: {
     height: moderateScale(25),
     width: moderateScale(25),
-    tintColor: Color.white,
+    tintColor: Color.brightSkyBlue,
+  },
+  galleryIconStyle: {
+    height: moderateScale(25),
+    width: moderateScale(25),
+    tintColor: Color.royalBlue,
   },
 });
