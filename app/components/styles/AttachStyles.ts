@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     bottom: verticalScale(70),
-    backgroundColor: Color.offWhite,
+    backgroundColor: Color.white,
   },
   iconContainer: {
     flex: 1,
@@ -16,10 +16,28 @@ const styles = StyleSheet.create({
     paddingTop: verticalScale(6),
   },
   cameraTintColor: {
-    tintColor: Color.lightRed,
+    tintColor: Color.brightSkyBlue,
   },
   galleryTintColor: {
-    tintColor: Color.lightIndigo,
+    tintColor: Color.royalBlue,
+  },
+  locationTintColor: {
+    tintColor: Color.deepPink,
+  },
+  documentTintColor: {
+    tintColor: Color.purple,
+  },
+  locationBackgroundColor: {
+    backgroundColor: Color.transparentPink,
+  },
+  galleryBackgroundColor: {
+    backgroundColor: Color.transparentRoyalBlue,
+  },
+  documentBackgroundColor: {
+    backgroundColor: Color.transparentPurple,
+  },
+  cameraBackgroundColor: {
+    backgroundColor: Color.transparentSky,
   },
 });
 
