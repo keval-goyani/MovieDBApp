@@ -633,7 +633,7 @@ export interface CustomIconRounderDataType {
   iconName: string;
   tintColor?: ImageStyle;
   onPress: () => void;
-  backgroundColor: ViewStyle;
+  backGroundColor: string;
 }
 
 export interface ShareLocationDataType {
@@ -690,7 +690,15 @@ export interface UsersListStateDataType {
   userList: UsersListDataType[] | [];
   fetchingUserList: boolean;
 }
+
 export interface UsersListDataType {
+  email: string;
+  uid: string;
+  username: string;
+  profileImage: string;
+}
+
+export interface RenderItemTypes {
   item: {
     email: string;
     uid: string;
