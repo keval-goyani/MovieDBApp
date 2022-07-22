@@ -41,6 +41,7 @@ import {
   ImageMessageDataType,
   ImageModalDataType,
   LatestMessageDataType,
+  LatestMessageProps,
   ListContainerDataType,
   ListDataType,
   ListItemDataType,
@@ -103,6 +104,7 @@ export {
 export type {
   AddUserListProps,
   AttachDataType,
+  LatestMessageProps,
   AuthDataType,
   AuthReduxDataType,
   AuthSagaDataType,

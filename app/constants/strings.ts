@@ -142,4 +142,9 @@ export default {
   makeSure: 'Make sure that your friend is using MovieDB',
   denied: 'denied',
   blocked: 'blocked',
+  photoText: 'Photo',
+  liveLocation: 'Live location',
+  photoIcon: 'ios-image',
+  locationIcon: 'ios-location-sharp',
+  documentIcon: 'document',
 };
