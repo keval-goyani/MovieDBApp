@@ -10,7 +10,7 @@ import {
 export const styles = StyleSheet.create({
   listItem: {
     flex: 1,
-    borderColor: Color.black,
+    borderColor: Color.lightGrey,
     borderBottomWidth: Metrics.borderLineWidth,
     flexDirection: 'row',
     justifyContent: 'space-around',
