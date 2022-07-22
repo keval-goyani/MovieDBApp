@@ -9,20 +9,20 @@ const Stagger = ({ setCameraModal, setImagePath }: StaggerDataType) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={styles.iconCamera}
+        style={styles.cameraContainer}
         onPress={() => {
           handleCameraPermission(setImagePath);
           setCameraModal(false);
         }}>
-        <Image source={Icons.camera} style={styles.icon} />
+        <Image source={Icons.cameraIcon} style={styles.cameraIconStyle} />
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.iconGallery}
+        style={styles.galleryContainer}
         onPress={() => {
           handleGalleryPermission(setImagePath);
           setCameraModal(false);
         }}>
-        <Image source={Icons.gallery} style={styles.icon} />
+        <Image source={Icons.galleryIcon} style={styles.galleryIconStyle} />
       </TouchableOpacity>
     </View>
   );
