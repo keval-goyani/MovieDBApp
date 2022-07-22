@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     width: Metrics.screenWidth,
     paddingLeft: horizontalScale(15),
     zIndex: 1,
-    backgroundColor: Color.transparentGray,
+    backgroundColor: Metrics.isAndroid ? Color.statusbarGray : Color.black,
     borderBottomEndRadius: 10,
     borderBottomStartRadius: 10,
   },
