@@ -690,7 +690,15 @@ export interface UsersListStateDataType {
   userList: UsersListDataType[] | [];
   fetchingUserList: boolean;
 }
+
 export interface UsersListDataType {
+  email: string;
+  uid: string;
+  username: string;
+  profileImage: string;
+}
+
+export interface RenderItemTypes {
   item: {
     email: string;
     uid: string;

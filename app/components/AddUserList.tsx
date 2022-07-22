@@ -9,8 +9,8 @@ import {
   appConstants,
   NavigationDataType,
   navigationStrings,
+  RenderItemTypes,
   UsersDocumentDataType,
-  UsersListDataType,
 } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
 import userListDataAction, { userListSelector } from '../redux/UserListRedux';
@@ -44,7 +44,7 @@ const AddUsersList = ({ userListData }: AddUserListProps) => {
     }, [fetchingUser]),
   );
 
-  const renderUserList = ({ item }: UsersListDataType) => {
+  const renderUserList = ({ item }: RenderItemTypes) => {
     const conversationId: string = conversationIdCreation(
       user?.email ?? '',
       item?.email,
