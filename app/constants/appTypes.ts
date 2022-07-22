@@ -745,3 +745,14 @@ export interface UserListEmptyType {
   fetching: boolean | null;
   userListLength: number;
 }
+
+export interface LatestMessageProps {
+  message: MessageProps;
+  isSendByMe: boolean;
+}
+
+export interface MessageProps {
+  type: string;
+  documentName?: string;
+  content?: string;
+}

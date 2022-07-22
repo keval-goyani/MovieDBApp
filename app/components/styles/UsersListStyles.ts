@@ -31,13 +31,6 @@ export const styles = StyleSheet.create({
     marginLeft: horizontalScale(10),
     paddingBottom: verticalScale(2),
   },
-  lastChatText: {
-    textAlign: 'justify',
-    fontSize: moderateScale(13),
-    color: Color.black,
-    marginLeft: horizontalScale(10),
-    paddingBottom: verticalScale(2),
-  },
   dateText: {
     textAlign: 'right',
     fontSize: moderateScale(15),
