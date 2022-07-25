@@ -1,12 +1,12 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Credentials, FormTypeProps, strings } from '../../../constants';
 import { Color } from '../../../theme';
 import { styles } from './styles/FormStyles';
 
-const Form = ({ getCredentials, type }: FormTypeProps) => {
+const Form = ({ getCredentials, type, form }: FormTypeProps) => {
   const buttonText =
     type === strings.loginCamel ? strings.login : strings.signUp;
   const {
@@ -14,16 +14,7 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
     handleSubmit,
     formState: { errors },
     getValues,
-    reset,
-  } = useForm({
-    defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-    mode: 'onChange',
-  });
+  } = form;
 
   const onSubmit = (data: Credentials) => {
     const credentials = {
@@ -32,7 +23,6 @@ const Form = ({ getCredentials, type }: FormTypeProps) => {
       password: data.password,
     };
     getCredentials(credentials);
-    reset();
   };
 
   return (

@@ -84,6 +84,7 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
           setIsAttach,
           setCameraModal,
           setChatWallpaper,
+          receiverId,
           conversationId,
         }}
       />

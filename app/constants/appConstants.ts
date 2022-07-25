@@ -38,13 +38,12 @@ export default {
   androidDocumentFolder: `${RNFetchBlob.fs.dirs.DCIMDir}/MovieDB/Documents`,
   iosDocumentFolder: `${RNFetchBlob.fs.dirs.DocumentDir}/MovieDB/Documents`,
   timestamp: new Date().getTime(),
-  cameraPermission: Metrics.isAndroid
-    ? PERMISSIONS.ANDROID.CAMERA
-    : PERMISSIONS.IOS.CAMERA,
+  iosCameraPermission: PERMISSIONS.IOS.CAMERA,
+  androidCameraPermission: PERMISSIONS.ANDROID.CAMERA,
   galleryPermission: Metrics.isAndroid
     ? PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
     : PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY,
-  documentWritePermission: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+  storagePermission: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
   storageDocumentPath: 'Documents/',
   storageImagePath: 'Images/',
   key: 'R@v!RnP@r3|!y@:V!kr@U|-Knk@b!y@:|-|!r3uL@|k!y@',
@@ -53,4 +52,5 @@ export default {
   conversationRef: firestore().collection('conversations'),
   messageRef: firestore().collection('messages'),
   firebaseTimestamp: firestore.FieldValue.serverTimestamp(),
+  emptyArray: [],
 };

@@ -1,3 +1,6 @@
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import apisauce from 'apisauce';
 import CryptoJS from 'crypto-js';
@@ -12,9 +15,11 @@ import {
 } from 'react-native-image-picker';
 import {
   check,
+  checkMultiple,
   openSettings,
   PERMISSIONS,
   request,
+  requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -199,28 +204,78 @@ const getHashCode = (id: string) => {
   return CryptoJS.MD5(id).toString();
 };
 
-export const handleCameraPermission = (
+export const handleCameraPermission = async (
   setImagePath: Dispatch<React.SetStateAction<string>>,
 ) => {
-  check(appConstants.cameraPermission)
-    .then(result => {
-      switch (result) {
-        case RESULTS.BLOCKED:
-          permissionAlert(strings.cameraPermission);
-          break;
-        case RESULTS.DENIED:
-          requestCameraPermission();
-          break;
-        case RESULTS.UNAVAILABLE || RESULTS.LIMITED:
-          alertMessage(strings.permissionUnavailable);
-          break;
-        default:
-          openCamera(setImagePath);
-      }
+  if (Metrics.isAndroid) {
+    handleAndroidCameraPermission(setImagePath);
+  } else {
+    check(appConstants.iosCameraPermission)
+      .then(result => {
+        switch (result) {
+          case RESULTS.BLOCKED:
+            permissionAlert(strings.cameraPermission);
+            break;
+          case RESULTS.DENIED:
+            request(appConstants.iosCameraPermission);
+            break;
+          case RESULTS.UNAVAILABLE || RESULTS.LIMITED:
+            alertMessage(strings.permissionUnavailable);
+            break;
+          default:
+            openCamera(setImagePath);
+        }
+      })
+      .catch(error => {
+        alertMessage(error.message);
+      });
+  }
+};
+
+export const handleAndroidCameraPermission = (
+  setImagePath: Dispatch<React.SetStateAction<string>>,
+) => {
+  checkMultiple([
+    appConstants.androidCameraPermission,
+    appConstants.storagePermission,
+  ])
+    .then(async results => {
+      const isDenied =
+        results[appConstants.androidCameraPermission] === 'denied' ||
+        results[appConstants.storagePermission] === 'denied';
+      const isBlocked =
+        results[appConstants.androidCameraPermission] === 'blocked' ||
+        results[appConstants.storagePermission] === 'blocked';
+      const blockStatus = isBlocked ? strings.blocked : strings.camera;
+      const permissionStatus = isDenied ? strings.denied : blockStatus;
+
+      checkPermission(isBlocked, permissionStatus, setImagePath);
     })
-    .catch(error => {
-      alertMessage(error.message);
-    });
+    .catch(error => error);
+};
+
+const checkPermission = async (
+  isBlocked: boolean,
+  permissionStatus: string,
+  setImagePath: Dispatch<React.SetStateAction<string>>,
+) => {
+  switch (permissionStatus) {
+    case strings.denied:
+      await requestMultiple([
+        appConstants.androidCameraPermission,
+        appConstants.storagePermission,
+      ]);
+      if (isBlocked) {
+        permissionAlert(strings.cameraWithstorage);
+      }
+      break;
+    case strings.blocked:
+      permissionAlert(strings.cameraWithstorage);
+      break;
+    default:
+      openCamera(setImagePath);
+      break;
+  }
 };
 
 export const handleGalleryPermission = (
@@ -251,7 +306,7 @@ export const handleDocumentPermission = (
   setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>,
 ) => {
   if (Metrics.isAndroid) {
-    check(appConstants.documentWritePermission).then(result => {
+    check(appConstants.storagePermission).then(result => {
       switch (result) {
         case RESULTS.BLOCKED:
           permissionAlert(strings.document);
@@ -328,23 +383,33 @@ const addDocumentToStorage = async (
     .catch(error => alertMessage(error.message));
 };
 
-const requestCameraPermission = () => {
-  return Metrics.isAndroid
-    ? request(PERMISSIONS.ANDROID.CAMERA)
-    : request(PERMISSIONS.IOS.CAMERA);
-};
-
-const requestGalleryPermission = () => {
+export const requestGalleryPermission = () => {
   return Metrics.isAndroid
     ? request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE)
     : request(PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY);
 };
 
+export const requestStoragePermission = () => {
+  return request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE);
+};
+
 const permissionAlert = (type: string) => {
-  const permissionBlockedAlert =
-    type === strings.cameraPermission
-      ? strings.cameraPermissionBlocked
-      : strings.galleryPermissionBlocked;
+  let permissionBlockedAlert = '';
+
+  switch (type) {
+    case strings.camera:
+      permissionBlockedAlert = strings.cameraPermissionBlocked;
+      break;
+    case strings.cameraWithstorage:
+      permissionBlockedAlert = strings.cameraStoragePermissionBlocked;
+      break;
+    case strings.gallery:
+    case strings.document:
+      permissionBlockedAlert = strings.storagePermissionBlocked;
+      break;
+    default:
+      break;
+  }
 
   Alert.alert(permissionBlockedAlert, strings.grantPermission, [
     { onPress: () => openSettings(), text: strings.goToSettings },
@@ -425,21 +490,71 @@ const selectImage = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
 };
 
 export const clearChat = ({
-  navigation,
   conversationId,
   setShowMenu,
+  receiverId,
+  senderId,
 }: ClearChatDataType) => {
   Alert.alert(strings.areYouSure, strings.clearChatAlert, [
     { text: strings.cancel, onPress: () => setShowMenu(false) },
     {
       text: strings.ok,
-      onPress: () => {
-        appConstants.messageRef.doc(conversationId).delete();
+      onPress: async () => {
         setShowMenu(false);
-        navigation.goBack();
+        await clearDataHandler(conversationId, receiverId, senderId);
       },
     },
   ]);
+};
+
+const clearDataHandler = async (
+  conversationId: string,
+  receiverId: string = '',
+  senderId: string,
+) => {
+  const messageBatch = firestore().batch();
+  const conversationBatch = firestore().batch();
+
+  await appConstants.messageRef
+    .doc(conversationId)
+    .collection(strings.messageCollection)
+    .get()
+    .then(async messages => {
+      messages?.docs?.forEach(messageData =>
+        messageBatch?.delete(messageData?.ref),
+      );
+      messageBatch?.commit();
+
+      await appConstants.conversationRef
+        .doc(conversationId)
+        .get()
+        .then(conversation => {
+          conversationBatch?.delete(conversation?.ref);
+        })
+        .catch(error => error);
+
+      await deleteChatRef(senderId, conversationId, conversationBatch);
+      await deleteChatRef(receiverId, conversationId, conversationBatch);
+
+      conversationBatch?.commit();
+    })
+    .catch(error => error);
+};
+
+const deleteChatRef = async (
+  id: string,
+  conversationId: string,
+  conversationBatch: FirebaseFirestoreTypes.WriteBatch,
+) => {
+  await appConstants.chatRef
+    .doc(id)
+    .collection(strings.conversationsCollection)
+    .doc(conversationId)
+    .get()
+    .then(chat => {
+      conversationBatch?.delete(chat?.ref);
+    })
+    .catch(error => error);
 };
 
 export const chatCreation = async ({
@@ -525,7 +640,7 @@ const userData = async (id: string) => {
   return await appConstants.userRef
     .doc(id)
     .get()
-    .then(user => user.data());
+    .then(user => user?.data());
 };
 
 export const openDocument = (url: string, documentName: string) => {

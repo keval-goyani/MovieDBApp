@@ -34,6 +34,7 @@ import {
   DrawerStateDataType,
   DropDownDataType,
   FireStoreResponseDataType,
+  FormDataType,
   FormTypeProps,
   FreeMovieDataType,
   HeaderDataType,
@@ -86,7 +87,7 @@ import {
   UserToChatNavigationDataType,
 } from './appTypes';
 import navigationStrings from './navigationStrings';
-import { filterData, genres, pickerOptions } from './staticData';
+import { defaultValues, filterData, genres, pickerOptions } from './staticData';
 import strings from './strings';
 
 export {
@@ -96,17 +97,18 @@ export {
   genres,
   strings,
   pickerOptions,
+  defaultValues,
 };
+
 export type {
+  AddUserListProps,
   AttachDataType,
-  UserListEmptyType,
   AuthDataType,
   AuthReduxDataType,
   AuthSagaDataType,
   AuthStateDataType,
   ChatDataType,
   RenderItemTypes,
-  UsersDocumentDataType,
   ChatHeaderDataType,
   ChatInputDataType,
   ChatListDataType,
@@ -114,7 +116,6 @@ export type {
   ChatLocalStoreDataType,
   ChatMenuDataType,
   ChatScreenDataType,
-  UsersListStateDataType,
   ChatStateDataType,
   ChatUserListDataType,
   ChatUserListType,
@@ -127,7 +128,6 @@ export type {
   CustomIconRounderDataType,
   DataType,
   DetailPathDataType,
-  UsersListDataType,
   DetailResponseGenerator,
   DetailStateDataType,
   DetailStoreDataType,
@@ -136,6 +136,7 @@ export type {
   DrawerStateDataType,
   DropDownDataType,
   FireStoreResponseDataType,
+  FormDataType,
   FormTypeProps,
   FreeMovieDataType,
   HeaderDataType,
@@ -166,6 +167,7 @@ export type {
   RouteDataType,
   SearchFunctionDataType,
   SearchModalDataType,
+  SearchUserProps,
   SetWallpaperDataType,
   ShareDocumentProps,
   ShareLocationDataProps,
@@ -178,8 +180,10 @@ export type {
   TrendingDataType,
   UserDataType,
   UserListDataType,
+  UserListEmptyType,
   UserListStateDataType,
+  UsersDocumentDataType,
+  UsersListDataType,
+  UsersListStateDataType,
   UserToChatNavigationDataType,
-  AddUserListProps,
-  SearchUserProps,
 };

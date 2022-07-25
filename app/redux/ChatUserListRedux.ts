@@ -16,7 +16,7 @@ export default Creators;
 
 export const INITIAL_STATE: ImmutableObject<UserListStateDataType> = Immutable({
   userList: [],
-  fetchingUserList: true,
+  fetchingUserList: null,
 });
 
 export const chatUserListSelector = {

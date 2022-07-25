@@ -1,5 +1,12 @@
 import React, { Dispatch } from 'react';
 import {
+  Control,
+  FormState,
+  UseFormGetValues,
+  UseFormHandleSubmit,
+  UseFormResetField,
+} from 'react-hook-form';
+import {
   ImageProps,
   ImageSourcePropType,
   ImageStyle,
@@ -33,11 +40,25 @@ interface SpokenLanguagesDataType {
   name: string;
 }
 
+export interface FormDataType {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export interface FormTypeProps {
   getCredentials: React.Dispatch<
     React.SetStateAction<{ userName?: string; email: string; password: string }>
   >;
   type: string;
+  form: {
+    control: Control<FormDataType>;
+    handleSubmit: UseFormHandleSubmit<FormDataType>;
+    formState: FormState<FormDataType>;
+    getValues: UseFormGetValues<FormDataType>;
+    resetField: UseFormResetField<FormDataType>;
+  };
 }
 
 interface CreditsDataType {
@@ -377,6 +398,7 @@ export interface ChatHeaderDataType {
   setIsAttach: Dispatch<React.SetStateAction<boolean>>;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
+  receiverId: string | undefined;
   conversationId: string;
 }
 
@@ -414,7 +436,7 @@ export interface UserListDataType {
 }
 export interface UserListStateDataType {
   userList: UserListDataType[] | [];
-  fetchingUserList: boolean;
+  fetchingUserList: boolean | null;
 }
 
 export interface ChatUserListType {
@@ -545,6 +567,7 @@ export interface ChatMenuDataType {
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   conversationId: string;
+  receiverId: string | undefined;
 }
 
 export interface CustomButtonDataType {
@@ -555,9 +578,10 @@ export interface CustomButtonDataType {
 }
 
 export interface ClearChatDataType {
-  navigation: NavigationDataType;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   conversationId: string;
+  receiverId: string | undefined;
+  senderId: string;
 }
 
 export interface LocationCoordsProps {
@@ -718,6 +742,6 @@ export interface ChatUsersListType {
 }
 
 export interface UserListEmptyType {
-  fetching: boolean;
+  fetching: boolean | null;
   userListLength: number;
 }

@@ -15,6 +15,7 @@ import {
   NavigationDataType,
   strings,
 } from '../../constants';
+import { alertMessage } from '../../services';
 import { Icons, Metrics } from '../../theme';
 import { styles } from './styles/LocationScreenStyle';
 
@@ -35,12 +36,18 @@ const LocationScreen = ({ route }: ChatScreenDataType) => {
 
   useEffect(() => {
     if (!isFromChat) {
-      Geolocation.getCurrentPosition(data => {
-        setLatitude(data?.coords?.latitude);
-        setLongitude(data?.coords?.longitude);
-      });
+      Geolocation.getCurrentPosition(
+        data => {
+          setLatitude(data?.coords?.latitude);
+          setLongitude(data?.coords?.longitude);
+        },
+        error => {
+          alertMessage(error.message);
+          navigation.goBack();
+        },
+      );
     }
-  }, [isFromChat]);
+  }, [isFromChat, navigation]);
 
   const permissionHandler = (permissionRequest: string) => {
     permissionRequest === RESULTS.GRANTED
