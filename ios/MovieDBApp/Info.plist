@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Ionicons.ttf</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -38,22 +42,22 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location</string>
 	<key>NSMicrophoneUsageDescription</key>
-    <string>Microphone</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>LocationAlwaysAndWhenInUse</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>LocationAlways</string>
-    <key>NSLocationTemporaryUsageDescriptionDictionary</key>
-    <dict>
-      <key>NeedToAccessLocation</key>
-      <string>MovieDB needs Location access</string>
-    </dict>
+	<string>Microphone</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>LocationAlwaysAndWhenInUse</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>LocationAlways</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>NeedToAccessLocation</key>
+		<string>MovieDB needs Location access</string>
+	</dict>
 	<key>NSCameraUsageDescription</key>
-  	<string>MovieDB needs Camera access</string>
+	<string>MovieDB needs Camera access</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-  	<string>MovieDB needs Photo Gallery acees</string>
-  	<key>NSPhotoLibraryAddUsageDescription</key>
-  	<string>MovieDB needs Photo Gallery acees</string>
+	<string>MovieDB needs Photo Gallery acees</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>MovieDB needs Photo Gallery acees</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

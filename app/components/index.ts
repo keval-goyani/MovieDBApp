@@ -15,6 +15,7 @@ import DropDownMenu from './DropDownMenu';
 import Header from './Header';
 import ImageMessage from './ImageMessage';
 import ImageModal from './ImageModal';
+import LatestMessage from './LatestMessage';
 import List from './List';
 import ListContainer, { movieListItem } from './ListContainer';
 import Loader from './Loader';
@@ -76,4 +77,5 @@ export {
   CustomFloatingButton,
   AddUsersList,
   SearchUser,
+  LatestMessage,
 };

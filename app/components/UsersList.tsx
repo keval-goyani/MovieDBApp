@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { asMutable } from 'seamless-immutable';
-import { UserListEmpty } from '../components';
+import { LatestMessage, UserListEmpty } from '../components';
 import {
   appConstants,
   navigationStrings,
@@ -118,13 +118,7 @@ const UsersList = () => {
       item?.email,
     );
     const message = item?.latestMessage;
-    const chatUsername =
-      item?.uid !== message?.senderId
-        ? `${strings.you}: ${message?.content}`
-        : `${message?.content}`;
-    const latestMessage = message?.content
-      ? chatUsername
-      : `${strings.startConversation}`;
+    const isSendByMe = item?.uid !== message?.senderId;
     const time = getChatTime(item?.createdAt);
 
     const navigateToChatScreen = () => {
@@ -144,12 +138,7 @@ const UsersList = () => {
           <Image source={Icons.avatar} style={styles.avatar} />
           <View style={styles.nameView}>
             <Text style={styles.text}>{item?.username}</Text>
-            <Text
-              style={styles.lastChatText}
-              ellipsizeMode="tail"
-              numberOfLines={1}>
-              {latestMessage}
-            </Text>
+            <LatestMessage {...{ isSendByMe, message }} />
           </View>
         </View>
         <View style={styles.dateView}>
