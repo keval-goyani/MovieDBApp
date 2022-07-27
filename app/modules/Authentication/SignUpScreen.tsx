@@ -19,6 +19,7 @@ import {
   strings,
 } from '../../constants';
 import authAction, { authDataSelectors } from '../../redux/AuthRedux';
+import { signUpError } from '../../services';
 import { Color, Icons, Metrics, styles as appStyles } from '../../theme';
 import { Form } from './components';
 import { styles } from './styles/SignUpScreenStyles';
@@ -52,11 +53,10 @@ const SignUpScreen = () => {
             }),
           ),
         )
-        .catch(() => {
-          return (
-            dispatch(authAction.authFailure(strings.signUpError)),
-            navigation.navigate(navigationStrings.Login)
-          );
+        .catch(async error => {
+          const errorMessage = signUpError(error.code);
+          dispatch(authAction.authFailure(errorMessage));
+          navigation.navigate(navigationStrings.Login);
         });
     }
   }, [dispatch, email, navigation, password, username]);

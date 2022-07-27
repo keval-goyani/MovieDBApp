@@ -34,4 +34,3 @@ const listData = (
 export const usersListReducer = createReducer(INITIAL_STATE, {
   [Types.USERS_LIST_SUCCESS]: listData,
 });
-

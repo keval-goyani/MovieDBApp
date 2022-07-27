@@ -35,6 +35,7 @@ import {
   MovieResponseGenerator,
   pickerOptions,
   strings,
+  UserListDataType,
 } from '../constants';
 import { Color, Metrics } from '../theme';
 
@@ -206,9 +207,10 @@ const getHashCode = (id: string) => {
 
 export const handleCameraPermission = async (
   setImagePath: Dispatch<React.SetStateAction<string>>,
+  isProfile: boolean = false,
 ) => {
   if (Metrics.isAndroid) {
-    handleAndroidCameraPermission(setImagePath);
+    handleAndroidCameraPermission(setImagePath, isProfile);
   } else {
     check(appConstants.iosCameraPermission)
       .then(result => {
@@ -223,7 +225,7 @@ export const handleCameraPermission = async (
             alertMessage(strings.permissionUnavailable);
             break;
           default:
-            openCamera(setImagePath);
+            openCamera(setImagePath, isProfile);
         }
       })
       .catch(error => {
@@ -234,6 +236,7 @@ export const handleCameraPermission = async (
 
 export const handleAndroidCameraPermission = (
   setImagePath: Dispatch<React.SetStateAction<string>>,
+  isProfile: boolean,
 ) => {
   checkMultiple([
     appConstants.androidCameraPermission,
@@ -249,7 +252,7 @@ export const handleAndroidCameraPermission = (
       const blockStatus = isBlocked ? strings.blocked : strings.camera;
       const permissionStatus = isDenied ? strings.denied : blockStatus;
 
-      checkPermission(isBlocked, permissionStatus, setImagePath);
+      checkPermission(isBlocked, permissionStatus, setImagePath, isProfile);
     })
     .catch(error => error);
 };
@@ -258,6 +261,7 @@ const checkPermission = async (
   isBlocked: boolean,
   permissionStatus: string,
   setImagePath: Dispatch<React.SetStateAction<string>>,
+  isProfile: boolean,
 ) => {
   switch (permissionStatus) {
     case strings.denied:
@@ -273,13 +277,14 @@ const checkPermission = async (
       permissionAlert(strings.cameraWithstorage);
       break;
     default:
-      openCamera(setImagePath);
+      openCamera(setImagePath, isProfile);
       break;
   }
 };
 
 export const handleGalleryPermission = (
   setImagePath: Dispatch<React.SetStateAction<string>>,
+  isProfile: boolean,
 ) => {
   check(appConstants.galleryPermission)
     .then(result => {
@@ -294,7 +299,7 @@ export const handleGalleryPermission = (
           alertMessage(strings.permissionUnavailable);
           break;
         default:
-          selectImage(setImagePath);
+          selectImage(setImagePath, isProfile);
       }
     })
     .catch(error => {
@@ -420,11 +425,20 @@ const permissionAlert = (type: string) => {
 const pickerCallback = (
   assets: Asset[] = [],
   setImagePath: Dispatch<React.SetStateAction<string>>,
+  isProfile: boolean,
 ) => {
-  const { androidFolder, iosFolder } = appConstants;
-  const filePath = generateFilePath(assets[0]?.fileName);
+  const { androidFolder, iosFolder, iosProfileFolder, androidProfileFolder } =
+    appConstants;
+  const androidDirectory = isProfile ? androidProfileFolder : androidFolder;
+  const iosDirectory = isProfile ? iosProfileFolder : iosFolder;
+  const filePath = generateFilePath(
+    assets[0]?.fileName,
+    androidDirectory,
+    iosDirectory,
+  );
   const data = assets[0]?.base64 ?? '';
-  const directory = Metrics.isAndroid ? androidFolder : iosFolder;
+
+  const directory = Metrics.isAndroid ? androidDirectory : iosDirectory;
 
   RNFetchBlob.fs.isDir(directory).then(isDir => {
     if (isDir) {
@@ -438,13 +452,17 @@ const pickerCallback = (
   });
 };
 
-const generateFilePath = (fileName: string = '') => {
-  const { androidFolder, iosFolder, timestamp } = appConstants;
+const generateFilePath = (
+  fileName: string = '',
+  androidDirectory: string,
+  iosDirectory: string,
+) => {
+  const { timestamp } = appConstants;
 
   if (fileName) {
     return Metrics.isAndroid
-      ? `${androidFolder}/${timestamp}_${fileName}`
-      : `${iosFolder}/${timestamp}_${fileName}`;
+      ? `${androidDirectory}/${timestamp}_${fileName}`
+      : `${iosDirectory}/${timestamp}_${fileName}`;
   }
 };
 
@@ -471,20 +489,26 @@ const getImage = (
     .catch(error => alertMessage(error.message));
 };
 
-const openCamera = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
+const openCamera = (
+  setImagePath: Dispatch<React.SetStateAction<string>>,
+  isProfile: boolean,
+) => {
   launchCamera({ mediaType: 'photo', ...pickerOptions })
     .then(
       ({ assets, didCancel }) =>
-        !didCancel && pickerCallback(assets, setImagePath),
+        !didCancel && pickerCallback(assets, setImagePath, isProfile),
     )
     .catch(error => alertMessage(error.message));
 };
 
-const selectImage = (setImagePath: Dispatch<React.SetStateAction<string>>) => {
+const selectImage = (
+  setImagePath: Dispatch<React.SetStateAction<string>>,
+  isProfile: boolean,
+) => {
   launchImageLibrary({ mediaType: 'photo', ...pickerOptions })
     .then(
       ({ assets, didCancel }) =>
-        !didCancel && pickerCallback(assets, setImagePath),
+        !didCancel && pickerCallback(assets, setImagePath, isProfile),
     )
     .catch(error => alertMessage(error.message));
 };
@@ -699,4 +723,51 @@ export const decryptData = (cipherText: string) => {
   return CryptoJS.AES.decrypt(cipherText, appConstants.key).toString(
     CryptoJS.enc.Utf8,
   );
+};
+
+export const loginError = (errorCode: string) => {
+  switch (errorCode) {
+    case strings.invalidPasswordErrorCode:
+      return strings.invalidPasswordMessage;
+    case strings.networkRequestErrorCode:
+    case strings.unknownNetworkErrorCode:
+      return strings.networkRequestErrorMessage;
+    case strings.userNotFoundErrorCode:
+      return strings.userNotFoundMessage;
+    default:
+      return strings.serverErrorMessage;
+  }
+};
+
+export const signUpError = (errorCode: string) => {
+  switch (errorCode) {
+    case strings.existEmailErrorCode:
+      return strings.existEmailMessage;
+    case strings.invalidEmailErrorCode:
+      return strings.invalidEmailMessage;
+    case strings.networkRequestErrorCode:
+    case strings.unknownNetworkErrorCode:
+      return strings.networkRequestErrorMessage;
+    default:
+      return strings.serverErrorMessage;
+  }
+};
+
+export const getConversationIds = async (
+  userList: UserListDataType[],
+  userId: string,
+  userEmail: string,
+) => {
+  return userList.length === 0
+    ? await appConstants.chatRef
+        .doc(userId)
+        .collection(strings.conversationsCollection)
+        .get()
+        .then(conversations => {
+          return conversations.docs.map(conversation => conversation.id);
+        })
+        .catch(error => error)
+    : userList.map((conversationUser: UserListDataType) => {
+        return conversationIdCreation(conversationUser?.email, userEmail);
+      });
 };

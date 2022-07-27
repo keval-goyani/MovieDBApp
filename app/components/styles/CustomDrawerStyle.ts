@@ -62,23 +62,36 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'red',
   },
-  avatarView: {
+  profileView: {
     paddingVertical: verticalScale(20),
     marginBottom: verticalScale(10),
     borderColor: Color.white,
     borderBottomWidth: verticalScale(3),
     backgroundColor: Color.darkBlue,
   },
-  avatar: {
+  profile: {
     height: moderateScale(100),
     width: moderateScale(100),
     marginBottom: verticalScale(10),
-    resizeMode: 'contain',
   },
   scrollView: { backgroundColor: Color.darkBlue },
   logOutButtonContainer: {
     marginTop: verticalScale(Metrics.screenHeight / 5),
+  },
+  editProfileButton: {
+    position: 'absolute',
+    backgroundColor: Color.blueGreen,
+    borderRadius: 20,
+    bottom: verticalScale(5),
+    right: horizontalScale(0),
+  },
+  editIcon: {
+    margin: moderateScale(3),
+  },
+  backgroundProfile: {
+    borderRadius: 50,
   },
 });
 

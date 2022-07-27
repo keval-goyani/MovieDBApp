@@ -18,10 +18,26 @@ export const styles = StyleSheet.create({
     padding: moderateScale(20),
     marginBottom: verticalScale(3),
   },
-  avatar: {
+  profileContainer: {
     height: moderateScale(60),
     width: moderateScale(60),
+  },
+  profile: {
+    height: moderateScale(60),
+    width: moderateScale(60),
+    borderRadius: 30,
     resizeMode: 'contain',
+  },
+  userStatus: {
+    position: 'absolute',
+    bottom: verticalScale(2),
+    left: horizontalScale(42),
+    backgroundColor: Color.onlineStatusColor,
+    height: moderateScale(14),
+    width: moderateScale(14),
+    borderRadius: 7,
+    borderWidth: 2,
+    borderColor: Color.white,
   },
   text: {
     textAlign: 'justify',

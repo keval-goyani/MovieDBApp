@@ -1,6 +1,7 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import { asMutable } from 'seamless-immutable';
 import { LatestMessage, UserListEmpty } from '../components';
@@ -21,7 +22,6 @@ import {
   convertToTimestamp,
   getChatTime,
 } from '../services';
-import { Icons } from '../theme';
 import { styles } from './styles/UsersListStyles';
 
 const UsersList = () => {
@@ -126,6 +126,8 @@ const UsersList = () => {
         conversationId,
         username: item?.username,
         receiverId: item?.uid,
+        userStatus: item?.status,
+        profileImage: item?.profileImage,
       });
     };
 
@@ -135,7 +137,20 @@ const UsersList = () => {
         onPress={navigateToChatScreen}
         activeOpacity={0.5}>
         <View style={styles.avatarGroup}>
-          <Image source={Icons.avatar} style={styles.avatar} />
+          <View style={styles.profileContainer}>
+            <FastImage
+              source={{
+                uri: item?.profileImage,
+                cache: FastImage.cacheControl.immutable,
+              }}
+              style={styles.profile}
+            />
+            {item?.status === strings.onlineStatus ? (
+              <View style={styles.userStatus} />
+            ) : (
+              <View />
+            )}
+          </View>
           <View style={styles.nameView}>
             <Text style={styles.text}>{item?.username}</Text>
             <LatestMessage {...{ isSendByMe, message }} />

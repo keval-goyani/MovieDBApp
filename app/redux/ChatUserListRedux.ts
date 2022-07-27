@@ -9,6 +9,8 @@ import {
 const { Types, Creators } = createActions({
   userListRequest: ['payload'],
   userListSuccess: ['data'],
+  userListStatus: ['status'],
+  userListProfile: ['profile'],
 });
 
 export const UserListType = Types;

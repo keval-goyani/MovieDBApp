@@ -42,4 +42,8 @@ export const Color = {
   transparentPurple: '#F9EDFF',
   transparentSky: '#04c6ff1a',
   statusbarGray: '#7F7F7F',
+  graySmoke: '#000000aa',
+  onlineStatusColor: '#51B73B',
+  paleGray: '#80808026',
+  trasparentGreen: '#90cea142',
 };

@@ -14,13 +14,35 @@ export const styles = StyleSheet.create({
     borderBottomWidth: Metrics.borderLineWidth,
     flexDirection: 'row',
     alignItems: 'center',
-    padding: moderateScale(20),
     marginBottom: verticalScale(3),
+    overflow: 'hidden',
   },
-  avatar: {
+  itemContainer: {
+    padding: moderateScale(20),
+    flexDirection: 'row',
+  },
+  profileContainer: {
     height: moderateScale(60),
     width: moderateScale(60),
+    zIndex: 1,
+  },
+  profile: {
+    height: moderateScale(60),
+    width: moderateScale(60),
+    borderRadius: 30,
     resizeMode: 'contain',
+  },
+  userStatus: {
+    position: 'absolute',
+    bottom: verticalScale(21),
+    left: horizontalScale(62),
+    backgroundColor: Color.onlineStatusColor,
+    height: moderateScale(14),
+    width: moderateScale(14),
+    borderRadius: 7,
+    borderWidth: 2,
+    borderColor: Color.white,
+    zIndex: 1,
   },
   text: {
     textAlign: 'justify',
@@ -40,5 +62,19 @@ export const styles = StyleSheet.create({
   nameView: {
     width: horizontalScale(190),
     marginLeft: horizontalScale(10),
+    // backgroundColor:'red',
+    marginTop: verticalScale(10),
+  },
+  overlay: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: Color.transparentSky,
+    top: 0,
+    left: 0,
+  },
+  iconStyle: {
+    position: 'absolute',
+    right: horizontalScale(18),
   },
 });

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, TouchableWithoutFeedback, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AddUsersList, Header, SearchUser } from '../../components';
 import { NavigationDataType, strings } from '../../constants';
