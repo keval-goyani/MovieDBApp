@@ -1,15 +1,23 @@
 import auth from '@react-native-firebase/auth';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import React, { FC, useState } from 'react';
-import { Alert, Image, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  Alert,
+  Image,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import Edit from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomDrawerDataType, navigationStrings, strings } from '../constants';
 import authAction, { authDataSelectors } from '../redux/AuthRedux';
 import selectedAction, {
-  selectedTabSelectors,
+  selectedTabSelectors
 } from '../redux/DrawerSelectRedux';
-import { Color, Icons } from '../theme';
+import { Color, Icons, moderateScale } from '../theme';
+import EditProfile from './EditProfile';
 import styles from './styles/CustomDrawerStyle';
 
 const CustomDrawer: FC<CustomDrawerDataType> = props => {
@@ -18,33 +26,32 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [imagePath, setImagePath] = useState(strings.imagePath);
 
   const getData = (
     selectedItemTab: string,
     navigationString: string,
     type: string,
   ) => {
-    switch (type) {
-      case strings.tint:
+    const themeType = {
+      [strings.tint]: () => {
         if (selectedItemTab === navigationString) {
           return { tintColor: Color.white };
         }
-        break;
-      case strings.back:
+      },
+      [strings.back]: () => {
         if (selectedItemTab === navigationString) {
-          return {
-            backgroundColor: Color.blueGreen,
-          };
+          return { backgroundColor: Color.blueGreen };
         }
-        break;
-      case strings.color:
+      },
+      [strings.color]: () => {
         if (selectedItemTab === navigationString) {
           return { color: Color.white };
         }
-        break;
-      default:
-        return;
-    }
+      },
+    };
+    return themeType[type]();
   };
 
   const userLogOut = () => {
@@ -115,8 +122,30 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
   return (
     <DrawerContentScrollView {...props} style={styles.scrollView}>
       <View style={styles.mainContainer}>
-        <View style={{ ...styles.container, ...styles.avatarView }}>
-          <Image source={Icons.avatar} style={styles.avatar} />
+        <View
+          style={{
+            ...styles.container,
+            ...styles.profileView,
+          }}>
+          <ImageBackground
+            source={{
+              uri: imagePath,
+            }}
+            imageStyle={styles.backgroundProfile}
+            style={styles.profile}>
+            <TouchableOpacity
+              style={styles.editProfileButton}
+              activeOpacity={0.7}
+              onPress={() => setOpen(true)}>
+              <Edit
+                name={strings.editIcon}
+                size={moderateScale(21)}
+                color={Color.darkBlue}
+                style={styles.editIcon}
+              />
+            </TouchableOpacity>
+          </ImageBackground>
+          {open && <EditProfile {...{ setOpen, setImagePath }} />}
           <Text style={styles.userEmail}>{user?.username}</Text>
         </View>
         <DrawerItem
