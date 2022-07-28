@@ -5,9 +5,13 @@ import { ProfileImageDataType, strings } from '../constants';
 import { Icons } from '../theme';
 import styles from './styles/ProfileImageStyles';
 
-const ProfileImage = ({ profileImage, userStatus }: ProfileImageDataType) => {
+const ProfileImage = ({
+  profileImage,
+  userStatus,
+  style,
+}: ProfileImageDataType) => {
   return (
-    <View style={styles.profileContainer}>
+    <View style={(styles.profileContainer, style)}>
       <FastImage
         source={
           profileImage
@@ -17,7 +21,7 @@ const ProfileImage = ({ profileImage, userStatus }: ProfileImageDataType) => {
               }
             : Icons.avatar
         }
-        style={styles.profile}
+        style={[styles.profile, style]}
       />
       {userStatus === strings.onlineStatus && (
         <View style={styles.userStatus} />

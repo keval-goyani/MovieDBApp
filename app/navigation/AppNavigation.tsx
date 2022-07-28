@@ -11,6 +11,7 @@ import {
   DetailScreen,
   LocationScreen,
   LoginScreen,
+  NewGroupScreen,
   SignUpScreen,
 } from '../modules';
 import { DrawerRoutes } from '../navigation';
@@ -64,12 +65,18 @@ const Routes = () => {
             name={navigationStrings.Details}
             component={DetailScreen}
           />
-          <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
+          <>
+            <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
+              <Stack.Screen
+                name={navigationStrings.ChatMessage}
+                component={ChatMessageScreen}
+              />
+            </Stack.Group>
             <Stack.Screen
-              name={navigationStrings.ChatMessage}
-              component={ChatMessageScreen}
+              name={navigationStrings.NewGroup}
+              component={NewGroupScreen}
             />
-          </Stack.Group>
+          </>
           <>
             <Stack.Screen
               name={navigationStrings.Chat}

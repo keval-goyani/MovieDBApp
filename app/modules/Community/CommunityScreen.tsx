@@ -2,7 +2,11 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
 import { CustomFloatingButton, Header, UsersList } from '../../components';
-import { NavigationDataType } from '../../constants';
+import {
+  NavigationDataType,
+  navigationStrings,
+  strings,
+} from '../../constants';
 import { Icons } from '../../theme';
 import styles from './styles/CommunityScreenStyles';
 
@@ -17,7 +21,10 @@ const CommunityScreen = () => {
         onPress={() => navigation.openDrawer()}
       />
       <UsersList />
-      <CustomFloatingButton />
+      <CustomFloatingButton
+        buttonType={strings.plus}
+        onPress={() => navigation.navigate(navigationStrings.ChatMessage)}
+      />
     </View>
   );
 };

@@ -11,4 +11,5 @@ export default {
   Chat: 'Chat',
   Location: 'Location',
   ChatMessage: 'ChatMessage',
+  NewGroup: 'NewGroup',
 };

@@ -1,20 +1,32 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
-import { NavigationDataType, navigationStrings } from '../constants';
-import { Icons } from '../theme';
+import { Image, TouchableOpacity, View, StyleSheet } from 'react-native';
+import Check from 'react-native-vector-icons/AntDesign';
+import { CustomFloatingButtonProps, strings } from '../constants';
+import { Color, Icons, moderateScale } from '../theme';
 import { styles } from './styles/CustomFloatingButtonStyles';
 
-const CustomFloatingButton = () => {
-  const navigation: NavigationDataType = useNavigation();
-
+const CustomFloatingButton = ({
+  buttonType,
+  onPress,
+  groupButtonStyle,
+}: CustomFloatingButtonProps) => {
+  const floatingContainer = StyleSheet.flatten([
+    styles.container,
+    groupButtonStyle,
+  ]);
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={0.6}
-        onPress={() => navigation.navigate(navigationStrings.ChatMessage)}>
+    <View style={floatingContainer}>
+      <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
         <View style={styles.buttonContainer}>
-          <Image source={Icons.plus} style={styles.plusIcon} />
+          {buttonType === strings.plus ? (
+            <Image source={Icons.plus} style={styles.plusIcon} />
+          ) : (
+            <Check
+              name={strings.check}
+              size={moderateScale(25)}
+              color={Color.lightBlue}
+            />
+          )}
         </View>
       </TouchableOpacity>
     </View>
