@@ -18,7 +18,7 @@ import {
   UserDataType,
 } from '../constants';
 import { Color, moderateScale } from '../theme';
-import ProfileImage from './ProfileImage';
+import { ProfileImage } from '../components';
 import { styles } from './styles/ParticipantsListStyles';
 
 const ParticipantsList = ({

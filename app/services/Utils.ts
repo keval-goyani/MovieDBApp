@@ -31,6 +31,7 @@ import {
   DocumentStateDataType,
   genres,
   ListItemDataType,
+  memberDataType,
   MovieDetailsDataType,
   MovieResponseGenerator,
   pickerOptions,
@@ -195,7 +196,7 @@ export const sortString = (input: string) => {
   return input.split('').sort().join('');
 };
 
-export const conversationIdCreation = (...userIds: string[]) => {
+export const conversationIdCreation = (userIds: string[]) => {
   let concatId = '';
   userIds.sort().map(id => (concatId += id));
   return getHashCode(concatId);
@@ -587,6 +588,7 @@ export const chatCreation = async ({
   receiverId,
   content,
   type,
+  members = {},
   documentName = '',
 }: {
   conversationId: string;
@@ -595,13 +597,21 @@ export const chatCreation = async ({
   content: string;
   type: string;
   documentName?: string;
+  members?: memberDataType;
 }) => {
-  const members = {
-    [senderId]: await userData(senderId),
-    [receiverId]: await userData(receiverId),
-  };
   let message = {};
+  const membersData = receiverId
+    ? {
+        [senderId]: await userData(senderId),
+        [receiverId]: await userData(receiverId),
+      }
+    : members;
+  const payload = receiverId ? strings.emptyString : strings.group;
+  const membersId = Object.keys(membersData);
   const fixedMessage = { content, type };
+  const createdAt = appConstants.firebaseTimestamp;
+  const conversationDocumentRef =
+    appConstants.conversationRef.doc(conversationId);
 
   if (documentName) {
     message = {
@@ -611,34 +621,65 @@ export const chatCreation = async ({
   } else {
     message = fixedMessage;
   }
-
-  const latestMessage = {
-    members,
-    createdAt: appConstants.firebaseTimestamp,
-    latestMessage: { ...message, senderId },
+  const latestMessage = { ...message, senderId };
+  const conversationMessage = {
+    members: membersData,
+    updatedAt: createdAt,
+    conversationId,
+    latestMessage,
   };
 
-  await appConstants.conversationRef
-    .doc(conversationId)
-    .set(latestMessage)
-    .then(() => {
-      addRecentMessageToUserList(senderId, receiverId, conversationId, message);
-    });
+  await conversationDocumentRef.get().then(document => {
+    if (document.exists) {
+      conversationDocumentRef
+        .update({ latestMessage, updatedAt: createdAt })
+        .then(() => {
+          addRecentMessageToUserList(
+            senderId,
+            membersId,
+            conversationId,
+            message,
+            payload,
+          );
+        })
+        .catch(error => error);
+    } else {
+      conversationDocumentRef
+        .set({
+          ...conversationMessage,
+          createdAt,
+        })
+        .then(() => {
+          addRecentMessageToUserList(
+            senderId,
+            membersId,
+            conversationId,
+            message,
+            payload,
+          );
+        })
+        .catch(error => error);
+    }
+  });
 };
 
 export const addRecentMessageToUserList = async (
   senderId: string,
-  receiverId: string,
+  membersId: string[],
   conversationId: string,
   message: { content: string; type: string; documentName?: string } | {},
+  payload: string,
 ) => {
+  const batch = firestore().batch();
+  let totalChat = 0;
+  const receiversId = membersId.filter(id => id !== senderId);
   const data = {
     ...message,
     createdAt: appConstants.firebaseTimestamp,
     sender: await userData(senderId),
     status: strings.sentStatus,
-    read: [receiverId],
-    payload: strings.emptyString,
+    read: receiversId,
+    payload,
   };
 
   await appConstants.messageRef
@@ -646,21 +687,35 @@ export const addRecentMessageToUserList = async (
     .collection(strings.messageCollection)
     .add(data)
     .then(() => {
-      updateChatCollection(senderId, conversationId);
-      updateChatCollection(receiverId, conversationId);
+      membersId.forEach(async userId => {
+        await updateChatCollection(userId, conversationId, batch);
+        totalChat = totalChat + 1;
+
+        if (totalChat === membersId.length) {
+          batch.commit();
+        }
+      });
     })
     .catch(error => error);
 };
 
-const updateChatCollection = async (id: string, conversationId: string) => {
+const updateChatCollection = async (
+  id: string,
+  conversationId: string,
+  batch: FirebaseFirestoreTypes.WriteBatch,
+) => {
   await appConstants.chatRef
     .doc(id)
     .collection(strings.conversationsCollection)
     .doc(conversationId)
-    .set({ unReadCount: 0 });
+    .get()
+    .then(chatData => {
+      batch.set(chatData?.ref, { unReadCount: 0 });
+    })
+    .catch(error => error);
 };
 
-const userData = async (id: string) => {
+export const userData = async (id: string) => {
   return await appConstants.userRef
     .doc(id)
     .get()
@@ -756,7 +811,6 @@ export const signUpError = (errorCode: string) => {
 export const getConversationIds = async (
   userList: UserListDataType[],
   userId: string,
-  userEmail: string,
 ) => {
   return userList.length === 0
     ? await appConstants.chatRef
@@ -768,7 +822,7 @@ export const getConversationIds = async (
         })
         .catch(error => error)
     : userList.map((conversationUser: UserListDataType) => {
-        return conversationIdCreation(conversationUser?.email, userEmail);
+        return conversationUser?.conversationId;
       });
 };
 
@@ -787,4 +841,85 @@ export const alertBox = (
       onPress: okButtonHandler,
     },
   ]);
+};
+
+export const storeImageToStorage = ({
+  imagePath,
+  setImagePath,
+  setImageUrl,
+}: {
+  imagePath: string;
+  setImagePath: Dispatch<React.SetStateAction<string>>;
+  setImageUrl: Dispatch<React.SetStateAction<string>>;
+}) => {
+  const selectedImage = imagePath?.split('/');
+  const imageName = selectedImage?.[selectedImage?.length - 1];
+  const storagePath = `${appConstants.storageProfilePath}${imageName}`;
+
+  storage()
+    .ref(storagePath)
+    .putFile(imagePath)
+    .then(async response => {
+      const stroredImagePath = Metrics.isAndroid
+        ? `${appConstants.storageProfilePath}${response?.metadata?.name}`
+        : `${response?.metadata?.name}`;
+
+      await storage()
+        .ref(stroredImagePath)
+        .getDownloadURL()
+        .then(remoteImage => {
+          setImageUrl(remoteImage);
+          setImagePath('');
+        })
+        .catch(error => alertMessage(error));
+    })
+    .catch(error => alertMessage(error));
+};
+
+export const groupCreation = async ({
+  conversationId,
+  members,
+  usersId,
+  groupInitializerId,
+  createdBy,
+  groupImage,
+  groupName,
+}: {
+  conversationId: string;
+  members: { [id: string]: string };
+  usersId: string[];
+  groupInitializerId: string;
+  createdBy: string;
+  groupImage: string;
+  groupName: string;
+}) => {
+  let totalChat = 0;
+  const createdAt = appConstants.firebaseTimestamp;
+  const batch = firestore().batch();
+  const latestMessage = {
+    members,
+    groupInitializerId,
+    createdBy,
+    groupImage,
+    groupName,
+    createdAt,
+    updatedAt: createdAt,
+    conversationId,
+    latestMessage: {
+      content: `${strings.createdGroup} ${groupName}`,
+      type: strings.textMessageType,
+      senderId: strings.emptyString,
+    },
+  };
+
+  appConstants.conversationRef.doc(conversationId).set(latestMessage);
+
+  usersId.forEach(async userId => {
+    await updateChatCollection(userId, conversationId, batch);
+    totalChat = totalChat + 1;
+
+    if (totalChat === usersId.length) {
+      batch.commit();
+    }
+  });
 };

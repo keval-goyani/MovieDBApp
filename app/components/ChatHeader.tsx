@@ -1,9 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import { ChatMenu } from '../components';
-import { ChatHeaderDataType, NavigationDataType } from '../constants';
+import TextTicker from 'react-native-text-ticker';
+import { ChatMenu, ProfileImage } from '../components';
+import {
+  appConstants,
+  ChatHeaderDataType,
+  NavigationDataType,
+} from '../constants';
 import { Icons } from '../theme';
 import { styles } from './styles/ChatHeaderStyles';
 
@@ -18,8 +22,12 @@ const ChatHeader = ({
   setChatWallpaper,
   receiverId,
   conversationId,
+  membersName,
+  groupName,
 }: ChatHeaderDataType) => {
   const navigation: NavigationDataType = useNavigation();
+  const [isTextMoving, setIsTextMoving] = useState(appConstants.trueValue);
+  const userInfo = userStatus ? userStatus : membersName;
 
   return (
     <>
@@ -29,20 +37,29 @@ const ChatHeader = ({
         </TouchableOpacity>
         <View style={styles.profileView}>
           <View style={styles.profile}>
-            <FastImage
-              source={
-                profileImage
-                  ? {
-                      uri: profileImage,
-                      cache: FastImage.cacheControl.immutable,
-                    }
-                  : Icons.avatar
-              }
-              style={styles.avatarImage}
+            <ProfileImage
+              {...{ profileImage, userStatus, groupName }}
+              isChatHeader={appConstants.trueValue}
             />
-            <View style={styles.userNameAndOnlineStatus}>
+            <View style={styles.userNameAndStatus}>
               <Text style={styles.username}>{username}</Text>
-              <Text style={styles.onlineStatus}>{userStatus}</Text>
+              {isTextMoving ? (
+                <TextTicker
+                  loop={false}
+                  bounce={false}
+                  style={styles.statusOrMembers}
+                  duration={5000}
+                  marqueeDelay={1500}
+                  onMarqueeComplete={() => {
+                    setIsTextMoving(appConstants.falseValue);
+                  }}>
+                  {userInfo}
+                </TextTicker>
+              ) : (
+                <Text numberOfLines={1} style={styles.statusOrMembers}>
+                  {userInfo}
+                </Text>
+              )}
             </View>
           </View>
         </View>

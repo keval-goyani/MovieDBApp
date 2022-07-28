@@ -13,20 +13,28 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(9),
   },
   chatImageContainer: {
-    flexDirection: 'row',
     resizeMode: 'contain',
     flex: 1,
     maxWidth: '44%',
     borderRadius: 10,
+    padding: moderateScale(5),
+  },
+  senderName: {
+    color: Color.darkModerateMagenta,
+    fontWeight: 'bold',
+    fontSize: moderateScale(12),
+    marginBottom: verticalScale(3),
   },
   chatImage: {
-    margin: moderateScale(7),
     height: verticalScale(200),
     width: horizontalScale(150),
   },
+  chatImageRadius: {
+    borderRadius: 10,
+  },
   imageTime: {
     position: 'absolute',
-    right: horizontalScale(3),
+    right: horizontalScale(4),
     bottom: 0,
   },
 });

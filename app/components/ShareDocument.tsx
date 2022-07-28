@@ -13,6 +13,7 @@ const ShareDocument = ({
   message,
   documentName,
   time,
+  senderName,
 }: ShareDocumentProps) => {
   const [docIcon, setDocIcon] = useState(Icons.documentIcon);
   const page = fileType === strings.pdf || fileType === strings.doc;
@@ -64,6 +65,11 @@ const ShareDocument = ({
   return (
     <View style={[styles.container, positionStyles.contentPosition]}>
       <TouchableOpacity onPress={() => openDocument(message, documentName)}>
+        {senderName ? (
+          <Text style={styles.senderName}>{senderName}</Text>
+        ) : (
+          <></>
+        )}
         <View style={styles.thumbnail}>
           {fileType === strings.pdf && (
             <Image source={Images.docFirstPage} style={styles.initialPage} />

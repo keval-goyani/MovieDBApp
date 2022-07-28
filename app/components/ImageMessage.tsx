@@ -10,17 +10,27 @@ const ImageMessage: FC<ImageMessageDataType> = ({
   message,
   time,
   chatUsername,
+  senderName,
 }) => {
   const [imageVisible, setImageVisible] = useState(false);
   const [showImageDetail, setShowImageDetail] = useState(false);
   const positionStyles = messagePosition(isLeft);
+  const userName = senderName ? senderName : chatUsername;
 
   return (
     <>
       <TouchableOpacity
         style={[styles.chatImageContainer, positionStyles.contentPosition]}
         onPress={() => setImageVisible(true)}>
-        <ImageBackground source={{ uri: message }} style={styles.chatImage}>
+        {senderName ? (
+          <Text style={styles.senderName}>{senderName}</Text>
+        ) : (
+          <></>
+        )}
+        <ImageBackground
+          source={{ uri: message }}
+          style={styles.chatImage}
+          imageStyle={styles.chatImageRadius}>
           <View style={styles.imageTime}>
             <Text style={styles.time}>{time}</Text>
           </View>
@@ -30,7 +40,7 @@ const ImageMessage: FC<ImageMessageDataType> = ({
         <ImageModal
           {...{
             message,
-            chatUsername,
+            userName,
             time,
             imageVisible,
             setImageVisible,

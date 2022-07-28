@@ -79,6 +79,7 @@ export default {
   user: 'User',
   chatCollection: 'Chat',
   you: 'You',
+  addedYou: 'added You',
   startConversation: 'Start Conversation',
   yesterday: 'Yesterday',
   emptyString: '',
@@ -182,4 +183,6 @@ export default {
   check: 'check',
   minusIcon: 'minuscircle',
   checkIcon: 'checkcircle',
+  group: 'Group Chat',
+  createdGroup: 'created group',
 };

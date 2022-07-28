@@ -18,6 +18,7 @@ const Location = ({
   message,
   isLeft,
   time,
+  senderName,
 }: LocationPropsType) => {
   const navigation: NavigationDataType = useNavigation();
   const [latitude, setLatitude] = useState(0);
@@ -77,6 +78,11 @@ const Location = ({
     <View style={styles.container}>
       <View
         style={[styles.shareLocationContainer, positionStyles.contentPosition]}>
+        {senderName ? (
+          <Text style={styles.senderName}>{senderName}</Text>
+        ) : (
+          <></>
+        )}
         <TouchableOpacity
           style={styles.shareLocationView}
           activeOpacity={0.5}

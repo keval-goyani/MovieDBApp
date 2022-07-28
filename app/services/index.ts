@@ -23,6 +23,8 @@ import {
   sortString,
   timestampToTime,
   alertBox,
+  storeImageToStorage,
+  groupCreation,
 } from './Utils';
 
 export {
@@ -50,4 +52,6 @@ export {
   loginError,
   signUpError,
   alertBox,
+  storeImageToStorage,
+  groupCreation,
 };

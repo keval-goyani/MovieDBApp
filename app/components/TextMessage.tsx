@@ -4,13 +4,23 @@ import { TextMessageDataType } from '../constants';
 import { messagePosition } from './styles/PositionStyles';
 import { textMessageStyles } from './styles/TextMessageStyles';
 
-const TextMessage: FC<TextMessageDataType> = ({ isLeft, message, time }) => {
+const TextMessage: FC<TextMessageDataType> = ({
+  isLeft,
+  message,
+  time,
+  senderName,
+}) => {
   const styles = textMessageStyles(isLeft);
   const positionStyles = messagePosition(isLeft);
 
   return (
     <View style={[styles.messageContainer, positionStyles.contentPosition]}>
       <View style={styles.messageView}>
+        {senderName ? (
+          <Text style={styles.senderName}>{senderName}</Text>
+        ) : (
+          <></>
+        )}
         <Text style={styles.message}>{message}</Text>
       </View>
       <View style={styles.timeView}>

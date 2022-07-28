@@ -2,14 +2,7 @@ import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import {
-  Alert,
-  Image,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import Edit from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -38,6 +31,9 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
   const [open, setOpen] = useState(false);
   const [imagePath, setImagePath] = useState(strings.emptyString);
   const { persistor } = reduxStore;
+  const profileImagestyle = user?.profileImage
+    ? styles.profile
+    : [styles.profile, styles.profileBorder];
 
   const getData = (
     selectedItemTab: string,
@@ -75,8 +71,8 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
         .putFile(imagePath)
         .then(response => {
           const stroredImagePath = Metrics.isAndroid
-            ? `${appConstants.storageProfilePath}${response.metadata.name}`
-            : `${response.metadata.name}`;
+            ? `${appConstants.storageProfilePath}${response?.metadata?.name}`
+            : `${response?.metadata?.name}`;
 
           storage()
             .ref(stroredImagePath)
@@ -176,16 +172,19 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
             ...styles.container,
             ...styles.profileView,
           }}>
-          <ImageBackground
-            source={
-              user?.profileImage
-                ? {
-                    uri: user?.profileImage,
-                  }
-                : Icons.avatar
-            }
-            imageStyle={styles.backgroundProfile}
-            style={styles.profile}>
+          <View style={styles.profileImageContainer}>
+            {user?.profileImage ? (
+              <Image
+                source={{
+                  uri: user?.profileImage,
+                }}
+                style={profileImagestyle}
+              />
+            ) : (
+              <View style={profileImagestyle}>
+                <Image source={Icons.avatar} style={styles.defaultProfile} />
+              </View>
+            )}
             <TouchableOpacity
               style={styles.editProfileButton}
               activeOpacity={0.7}
@@ -197,7 +196,7 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
                 style={styles.editIcon}
               />
             </TouchableOpacity>
-          </ImageBackground>
+          </View>
           {open && <EditProfile {...{ setOpen, setImagePath }} />}
           <Text style={styles.userEmail}>{user?.username}</Text>
         </View>
