@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Color, horizontalScale, moderateScale } from '../../theme';
+import { Color, horizontalScale, Metrics, moderateScale } from '../../theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   lastChatText: {
+    width: Metrics.isAndroid ? horizontalScale(148) : horizontalScale(168),
     fontSize: moderateScale(14),
     color: Color.darkBlue,
     marginLeft: horizontalScale(3),

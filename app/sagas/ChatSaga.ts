@@ -1,25 +1,36 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
-import { ChatSagaDataType, ChatType } from '../constants';
+import { appConstants, ChatSagaDataType } from '../constants';
 import chatAction, { chatDataSelector, ChatDataType } from '../redux/ChatRedux';
+import { Metrics } from '../theme';
 
 function* chatDataHandler({ payload }: ChatSagaDataType) {
   const { data, conversationId } = payload;
   const { chatData } = yield select(chatDataSelector.getData);
+  const previousChat = chatData?.[conversationId];
+  const clearChatLength =
+    previousChat?.clearChatLength + previousChat?.data?.length;
+  let updatedData;
 
-  const conversationIndex = chatData?.findIndex((conversation: ChatType) => {
-    return Object.keys(conversation)?.[0] === conversationId;
-  });
+  if (data) {
+    updatedData = chatData.hasOwnProperty(conversationId)
+      ? {
+          ...chatData,
+          [conversationId]: { ...chatData[conversationId], data },
+        }
+      : {
+          ...chatData,
+          [conversationId]: { data, clearChatLength: Metrics.zero },
+        };
+  } else {
+    updatedData = {
+      ...chatData,
+      [conversationId]: {
+        data: appConstants.emptyArray,
+        clearChatLength,
+      },
+    };
+  }
 
-  const updatedData: ChatType[] =
-    conversationIndex === -1
-      ? [...chatData, { [conversationId]: data }]
-      : chatData?.map((conversation: ChatType, index: number) => {
-          if (index === conversationIndex) {
-            return { [conversationId]: data };
-          }
-
-          return conversation;
-        });
   yield put(chatAction.chatDataSuccess(updatedData));
 }
 

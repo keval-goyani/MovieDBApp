@@ -16,11 +16,11 @@ export default Creators;
 
 export const INITIAL_STATE: ImmutableObject<ChatStateDataType> = Immutable({
   fetchingChatData: false,
-  chatData: [],
+  chatData: {},
 });
 
 export const chatDataSelector = {
-  getData: (state: RootState) => state?.chatData,
+  getData: (state: RootState) => state?.chat,
 };
 
 const request = (state: ImmutableObject<ChatStateDataType>) => {

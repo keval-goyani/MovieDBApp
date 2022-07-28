@@ -25,7 +25,7 @@ export const rootReducer = (
 
 export const appReducer = combineReducers({
   authData: authReducer,
-  chatData: chatReducer,
+  chat: chatReducer,
   chatUser: userListReducer,
   freeMovieData: freeMovieReducer,
   movieDetailData: detailReducer,

@@ -402,7 +402,6 @@ interface ChatHeaderDataType {
   setIsAttach: Dispatch<React.SetStateAction<boolean>>;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
-  receiverId: string | undefined;
   conversationId: string;
   membersName: string;
   groupName: string | undefined;
@@ -481,13 +480,16 @@ interface ChatDataType {
   status: string;
 }
 
+interface ConversationDataType {
+  [conversationId: string]: Array<ChatType>;
+}
 interface ChatStateDataType {
   fetchingChatData: boolean;
-  chatData: [] | Array<ChatType>;
+  chatData: {} | ConversationDataType;
 }
 
 interface ChatLocalStoreDataType {
-  chat: Array<ChatType>;
+  chat: ConversationDataType;
 }
 
 interface LocationDataType {
@@ -584,7 +586,6 @@ interface ChatMenuDataType {
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   conversationId: string;
-  receiverId: string | undefined;
 }
 
 interface CustomButtonDataType {
@@ -596,9 +597,7 @@ interface CustomButtonDataType {
 
 interface ClearChatDataType {
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
-  conversationId: string;
-  receiverId: string | undefined;
-  senderId: string;
+  clearConversation: () => void;
 }
 
 interface LocationCoordsProps {
