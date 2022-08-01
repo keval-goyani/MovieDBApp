@@ -12,6 +12,7 @@ import CustomShareLocationButton from './CustomShareLocationButton';
 import CustomSkeleton from './CustomSkeleton';
 import DocumentFooter from './DocumentFooter';
 import DropDownMenu from './DropDownMenu';
+import EditProfile from './EditProfile';
 import Header from './Header';
 import ImageMessage from './ImageMessage';
 import ImageModal from './ImageModal';
@@ -78,4 +79,5 @@ export {
   AddUsersList,
   SearchUser,
   LatestMessage,
+  EditProfile,
 };

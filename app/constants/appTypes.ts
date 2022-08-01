@@ -756,3 +756,8 @@ export interface MessageProps {
   documentName?: string;
   content?: string;
 }
+
+export interface EditProfileProps {
+  setOpen: Dispatch<React.SetStateAction<boolean>>;
+  setImagePath: Dispatch<React.SetStateAction<string>>;
+}

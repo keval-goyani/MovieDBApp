@@ -147,4 +147,9 @@ export default {
   photoIcon: 'ios-image',
   locationIcon: 'ios-location-sharp',
   documentIcon: 'document',
+  editIcon: 'account-edit-outline',
+  profilePhoto: 'Profile photo',
+  delete: 'delete',
+  imagePath:
+    'https://firebasestorage.googleapis.com/v0/b/moviedb-2908d.appspot.com/o/Images%2F1657876616147_9442886A-0093-494A-824A-C39A3F7ACB34.jpg?alt=media&token=49a1f8ce-44ca-4210-9ca0-1f879eac9500',
 };

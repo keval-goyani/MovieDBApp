@@ -33,6 +33,7 @@ import {
   DocumentStateDataType,
   DrawerStateDataType,
   DropDownDataType,
+  EditProfileProps,
   FireStoreResponseDataType,
   FormDataType,
   FormTypeProps,
@@ -100,7 +101,6 @@ export {
   pickerOptions,
   defaultValues,
 };
-
 export type {
   AddUserListProps,
   AttachDataType,
@@ -188,4 +188,5 @@ export type {
   UsersListDataType,
   UsersListStateDataType,
   UserToChatNavigationDataType,
+  EditProfileProps,
 };
