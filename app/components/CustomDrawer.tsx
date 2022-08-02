@@ -1,22 +1,31 @@
 import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import {
   Alert,
   Image,
   ImageBackground,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import Edit from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomDrawerDataType, navigationStrings, strings } from '../constants';
-import authAction, { authDataSelectors } from '../redux/AuthRedux';
+import {
+  appConstants,
+  CustomDrawerDataType,
+  navigationStrings,
+  strings,
+} from '../constants';
+import { authDataSelectors } from '../redux/AuthRedux';
+import userListUpdateAction from '../redux/ChatUserListRedux';
 import selectedAction, {
-  selectedTabSelectors
+  selectedTabSelectors,
 } from '../redux/DrawerSelectRedux';
-import { Color, Icons, moderateScale } from '../theme';
+import reduxStore from '../redux/store';
+import { alertMessage } from '../services';
+import { Color, Icons, Metrics, moderateScale } from '../theme';
 import EditProfile from './EditProfile';
 import styles from './styles/CustomDrawerStyle';
 
@@ -27,7 +36,8 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(false);
   const [open, setOpen] = useState(false);
-  const [imagePath, setImagePath] = useState(strings.imagePath);
+  const [imagePath, setImagePath] = useState(strings.emptyString);
+  const { persistor } = reduxStore;
 
   const getData = (
     selectedItemTab: string,
@@ -54,6 +64,48 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
     return themeType[type]();
   };
 
+  const chatImageHandler = useCallback(() => {
+    if (imagePath) {
+      const selectedImage = imagePath?.split('/');
+      const imageName = selectedImage?.[selectedImage?.length - 1];
+      const storagePath = `${appConstants.storageProfilePath}${imageName}`;
+
+      storage()
+        .ref(storagePath)
+        .putFile(imagePath)
+        .then(response => {
+          const stroredImagePath = Metrics.isAndroid
+            ? `${appConstants.storageProfilePath}${response.metadata.name}`
+            : `${response.metadata.name}`;
+
+          storage()
+            .ref(stroredImagePath)
+            .getDownloadURL()
+            .then(remoteImage => {
+              dispatch(userListUpdateAction.userListProfile(remoteImage));
+              setImagePath('');
+            })
+            .catch(error => alertMessage(error));
+        })
+        .catch(error => alertMessage(error));
+    }
+  }, [dispatch, imagePath]);
+
+  useEffect(() => {
+    chatImageHandler();
+  }, [chatImageHandler]);
+
+  const handleLogOut = () => {
+    auth()
+      .signOut()
+      .then(() => {
+        dispatch(userListUpdateAction.userListStatus(strings.backgroundState));
+        dispatch({ type: strings.signoutRequest });
+        persistor.flush();
+      })
+      .catch(error => error);
+  };
+
   const userLogOut = () => {
     Alert.alert(strings.warning, strings.confirm, [
       {
@@ -62,10 +114,7 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
       },
       {
         text: strings.ok,
-        onPress: () => {
-          auth().signOut();
-          return dispatch(authAction.logout());
-        },
+        onPress: handleLogOut,
       },
     ]);
   };
@@ -128,9 +177,13 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
             ...styles.profileView,
           }}>
           <ImageBackground
-            source={{
-              uri: imagePath,
-            }}
+            source={
+              user?.profileImage
+                ? {
+                    uri: user?.profileImage,
+                  }
+                : Icons.avatar
+            }
             imageStyle={styles.backgroundProfile}
             style={styles.profile}>
             <TouchableOpacity

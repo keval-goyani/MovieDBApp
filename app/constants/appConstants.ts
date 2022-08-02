@@ -48,6 +48,7 @@ export default {
   storagePermission: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
   storageDocumentPath: 'Documents/',
   storageImagePath: 'Images/',
+  storageProfilePath: 'Profiles/',
   key: 'R@v!RnP@r3|!y@:V!kr@U|-Knk@b!y@:|-|!r3uL@|k!y@',
   userRef: firestore().collection('users'),
   chatRef: firestore().collection('chats'),

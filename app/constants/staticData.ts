@@ -1,6 +1,7 @@
-import { appConstants, strings } from '../constants';
+import strings from './strings';
+import appConstants from './appConstants';
 
-export const filterData = {
+const filterData = {
   popularMovieFilterData: [
     {
       id: 0,
@@ -71,7 +72,7 @@ export const filterData = {
   ],
 };
 
-export const genres = [
+const genres = [
   {
     id: 28,
     name: 'Action',
@@ -150,16 +151,18 @@ export const genres = [
   },
 ];
 
-export const pickerOptions = {
+const pickerOptions = {
   maxWidth: 800,
   maxHeight: 800,
   includeBase64: true,
   includeExtra: true,
 };
 
-export const defaultValues = {
+const defaultValues = {
   username: '',
   email: '',
   password: '',
   confirmPassword: '',
 };
+
+export { filterData, defaultValues, genres, pickerOptions };

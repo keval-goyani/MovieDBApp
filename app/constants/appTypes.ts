@@ -15,7 +15,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { ImmutableArray } from 'seamless-immutable';
-import rootReducer from '../redux';
+import { appReducer } from '../redux';
 
 interface genresDataType {
   id: number;
@@ -40,14 +40,14 @@ interface SpokenLanguagesDataType {
   name: string;
 }
 
-export interface FormDataType {
+interface FormDataType {
   username: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
-export interface FormTypeProps {
+interface FormTypeProps {
   getCredentials: React.Dispatch<
     React.SetStateAction<{ userName?: string; email: string; password: string }>
   >;
@@ -78,7 +78,7 @@ interface CreditsDataType {
   job?: string;
 }
 
-export interface MovieDetailsDataType {
+interface MovieDetailsDataType {
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection: null;
@@ -113,9 +113,9 @@ export interface MovieDetailsDataType {
   };
 }
 
-export type RootState = ReturnType<typeof rootReducer>;
+type RootState = ReturnType<typeof appReducer>;
 
-export interface MovieSagaDataType {
+interface MovieSagaDataType {
   payload: {
     urlMainPath?: string;
     pageNo: number;
@@ -123,12 +123,12 @@ export interface MovieSagaDataType {
   type: string;
 }
 
-export interface DetailPathDataType {
+interface DetailPathDataType {
   payload: string;
   type: string;
 }
 
-export interface DetailResponseGenerator {
+interface DetailResponseGenerator {
   config?: object;
   data: MovieDetailsDataType;
   duration?: number;
@@ -139,18 +139,18 @@ export interface DetailResponseGenerator {
   status?: number;
 }
 
-export interface DetailStateDataType {
+interface DetailStateDataType {
   detailData: MovieDetailsDataType | null;
   fetchingDetailData: boolean;
   DetailDataFetchingError: boolean;
 }
 
-export interface DetailStoreDataType {
+interface DetailStoreDataType {
   data: MovieDetailsDataType;
   error: string;
 }
 
-export interface ListItemDataType {
+interface ListItemDataType {
   adult: boolean;
   backdrop_path: string;
   genre_ids: Array<number>;
@@ -170,20 +170,20 @@ export interface ListItemDataType {
   vote_count: number;
 }
 
-export interface ListItemType {
+interface ListItemType {
   page: number;
   results: Array<ListItemDataType>;
   total_pages: number;
   total_results: number;
 }
 
-export interface DataType {
+interface DataType {
   id: number;
   name: string;
   endPoint: string;
 }
 
-export interface ListContainerDataType {
+interface ListContainerDataType {
   title?: string;
   filterOptions?: Array<DataType>;
   data: ImmutableArray<ListItemDataType>;
@@ -193,7 +193,7 @@ export interface ListContainerDataType {
   searchModal: boolean;
 }
 
-export interface ListDataType {
+interface ListDataType {
   fetching?: boolean;
   listData: Array<ListItemDataType>;
   searchModal: boolean;
@@ -203,18 +203,18 @@ export interface ListDataType {
   latestSkeletonStyle?: StyleProp<ViewStyle>;
 }
 
-export interface MovieDataType {
+interface MovieDataType {
   data: ImmutableArray<ListItemDataType> | Array<ListItemDataType>;
   listPage: listPageType;
 }
 
-export interface listPageType {
+interface listPageType {
   whatsPopularPage: number;
   freeToWatchPage: number;
   trendingPage: number;
 }
 
-export interface MovieResponseGenerator {
+interface MovieResponseGenerator {
   config?: object;
   data: ListItemType;
   duration?: number;
@@ -225,13 +225,13 @@ export interface MovieResponseGenerator {
   status?: number;
 }
 
-export interface RouteDataType {
+interface RouteDataType {
   route: {
     params: { id: number; data: string };
   };
 }
 
-export interface PopularDataType {
+interface PopularDataType {
   whatsPopularData: Array<ListItemDataType>;
   whatsPopularSearch: Array<ListItemDataType>;
   whatsPopularPage: number;
@@ -239,7 +239,7 @@ export interface PopularDataType {
   whatsPopularDataFetchingError: boolean;
 }
 
-export interface FreeMovieDataType {
+interface FreeMovieDataType {
   freeToWatch: Array<ListItemDataType>;
   freeToWatchSearch: Array<ListItemDataType>;
   freeToWatchPage: number;
@@ -247,7 +247,7 @@ export interface FreeMovieDataType {
   freeToWatchFetchingError: boolean;
 }
 
-export interface TrailerDataType {
+interface TrailerDataType {
   latestTrailers: Array<ListItemDataType>;
   latestTrailersSearch: Array<ListItemDataType>;
   latestTrailersPage: number;
@@ -255,7 +255,7 @@ export interface TrailerDataType {
   latestTrailersFetchingError: boolean;
 }
 
-export interface TrendingDataType {
+interface TrendingDataType {
   trending: Array<ListItemDataType>;
   trendingSearch: Array<ListItemDataType>;
   trendingPage: number;
@@ -263,7 +263,7 @@ export interface TrendingDataType {
   trendingFetchingError: boolean;
 }
 
-export interface HeaderDataType {
+interface HeaderDataType {
   leftIcon: ImageSourcePropType;
   logoIcon: ImageSourcePropType;
   rightIcon?: ImageSourcePropType;
@@ -273,7 +273,7 @@ export interface HeaderDataType {
   title?: string;
 }
 
-export interface NavigationDataType {
+interface NavigationDataType {
   navigate: (
     screen: string,
     params?: {
@@ -287,6 +287,8 @@ export interface NavigationDataType {
       lastLatitude?: number;
       lastLongitude?: number;
       receiverId?: string;
+      userStatus?: string;
+      profileImage?: string;
     },
   ) => void;
   openDrawer: () => void;
@@ -294,7 +296,7 @@ export interface NavigationDataType {
   goBack: () => void;
 }
 
-export interface DropDownDataType {
+interface DropDownDataType {
   data: Array<DataType>;
   title: string;
   dropDownViewStyle?: StyleProp<ViewStyle>;
@@ -303,7 +305,7 @@ export interface DropDownDataType {
   setMethod: Dispatch<React.SetStateAction<string>>;
 }
 
-export interface MovieStoreDataType {
+interface MovieStoreDataType {
   data: {
     movieData: object;
     page: number;
@@ -312,76 +314,75 @@ export interface MovieStoreDataType {
   searchData: { type: string; searchData: ListItemDataType[] };
 }
 
-export interface Credentials {
+interface Credentials {
   username?: string;
   email: string;
   password: string;
 }
 
-export interface NavigationScreenType {
+interface NavigationScreenType {
   navigate: (Screen: string) => void;
 }
 
-export interface AuthDataType {
-  username: string;
-  email: string;
-  uid: string;
-}
-
 interface AuthPayloadDataType {
-  user: { _user: AuthDataType };
+  user: { _user: UserDataType };
   username?: string;
 }
 
-export interface AuthSagaDataType {
+interface AuthSagaDataType {
   payload: AuthPayloadDataType;
   type: string;
 }
 
-export interface AuthReduxDataType {
-  data: AuthDataType;
+interface LoginSagaDataType {
+  payload: string;
+  type: string;
+}
+
+interface AuthReduxDataType {
+  data: UserDataType;
   error: string;
 }
 
-export interface AuthStateDataType {
-  user: null | AuthDataType;
+interface AuthStateDataType {
+  user: null | UserDataType;
   authenticated: null | boolean;
   error: null | boolean;
   loading: boolean | null;
 }
-export interface DrawerStateDataType {
+interface DrawerStateDataType {
   setActiveTab: selectDataTypes;
 }
 
-export interface selectDataTypes {
+interface selectDataTypes {
   payload: string;
 }
 
-export interface TabBarIconDataType {
+interface TabBarIconDataType {
   focused: boolean;
   icon: ImageProps;
 }
 
-export interface SearchModalDataType {
+interface SearchModalDataType {
   searchQuery: string;
   setSearchQuery: Dispatch<React.SetStateAction<string>>;
   setSearchModal: Dispatch<React.SetStateAction<boolean>>;
   searchModal: boolean;
 }
 
-export interface SearchFunctionDataType {
+interface SearchFunctionDataType {
   query: string;
   type: string;
 }
 
-export interface LoaderDataType {
+interface LoaderDataType {
   size?: string | number;
   animating?: boolean;
   style?: StyleProp<ViewStyle>;
   color?: string;
 }
 
-export interface CustomDrawerDataType {
+interface CustomDrawerDataType {
   descriptors?: object;
   navigation: {
     navigate: (routeName: string, { screen }: { screen: string }) => void;
@@ -389,10 +390,10 @@ export interface CustomDrawerDataType {
   state?: object;
 }
 
-export interface ChatHeaderDataType {
+interface ChatHeaderDataType {
   username: string;
-  picture: ImageSourcePropType;
-  onlineStatus: string;
+  profileImage: string | undefined;
+  userStatus: string | undefined;
   showMenu: boolean;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   setIsAttach: Dispatch<React.SetStateAction<boolean>>;
@@ -402,7 +403,7 @@ export interface ChatHeaderDataType {
   conversationId: string;
 }
 
-export interface MessageDataType {
+interface MessageDataType {
   key?: number;
   time: string;
   isLeft: boolean;
@@ -411,22 +412,23 @@ export interface MessageDataType {
   documentName: string;
   chatUsername: string;
 }
-export interface SkeletonProps {
+interface SkeletonProps {
   width: number;
   height: number;
 }
 
-export interface LoadingStateProps {
+interface LoadingStateProps {
   searchModal: boolean;
   latestSkeletonStyle: StyleProp<ViewStyle>;
 }
 
-export interface UserListDataType {
+interface UserListDataType {
   email: string;
   uid: string;
   username: string;
   profileImage: string;
   createdAt: number;
+  status: string;
   latestMessage: {
     type: string;
     content: string;
@@ -434,20 +436,28 @@ export interface UserListDataType {
     documentName?: string;
   };
 }
-export interface UserListStateDataType {
+interface UserListStateDataType {
   userList: UserListDataType[] | [];
   fetchingUserList: boolean | null;
 }
 
-export interface ChatUserListType {
+interface ChatUserListType {
   data: UserListDataType[];
 }
 
-export interface UserDataType extends AuthDataType {
+interface UserDataType {
+  username: string;
+  email: string;
+  uid: string;
   profileImage: string;
+  status: string;
 }
 
-export interface ChatDataType {
+interface ChatType {
+  [conversationId: string]: ChatDataType;
+}
+
+interface ChatDataType {
   content: string;
   type: string;
   documentName?: string;
@@ -458,21 +468,21 @@ export interface ChatDataType {
   status: string;
 }
 
-export interface ChatStateDataType {
+interface ChatStateDataType {
   fetchingChatData: boolean;
-  chatData: [] | ChatDataType[];
+  chatData: [] | Array<ChatType>;
 }
 
-export interface ChatLocalStoreDataType {
-  chat: ChatDataType[];
+interface ChatLocalStoreDataType {
+  chat: Array<ChatType>;
 }
 
-export interface LocationDataType {
+interface LocationDataType {
   currentLatitude: number | undefined;
   currentLongitude: number | undefined;
 }
 
-export interface ChatInputDataType {
+interface ChatInputDataType {
   cameraModal: boolean;
   isAttach: boolean;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
@@ -487,7 +497,7 @@ export interface ChatInputDataType {
   receiverId: string | undefined;
 }
 
-export interface LatestMessageDataType {
+interface LatestMessageDataType {
   content?: string;
   type?: string;
   documentName?: string;
@@ -498,7 +508,7 @@ export interface LatestMessageDataType {
   status?: string;
 }
 
-export interface ChatListDataType {
+interface ChatListDataType {
   email: string;
   uid: string;
   username: string;
@@ -510,11 +520,11 @@ export interface ChatListDataType {
   receiverId: string;
 }
 
-export interface ChatUserListDataType {
+interface ChatUserListDataType {
   chatUserList: Array<UserListDataType>;
 }
 
-export interface ChatScreenDataType {
+interface ChatScreenDataType {
   route: {
     params: {
       conversationId: string;
@@ -525,33 +535,24 @@ export interface ChatScreenDataType {
       currentLatitude?: number;
       currentLongitude?: number;
       receiverId?: string;
+      userStatus?: string;
+      profileImage?: string;
     };
   };
 }
 
-export interface FireStoreResponseDataType {
-  _data: {
-    email: string;
-    uid: string;
-    username: string;
-  };
-}
-
-export interface ChatListSagaDataType {
+interface ChatListSagaDataType {
   payload: ChatListDataType[];
   type: string;
 }
-export interface UsersListSagaDataType {
-  payload: UsersListDataType[];
-  type: string;
-}
-export interface StaggerDataType {
+
+interface StaggerDataType {
   imagePath?: string;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
   setImagePath: Dispatch<React.SetStateAction<string>>;
 }
 
-export interface MessageListDataType {
+interface MessageListDataType {
   conversationId: string;
   username: string;
   setCameraModal: Dispatch<React.SetStateAction<boolean>>;
@@ -559,37 +560,37 @@ export interface MessageListDataType {
   setIsAttach: Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface SetWallpaperDataType {
+interface SetWallpaperDataType {
   wallpaperPath: string;
 }
 
-export interface ChatMenuDataType {
+interface ChatMenuDataType {
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   conversationId: string;
   receiverId: string | undefined;
 }
 
-export interface CustomButtonDataType {
+interface CustomButtonDataType {
   onPress: () => void;
   buttonStyle: TextStyle;
   buttonTextStyle: TextStyle;
   buttonText: string;
 }
 
-export interface ClearChatDataType {
+interface ClearChatDataType {
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
   conversationId: string;
   receiverId: string | undefined;
   senderId: string;
 }
 
-export interface LocationCoordsProps {
+interface LocationCoordsProps {
   endedLatitude: number;
   endedLongitude: number;
 }
 
-export interface MapDataProps {
+interface MapDataProps {
   isFromChat: boolean;
   longitude: number;
   latitude: number;
@@ -599,7 +600,7 @@ export interface MapDataProps {
   username?: string;
 }
 
-export interface CustomButtonProps {
+interface CustomButtonProps {
   isFromChat: boolean;
   longitude: number;
   latitude: number;
@@ -607,20 +608,20 @@ export interface CustomButtonProps {
   receiverId: string | undefined;
 }
 
-export interface ShareLocationDataProps {
+interface ShareLocationDataProps {
   conversationId?: string;
   username?: string;
   currentLatitude?: number;
   currentLongitude?: number;
 }
 
-export interface CustomHyperlinkDataType {
+interface CustomHyperlinkDataType {
   linkTitle: string;
   hyperlinkTitle: string;
   onPress: () => void;
 }
 
-export interface ShareDocumentProps {
+interface ShareDocumentProps {
   fileType: string;
   isLeft: boolean;
   message: string;
@@ -628,12 +629,12 @@ export interface ShareDocumentProps {
   time: string;
 }
 
-export interface DocumentFooterProps {
+interface DocumentFooterProps {
   page: boolean;
   fileType: string;
   time: string;
 }
-export interface ImageModalDataType {
+interface ImageModalDataType {
   message: string;
   chatUsername: string;
   time: string;
@@ -643,7 +644,7 @@ export interface ImageModalDataType {
   setShowImageDetail: Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface AttachDataType {
+interface AttachDataType {
   setIsAttach: Dispatch<React.SetStateAction<boolean>>;
   setImagePath: Dispatch<React.SetStateAction<string>>;
   setDocumentData: Dispatch<React.SetStateAction<DocumentStateDataType>>;
@@ -652,7 +653,7 @@ export interface AttachDataType {
   receiverId: string | undefined;
 }
 
-export interface CustomIconRounderDataType {
+interface CustomIconRounderDataType {
   path: ImageSourcePropType;
   iconName: string;
   tintColor?: ImageStyle;
@@ -660,104 +661,209 @@ export interface CustomIconRounderDataType {
   backgroundColor: ViewStyle;
 }
 
-export interface ShareLocationDataType {
+interface ShareLocationDataType {
   conversationId: string;
   username: string;
 }
 
-export interface LocationPropsType {
+interface LocationPropsType {
   chatUsername: string;
   message: string;
   isLeft: boolean;
   time: string;
 }
 
-export interface DocumentStateDataType {
+interface DocumentStateDataType {
   documentUrl: string;
   documentName: string;
 }
 
-export interface ImageMessageDataType {
+interface ImageMessageDataType {
   isLeft: boolean;
   message: string;
   time: string;
   chatUsername: string;
 }
 
-export interface TextMessageDataType {
+interface TextMessageDataType {
   isLeft: boolean;
   message: string;
   time: string;
 }
 
-export interface UserToChatNavigationDataType {
+interface UserToChatNavigationDataType {
   navigate: (
     screen: string,
     params: {
       conversationId: string;
       username: string;
       receiverId: string;
+      userStatus: string;
+      profileImage: string;
     },
   ) => void;
 }
-export interface SearchUserProps {
-  setUsersList: Dispatch<
-    React.SetStateAction<ImmutableArray<UsersListDataType>>
-  >;
+interface SearchUserProps {
+  setUsersList: Dispatch<React.SetStateAction<ImmutableArray<UserDataType>>>;
 }
 
-export interface AddUserListProps {
-  userListData: ImmutableArray<UsersListDataType>;
+interface AddUserListProps {
+  userListData: ImmutableArray<UserDataType>;
 }
 
-export interface UsersListStateDataType {
-  userList: UsersListDataType[] | [];
+interface UsersListStateDataType {
+  userList: UserDataType[] | [];
   fetchingUserList: boolean;
 }
 
-export interface UsersListDataType {
-  email: string;
-  uid: string;
-  username: string;
-  profileImage: string;
+interface ChatUsersListType {
+  data: UserDataType[];
 }
 
-export interface RenderItemTypes {
-  item: {
-    email: string;
-    uid: string;
-    username: string;
-    profileImage: string;
-  };
+interface RenderItemTypes {
+  item: UserDataType;
 }
 
-export interface UsersDocumentDataType {
+interface UsersDocumentDataType {
   email?: string;
   uid?: string;
   username?: string;
   profileImage?: string;
 }
-export interface ChatUsersListType {
-  data: UsersListDataType[];
-}
 
-export interface UserListEmptyType {
+interface UserListEmptyType {
   fetching: boolean | null;
   userListLength: number;
 }
 
-export interface LatestMessageProps {
+interface LatestMessageProps {
   message: MessageProps;
   isSendByMe: boolean;
 }
 
-export interface MessageProps {
+interface MessageProps {
   type: string;
   documentName?: string;
   content?: string;
 }
 
-export interface EditProfileProps {
+interface EditProfileProps {
   setOpen: Dispatch<React.SetStateAction<boolean>>;
   setImagePath: Dispatch<React.SetStateAction<string>>;
 }
+interface UserStatusDataType {
+  status: string;
+  type: string;
+}
+
+interface ChatSagaDataType {
+  payload: {
+    data: ChatDataType[];
+    conversationId: string;
+  };
+  type: string;
+}
+
+interface ProfileImageDataType {
+  profileImage: string;
+  userStatus: string;
+}
+
+interface ProfileUpdateDataType {
+  profile: string;
+  type: string;
+}
+
+export type {
+  AddUserListProps,
+  AttachDataType,
+  LatestMessageProps,
+  AuthReduxDataType,
+  AuthSagaDataType,
+  AuthStateDataType,
+  ChatDataType,
+  RenderItemTypes,
+  ChatHeaderDataType,
+  ChatInputDataType,
+  ChatListDataType,
+  ChatListSagaDataType,
+  ChatLocalStoreDataType,
+  ChatMenuDataType,
+  ChatScreenDataType,
+  ChatStateDataType,
+  ChatUserListDataType,
+  ChatUserListType,
+  ClearChatDataType,
+  Credentials,
+  CustomButtonDataType,
+  CustomButtonProps,
+  CustomDrawerDataType,
+  CustomHyperlinkDataType,
+  CustomIconRounderDataType,
+  DataType,
+  DetailPathDataType,
+  DetailResponseGenerator,
+  DetailStateDataType,
+  DetailStoreDataType,
+  DocumentFooterProps,
+  DocumentStateDataType,
+  DrawerStateDataType,
+  DropDownDataType,
+  EditProfileProps,
+  FormDataType,
+  FormTypeProps,
+  FreeMovieDataType,
+  HeaderDataType,
+  ImageMessageDataType,
+  ImageModalDataType,
+  LatestMessageDataType,
+  ListContainerDataType,
+  ListDataType,
+  ListItemDataType,
+  ListItemType,
+  LoaderDataType,
+  LoadingStateProps,
+  LocationCoordsProps,
+  LocationDataType,
+  LocationPropsType,
+  MapDataProps,
+  MessageDataType,
+  MessageListDataType,
+  MovieDataType,
+  MovieDetailsDataType,
+  MovieResponseGenerator,
+  MovieSagaDataType,
+  MovieStoreDataType,
+  NavigationDataType,
+  NavigationScreenType,
+  PopularDataType,
+  RootState,
+  RouteDataType,
+  SearchFunctionDataType,
+  SearchModalDataType,
+  SearchUserProps,
+  SetWallpaperDataType,
+  ShareDocumentProps,
+  ShareLocationDataProps,
+  ShareLocationDataType,
+  SkeletonProps,
+  StaggerDataType,
+  TabBarIconDataType,
+  TextMessageDataType,
+  TrailerDataType,
+  TrendingDataType,
+  UserDataType,
+  UserListDataType,
+  UserListEmptyType,
+  UserListStateDataType,
+  UsersDocumentDataType,
+  UsersListStateDataType,
+  UserToChatNavigationDataType,
+  UserStatusDataType,
+  ChatSagaDataType,
+  ChatType,
+  ChatUsersListType,
+  ProfileImageDataType,
+  LoginSagaDataType,
+  ProfileUpdateDataType,
+};

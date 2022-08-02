@@ -27,6 +27,7 @@ import Message from './Message';
 import MessageList from './MessageList';
 import Movies from './Movies';
 import MovieTrailer, { trailerListItem } from './MovieTrailers';
+import ProfileImage from './ProfileImage';
 import SearchModal from './SearchModal';
 import SearchUser from './SearchUser';
 import ShareDocument from './ShareDocument';
@@ -80,4 +81,5 @@ export {
   SearchUser,
   LatestMessage,
   EditProfile,
+  ProfileImage,
 };
