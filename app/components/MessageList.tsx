@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { asMutable } from 'seamless-immutable';
 import { Message } from '../components';
 import {
   appConstants,
@@ -26,6 +25,10 @@ const MessageList = ({
   const { chatData } = useSelector(chatDataSelector.getData);
   const { user } = useSelector(authDataSelectors.getData);
   const currentUser = useRef(user?.uid);
+  const chatMessages =
+    chatData?.filter(
+      conversation => Object.keys(conversation)?.[0] === conversationId,
+    )?.[0]?.[conversationId] ?? [];
 
   const fetchRealTimeMessages = useCallback(() => {
     const subscriber = appConstants.messageRef
@@ -36,11 +39,17 @@ const MessageList = ({
         const firestoreChatList: LatestMessageDataType[] = [];
 
         documentSnapshot?.forEach(document => {
-          const chatMessages = document?.data();
+          const chatMessage = document?.data();
 
-          firestoreChatList.push(chatMessages);
+          firestoreChatList.push(chatMessage);
         });
-        dispatch(chatAction.chatDataSuccess(firestoreChatList));
+
+        dispatch(
+          chatAction.chatDataRequest({
+            data: firestoreChatList,
+            conversationId,
+          }),
+        );
       });
 
     return () => subscriber();
@@ -53,7 +62,7 @@ const MessageList = ({
   return (
     <FlatList
       ref={scrollRef}
-      data={asMutable(chatData) ?? []}
+      data={Object.values(chatMessages)}
       onContentSizeChange={() => {
         scrollRef?.current?.scrollToEnd({ animated: true });
       }}

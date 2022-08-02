@@ -17,11 +17,6 @@ export const styles = StyleSheet.create({
     padding: moderateScale(20),
     marginBottom: verticalScale(3),
   },
-  avatar: {
-    height: moderateScale(60),
-    width: moderateScale(60),
-    resizeMode: 'contain',
-  },
   text: {
     textAlign: 'justify',
     fontWeight: '700',

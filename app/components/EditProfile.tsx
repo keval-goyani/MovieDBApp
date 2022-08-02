@@ -9,12 +9,25 @@ import {
   View,
 } from 'react-native';
 import Delete from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch } from 'react-redux';
 import { appConstants, EditProfileProps, strings } from '../constants';
-import { handleCameraPermission, handleGalleryPermission } from '../services';
+import deleteProfileAction from '../redux/ChatUserListRedux';
+import {
+  alertBox,
+  handleCameraPermission,
+  handleGalleryPermission,
+} from '../services';
 import { Color, Icons, moderateScale } from '../theme';
 import { styles } from './styles/EditProfileStyles';
 
 const EditProfile = ({ setOpen, setImagePath }: EditProfileProps) => {
+  const dispatch = useDispatch();
+
+  const removeProfile = () => {
+    dispatch(deleteProfileAction.userListProfile(strings.emptyString));
+    setOpen(false);
+  };
+
   return (
     <>
       <Modal transparent={true}>
@@ -27,7 +40,13 @@ const EditProfile = ({ setOpen, setImagePath }: EditProfileProps) => {
               <Text style={styles.profileText}>{strings.profilePhoto}</Text>
               <TouchableOpacity
                 style={styles.deleteIcon}
-                onPress={() => setOpen(false)}>
+                onPress={() => {
+                  alertBox(
+                    removeProfile,
+                    strings.warning,
+                    strings.confirmDeleteProfile,
+                  );
+                }}>
                 <Delete
                   name={strings.delete}
                   size={moderateScale(22)}

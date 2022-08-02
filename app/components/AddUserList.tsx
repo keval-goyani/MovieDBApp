@@ -1,9 +1,9 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { asMutable } from 'seamless-immutable';
-import { UserListEmpty } from '../components';
+import { ProfileImage, UserListEmpty } from '../components';
 import {
   AddUserListProps,
   appConstants,
@@ -15,7 +15,6 @@ import {
 import { authDataSelectors } from '../redux/AuthRedux';
 import userListDataAction, { userListSelector } from '../redux/UserListRedux';
 import { conversationIdCreation } from '../services';
-import { Icons } from '../theme';
 import { styles } from './styles/AddUserListStyles';
 
 const AddUsersList = ({ userListData }: AddUserListProps) => {
@@ -25,13 +24,14 @@ const AddUsersList = ({ userListData }: AddUserListProps) => {
   const { fetchingUserList } = useSelector(userListSelector.getData);
 
   const fetchingUser = useCallback(() => {
-    const fireStoreUserList: UsersDocumentDataType[] = [];
-
     appConstants.userRef.onSnapshot(users => {
+      const fireStoreUserList: UsersDocumentDataType[] = [];
+
       users.forEach(userData => {
         if (userData?.data()?.uid !== user?.uid) {
           fireStoreUserList.push(userData?.data());
         }
+
         dispatch(userListDataAction.usersListSuccess(fireStoreUserList));
       });
     });
@@ -56,6 +56,8 @@ const AddUsersList = ({ userListData }: AddUserListProps) => {
         conversationId,
         username: item?.username,
         receiverId: item?.uid,
+        userStatus: item?.status,
+        profileImage: item?.profileImage,
       });
     };
 
@@ -64,7 +66,10 @@ const AddUsersList = ({ userListData }: AddUserListProps) => {
         style={styles.listItem}
         onPress={navigateToChatScreen}
         activeOpacity={0.5}>
-        <Image source={Icons.avatar} style={styles.avatar} />
+        <ProfileImage
+          profileImage={item?.profileImage}
+          userStatus={item?.status}
+        />
         <View style={styles.nameView}>
           <Text style={styles.text}>{item?.username}</Text>
           <Text
