@@ -3,6 +3,7 @@ import immutablePersistenceTransform from './immutablePersistenceTransform';
 import {
   alertMessage,
   apiConfig,
+  loginError,
   chatCreation,
   clearChat,
   conversationIdCreation,
@@ -18,8 +19,10 @@ import {
   handleGalleryPermission,
   openDocument,
   searchMovie,
+  signUpError,
   sortString,
   timestampToTime,
+  alertBox,
 } from './Utils';
 
 export {
@@ -44,4 +47,7 @@ export {
   encryptData,
   decryptData,
   convertToTimestamp,
+  loginError,
+  signUpError,
+  alertBox,
 };

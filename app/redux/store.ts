@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
-import rootReducer from '.';
+import { rootReducer } from '../redux';
 import rootSaga from '../sagas';
 import { immutablePersistenceTransform } from '../services';
 

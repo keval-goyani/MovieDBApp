@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: verticalScale(2),
     right: horizontalScale(2),
-    backgroundColor: Color.onlineStatusColor,
+    backgroundColor: Color.leafyGreen,
     height: moderateScale(14),
     width: moderateScale(14),
     borderRadius: 7,

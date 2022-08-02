@@ -4,7 +4,8 @@ import { AuthReduxDataType, AuthStateDataType, RootState } from '../constants';
 import { alertMessage } from '../services';
 
 const { Types, Creators } = createActions({
-  authRequest: ['payload'],
+  authRequest: [],
+  signUpRequest: ['payload'],
   loginRequest: ['payload'],
   authSuccess: ['data'],
   authFailure: ['error'],
@@ -68,5 +69,4 @@ export const authReducer = createReducer(INITIAL_STATE, {
   [Types.AUTH_SUCCESS]: success,
   [Types.AUTH_FAILURE]: failure,
   [Types.LOGOUT]: signOut,
-  [Types.LOGIN_REQUEST]: request,
 });

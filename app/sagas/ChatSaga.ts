@@ -1,25 +1,26 @@
-import firestore from '@react-native-firebase/firestore';
-import { put, takeLatest } from 'redux-saga/effects';
-import { LatestMessageDataType, strings } from '../constants';
-import chatAction, { ChatDataType } from '../redux/ChatRedux';
-import { alertMessage } from '../services';
+import { put, select, takeLatest } from 'redux-saga/effects';
+import { ChatSagaDataType, ChatType } from '../constants';
+import chatAction, { chatDataSelector, ChatDataType } from '../redux/ChatRedux';
 
-function* chatDataHandler({ payload }: { payload: string; type: string }) {
-  const firestoreChatList: LatestMessageDataType[] = [];
+function* chatDataHandler({ payload }: ChatSagaDataType) {
+  const { data, conversationId } = payload;
+  const { chatData } = yield select(chatDataSelector.getData);
 
-  yield firestore()
-    .collection(strings.chatCollection)
-    .doc(payload)
-    .collection(strings.messageCollection)
-    .orderBy('createdAt', 'asc')
-    .get()
-    .then(documentSnapshot => {
-      documentSnapshot.forEach(document => {
-        firestoreChatList.push(document?.data());
-      });
-    })
-    .catch(error => alertMessage(error));
-  yield put(chatAction.chatDataSuccess(firestoreChatList));
+  const conversationIndex = chatData?.findIndex((conversation: ChatType) => {
+    return Object.keys(conversation)?.[0] === conversationId;
+  });
+
+  const updatedData: ChatType[] =
+    conversationIndex === -1
+      ? [...chatData, { [conversationId]: data }]
+      : chatData?.map((conversation: ChatType, index: number) => {
+          if (index === conversationIndex) {
+            return { [conversationId]: data };
+          }
+
+          return conversation;
+        });
+  yield put(chatAction.chatDataSuccess(updatedData));
 }
 
 export default [takeLatest(ChatDataType.CHAT_DATA_REQUEST, chatDataHandler)];
