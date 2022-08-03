@@ -35,6 +35,7 @@ import {
   MovieResponseGenerator,
   pickerOptions,
   strings,
+  UserListDataType,
 } from '../constants';
 import { Color, Metrics } from '../theme';
 
@@ -722,4 +723,68 @@ export const decryptData = (cipherText: string) => {
   return CryptoJS.AES.decrypt(cipherText, appConstants.key).toString(
     CryptoJS.enc.Utf8,
   );
+};
+
+export const loginError = (errorCode: string) => {
+  switch (errorCode) {
+    case strings.invalidPasswordErrorCode:
+      return strings.invalidPasswordMessage;
+    case strings.networkRequestErrorCode:
+    case strings.unknownNetworkErrorCode:
+      return strings.networkRequestErrorMessage;
+    case strings.userNotFoundErrorCode:
+      return strings.userNotFoundMessage;
+    default:
+      return strings.serverErrorMessage;
+  }
+};
+
+export const signUpError = (errorCode: string) => {
+  switch (errorCode) {
+    case strings.existEmailErrorCode:
+      return strings.existEmailMessage;
+    case strings.invalidEmailErrorCode:
+      return strings.invalidEmailMessage;
+    case strings.networkRequestErrorCode:
+    case strings.unknownNetworkErrorCode:
+      return strings.networkRequestErrorMessage;
+    default:
+      return strings.serverErrorMessage;
+  }
+};
+
+export const getConversationIds = async (
+  userList: UserListDataType[],
+  userId: string,
+  userEmail: string,
+) => {
+  return userList.length === 0
+    ? await appConstants.chatRef
+        .doc(userId)
+        .collection(strings.conversationsCollection)
+        .get()
+        .then(conversations => {
+          return conversations.docs.map(conversation => conversation.id);
+        })
+        .catch(error => error)
+    : userList.map((conversationUser: UserListDataType) => {
+        return conversationIdCreation(conversationUser?.email, userEmail);
+      });
+};
+
+export const alertBox = (
+  okButtonHandler: () => void,
+  alertTitle: string = strings.warning,
+  alertDescription: string = strings.confirm,
+) => {
+  Alert.alert(alertTitle, alertDescription, [
+    {
+      text: strings.cancel,
+      style: 'cancel',
+    },
+    {
+      text: strings.ok,
+      onPress: okButtonHandler,
+    },
+  ]);
 };

@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { RootState, strings } from '../constants';
 import { authReducer } from './AuthRedux';
 import { chatReducer } from './ChatRedux';
 import { userListReducer } from './ChatUserListRedux';
@@ -11,7 +12,18 @@ import { trailerReducer } from './TrailerRedux';
 import { trendingReducer } from './TrendingRedux';
 import { usersListReducer } from './UserListRedux';
 
-export default combineReducers({
+export const rootReducer = (
+  state: RootState | undefined,
+  action: { type: string },
+) => {
+  if (action?.type === strings.signoutRequest) {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
+
+export const appReducer = combineReducers({
   authData: authReducer,
   chatData: chatReducer,
   chatUser: userListReducer,

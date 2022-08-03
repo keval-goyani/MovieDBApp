@@ -43,4 +43,5 @@ export const Color = {
   transparentSky: '#04c6ff1a',
   statusbarGray: '#7F7F7F',
   graySmoke: '#000000aa',
+  leafyGreen: '#51B73B',
 };

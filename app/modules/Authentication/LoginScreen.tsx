@@ -20,6 +20,7 @@ import {
   strings,
 } from '../../constants';
 import authAction, { authDataSelectors } from '../../redux/AuthRedux';
+import { loginError } from '../../services';
 import { Color, Metrics, styles as appStyles } from '../../theme';
 import { Form } from './components';
 import { styles } from './styles/LoginScreenStyles';
@@ -42,13 +43,17 @@ const LoginScreen = () => {
 
   const loginHandler = useCallback(async () => {
     if (email && password) {
+      dispatch(authAction.authRequest());
+
       await auth()
         .signInWithEmailAndPassword(email, password)
-        .then(userCredential =>
-          dispatch(authAction.loginRequest({ user: userCredential.user })),
-        )
-        .catch(() => {
-          dispatch(authAction.authFailure(strings.loginError));
+        .then(userCredential => {
+          const { uid } = userCredential?.user;
+          dispatch(authAction.loginRequest(uid));
+        })
+        .catch(error => {
+          const errorMessage = loginError(error.code);
+          dispatch(authAction.authFailure(errorMessage));
           form.resetField('password');
         });
     }

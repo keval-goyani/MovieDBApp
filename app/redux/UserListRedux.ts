@@ -1,7 +1,10 @@
 import { createActions, createReducer } from 'reduxsauce';
 import Immutable, { ImmutableObject } from 'seamless-immutable';
-import { RootState, UsersListStateDataType } from '../constants';
-import { ChatUsersListType } from '../constants/appTypes';
+import {
+  RootState,
+  UsersListStateDataType,
+  ChatUsersListType,
+} from '../constants';
 
 const { Types, Creators } = createActions({
   usersListSuccess: ['data'],
@@ -34,4 +37,3 @@ const listData = (
 export const usersListReducer = createReducer(INITIAL_STATE, {
   [Types.USERS_LIST_SUCCESS]: listData,
 });
-

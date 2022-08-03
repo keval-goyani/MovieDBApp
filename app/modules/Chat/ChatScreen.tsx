@@ -21,7 +21,8 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
   const verticalOffset = Metrics.isAndroid
     ? verticalScale(25)
     : verticalScale(45);
-  const { conversationId, username, receiverId } = route.params;
+  const { conversationId, username, receiverId, userStatus, profileImage } =
+    route.params;
   const { wallpaperPath } = useSelector(wallpaperSelectors.getData);
   const [cameraModal, setCameraModal] = useState(false);
   const [isAttach, setIsAttach] = useState(false);
@@ -77,8 +78,8 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
       <ChatHeader
         {...{
           username: username ?? strings.user,
-          picture: Icons.avatar,
-          onlineStatus: strings.onlineStatus,
+          profileImage,
+          userStatus,
           showMenu,
           setShowMenu,
           setIsAttach,

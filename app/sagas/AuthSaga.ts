@@ -1,8 +1,10 @@
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { put, takeLatest } from 'redux-saga/effects';
 import {
   appConstants,
   AuthSagaDataType,
-  FireStoreResponseDataType,
+  LoginSagaDataType,
+  strings,
 } from '../constants';
 import authAction, { AuthTypes } from '../redux/AuthRedux';
 
@@ -13,27 +15,26 @@ function* handleSignUpRequest({ payload }: AuthSagaDataType) {
     },
     username,
   } = payload;
-  const userData = { email, uid, username, profileImage: '' };
+  const userData = {
+    email,
+    uid,
+    username,
+    profileImage: strings.emptyString,
+    status: strings.onlineStatus,
+  };
 
   email !== '' && appConstants.userRef.doc(uid).set(userData);
-
   yield put(authAction.authSuccess(userData));
 }
 
-function* handleLoginRequest({ payload }: AuthSagaDataType) {
-  const {
-    user: {
-      _user: { uid },
-    },
-  } = payload;
-  const fireStoreResponse: FireStoreResponseDataType =
-    yield appConstants.userRef.doc(uid).get();
-  const { _data } = fireStoreResponse;
+function* handleLoginRequest({ payload }: LoginSagaDataType) {
+  const fireStoreResponse: FirebaseFirestoreTypes.DocumentData =
+    yield appConstants.userRef.doc(payload).get();
 
-  yield put(authAction.authSuccess(_data));
+  yield put(authAction.authSuccess(fireStoreResponse?.data()));
 }
 
 export default [
-  takeLatest(AuthTypes.AUTH_REQUEST, handleSignUpRequest),
+  takeLatest(AuthTypes.SIGN_UP_REQUEST, handleSignUpRequest),
   takeLatest(AuthTypes.LOGIN_REQUEST, handleLoginRequest),
 ];
