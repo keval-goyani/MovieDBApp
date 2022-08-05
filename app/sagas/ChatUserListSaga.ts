@@ -37,22 +37,22 @@ function* updateFirestore(
         [`members.${userId}.status`]: content,
       };
 
-  yield appConstants.userRef.doc(userId).update(updateUserData);
+  // yield appConstants.userRef.doc(userId).update(updateUserData);
 
-  yield conversationIds.forEach((conversationId: string) => {
-    appConstants.conversationRef
-      .doc(conversationId)
-      .get()
-      .then(conversation => {
-        totalConversation = totalConversation + 1;
-        batch.update(conversation.ref, updateConversationData);
+  // yield conversationIds.forEach((conversationId: string) => {
+  //   appConstants.conversationRef
+  //     .doc(conversationId)
+  //     .get()
+  //     .then(conversation => {
+  //       totalConversation = totalConversation + 1;
+  //       batch.update(conversation.ref, updateConversationData);
 
-        if (conversationIds.length === totalConversation) {
-          batch.commit();
-        }
-      })
-      .catch(error => error);
-  });
+  //       if (conversationIds.length === totalConversation) {
+  //         batch.commit();
+  //       }
+  //     })
+  //     .catch(error => error);
+  // });
 }
 
 function* handleStausUpdate({ status }: UserStatusDataType) {

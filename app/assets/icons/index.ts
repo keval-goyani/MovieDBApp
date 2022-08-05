@@ -38,4 +38,5 @@ export default {
   fileIcon: require('./fileIcon.png'),
   cameraIcon: require('./cameraIcon.png'),
   galleryIcon: require('./galleryIcon.png'),
+  groupImage: require('./groupImage.png'),
 };

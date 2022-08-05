@@ -58,7 +58,7 @@ const ParticipantsList = ({
       <View style={styles.renderItemContainer}>
         <View style={styles.outerImageContainer}>
           <ProfileImage
-            style={styles.avatar}
+            customStyle={styles.avatar}
             userStatus={strings.emptyString}
             {...{ profileImage }}
           />

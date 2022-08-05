@@ -174,6 +174,10 @@ export const timestampToTime = (timestamp: number) => {
     : `${padTo2Digits(hours)}:${padTo2Digits(minutes)} am`;
 };
 
+export const dateConvertor = (createdAt: number) => {
+  return new Date(createdAt).toLocaleDateString('en-GB').toString();
+};
+
 export const getChatTime = (time: number) => {
   const latestChatTime = new Date(time).getDate();
   const currentTime = new Date().getDate();
@@ -198,7 +202,7 @@ export const sortString = (input: string) => {
 
 export const conversationIdCreation = (userIds: string[]) => {
   let concatId = '';
-  userIds.sort().map(id => (concatId += id));
+  userIds?.sort()?.map(id => (concatId += id));
   return getHashCode(concatId);
 };
 

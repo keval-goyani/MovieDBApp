@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
   userNameAndStatus: {
     justifyContent: 'center',
     width: horizontalScale(230),
-    paddingHorizontal: horizontalScale(10),
+    paddingLeft: horizontalScale(10),
   },
   username: {
     color: Color.white,

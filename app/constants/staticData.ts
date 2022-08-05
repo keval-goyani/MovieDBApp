@@ -165,4 +165,42 @@ const defaultValues = {
   confirmPassword: '',
 };
 
-export { filterData, defaultValues, genres, pickerOptions };
+const imageList = [
+  {
+    id: 1,
+    image:
+      'https://firebasestorage.googleapis.com:443/v0/b/moviedb-2908d.appspot.com/o/Profiles%2F1660035707009_8C0C6E38-9675-4D95-AE1C-8FCFE9C6A88C.jpg?alt=media&token=f5db3ee1-40b3-47de-b070-25be67f36ccc',
+  },
+  {
+    id: 2,
+    image:
+      'https://firebasestorage.googleapis.com/v0/b/moviedb-2908d.appspot.com/o/Profiles%2F1659940616317_rn_image_picker_lib_temp_3b245d70-e35b-4a61-956e-01783d96c325.jpg?alt=media&token=11e99a67-77c7-4c56-81b8-47baba2ba15b',
+  },
+  {
+    id: 3,
+    image:
+      'https://firebasestorage.googleapis.com/v0/b/moviedb-2908d.appspot.com/o/Profiles%2F1659520895440_rn_image_picker_lib_temp_a2cbbf60-2ded-46cf-9597-148b984d0a79.jpg?alt=media&token=00f95643-eb11-4355-873e-d35959488779',
+  },
+  {
+    id: 4,
+    image:
+      'https://firebasestorage.googleapis.com/v0/b/moviedb-2908d.appspot.com/o/Profiles%2F1659072974284_rn_image_picker_lib_temp_0ef17d75-7764-4440-be85-10bdd82d8617.jpg?alt=media&token=5eb05538-3b30-48fc-aba2-5d4e85299505',
+  },
+  {
+    id: 5,
+    image:
+      'https://firebasestorage.googleapis.com/v0/b/moviedb-2908d.appspot.com/o/Profiles%2F1659072974284_rn_image_picker_lib_temp_0ef17d75-7764-4440-be85-10bdd82d8617.jpg?alt=media&token=5eb05538-3b30-48fc-aba2-5d4e85299505',
+  },
+  {
+    id: 6,
+    image:
+      'https://firebasestorage.googleapis.com/v0/b/moviedb-2908d.appspot.com/o/Profiles%2F1659072974284_rn_image_picker_lib_temp_0ef17d75-7764-4440-be85-10bdd82d8617.jpg?alt=media&token=5eb05538-3b30-48fc-aba2-5d4e85299505',
+  },
+  {
+    id: 7,
+    image:
+      'https://firebasestorage.googleapis.com/v0/b/moviedb-2908d.appspot.com/o/Profiles%2F1659940616317_rn_image_picker_lib_temp_3b245d70-e35b-4a61-956e-01783d96c325.jpg?alt=media&token=11e99a67-77c7-4c56-81b8-47baba2ba15b',
+  },
+];
+
+export { filterData, defaultValues, genres, pickerOptions, imageList };
