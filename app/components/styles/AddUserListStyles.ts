@@ -14,8 +14,12 @@ export const styles = StyleSheet.create({
     borderBottomWidth: Metrics.borderLineWidth,
     flexDirection: 'row',
     alignItems: 'center',
-    padding: moderateScale(20),
     marginBottom: verticalScale(3),
+    overflow: 'hidden',
+  },
+  itemContainer: {
+    padding: moderateScale(20),
+    flexDirection: 'row',
   },
   text: {
     textAlign: 'justify',
@@ -35,5 +39,19 @@ export const styles = StyleSheet.create({
   nameView: {
     width: horizontalScale(190),
     marginLeft: horizontalScale(10),
+    marginTop: verticalScale(10),
+  },
+  overlay: {
+    flex: 1,
+    position: 'absolute',
+    width: Metrics.screenWidth,
+    height: verticalScale(150),
+    backgroundColor: Color.transparentSky,
+    top: 0,
+    left: 0,
+  },
+  iconStyle: {
+    position: 'absolute',
+    right: horizontalScale(18),
   },
 });

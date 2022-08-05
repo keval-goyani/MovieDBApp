@@ -11,7 +11,14 @@ const Header: FC<HeaderDataType> = ({
   onPress,
   setSearchModal = () => {},
   title,
+  plusButtonOnPress,
+  isFromChatMessageScreen,
 }) => {
+  const handleOnPress = () => {
+    isFromChatMessageScreen
+      ? plusButtonOnPress?.()
+      : setSearchModal(!searchModal);
+  };
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
@@ -23,7 +30,7 @@ const Header: FC<HeaderDataType> = ({
         <Image source={logoIcon} />
       )}
       {rightIcon ? (
-        <Pressable onPress={() => setSearchModal(!searchModal)}>
+        <Pressable onPress={handleOnPress}>
           <Image source={rightIcon} style={styles.rightIconStyle} />
         </Pressable>
       ) : (

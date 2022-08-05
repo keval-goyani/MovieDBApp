@@ -44,4 +44,6 @@ export const Color = {
   statusbarGray: '#7F7F7F',
   graySmoke: '#000000aa',
   leafyGreen: '#51B73B',
+  blueLagoon: '#85E6EB',
+  transparentDarkBlue: '#0d253f99',
 };

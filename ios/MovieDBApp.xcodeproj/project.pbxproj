@@ -50,6 +50,9 @@
 		E32B76162891092F006CD148 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
 		E37AA787288FAF6F00FF20BA /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
 		E37CB13A289012D700FF211F /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		E38E8BE52892CD28007617BA /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
+		E3C14ED92897E9AC00CF396A /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
+		E3C14EDB2897EAC300CF396A /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -161,9 +164,12 @@
 		E37AA786288FAEC200FF20BA /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				E3C14EDB2897EAC300CF396A /* FontAwesome5_Solid.ttf */,
+				E3C14ED92897E9AC00CF396A /* FontAwesome5_Brands.ttf */,
 				E32B76162891092F006CD148 /* MaterialCommunityIcons.ttf */,
 				E32B761428910697006CD148 /* Feather.ttf */,
 				E37CB13A289012D700FF211F /* MaterialIcons.ttf */,
+				E38E8BE52892CD28007617BA /* AntDesign.ttf */,
 				E37AA787288FAF6F00FF20BA /* Ionicons.ttf */,
 			);
 			name = Fonts;

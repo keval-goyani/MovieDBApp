@@ -7,6 +7,7 @@ import DetailScreen from './Detail/DetailScreen';
 import HomeScreen from './Home/HomeScreen';
 import LocationScreen from './Location/LocationScreen';
 import MoviesScreen from './Movies/MoviesScreen';
+import NewGroupScreen from './NewGroup/NewGroupScreen';
 import TrailersScreen from './Trailers/TrailersScreen';
 
 export {
@@ -20,4 +21,5 @@ export {
   TrailersScreen,
   LocationScreen,
   ChatMessageScreen,
+  NewGroupScreen,
 };

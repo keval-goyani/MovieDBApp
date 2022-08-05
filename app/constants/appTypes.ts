@@ -7,7 +7,6 @@ import {
   UseFormResetField,
 } from 'react-hook-form';
 import {
-  ImageProps,
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
@@ -271,6 +270,8 @@ interface HeaderDataType {
   setSearchModal?: Dispatch<React.SetStateAction<boolean>>;
   onPress?: () => void;
   title?: string;
+  plusButtonOnPress?: () => void;
+  isFromChatMessageScreen?: boolean;
 }
 
 interface NavigationDataType {
@@ -289,11 +290,13 @@ interface NavigationDataType {
       receiverId?: string;
       userStatus?: string;
       profileImage?: string;
+      selectedUser?: UserDataType[];
     },
   ) => void;
   openDrawer: () => void;
   replace: (screenName: string) => void;
   goBack: () => void;
+  dispatch: () => void;
 }
 
 interface DropDownDataType {
@@ -709,6 +712,7 @@ interface SearchUserProps {
 
 interface AddUserListProps {
   userListData: ImmutableArray<UserDataType>;
+  setSelectedUsers: Dispatch<React.SetStateAction<Array<UserDataType>>>;
 }
 
 interface UsersListStateDataType {
@@ -767,11 +771,56 @@ interface ChatSagaDataType {
 interface ProfileImageDataType {
   profileImage: string;
   userStatus: string;
+  style?: ImageProps;
 }
 
+interface ImageProps {
+  borderRadius: number;
+  height: number;
+  width: number;
+}
 interface ProfileUpdateDataType {
   profile: string;
   type: string;
+}
+
+interface SelectedUsersProps {
+  email: string;
+  uid: string;
+  username: string;
+  profileImage: string;
+  status: string;
+}
+
+interface CustomFloatingButtonProps {
+  buttonType: string;
+  onPress: () => void;
+  groupButtonStyle?: ViewStyle;
+}
+
+interface NewGroupProps {
+  route: {
+    params: {
+      selectedUser: UserDataType[];
+    };
+  };
+}
+
+interface NewGroupRenderItemTypes {
+  item: NewGroupDataType;
+}
+
+interface NewGroupDataType {
+  username: string;
+  profileImage: string;
+  email: string;
+  uid: string;
+  status: string;
+}
+
+interface ParticipantsPropsType {
+  participantsData: UserDataType[];
+  setMembersInGroup: Dispatch<React.SetStateAction<Array<UserDataType>>>;
 }
 
 export type {
@@ -866,4 +915,10 @@ export type {
   ProfileImageDataType,
   LoginSagaDataType,
   ProfileUpdateDataType,
+  SelectedUsersProps,
+  CustomFloatingButtonProps,
+  NewGroupProps,
+  NewGroupRenderItemTypes,
+  ParticipantsPropsType,
+  NewGroupDataType,
 };
