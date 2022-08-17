@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { ImageModal } from '../components';
 import { ImageMessageDataType } from '../constants';
+import SenderName from './SenderName';
 import styles from './styles/ImageMessageStyles';
 import { messagePosition } from './styles/PositionStyles';
 
@@ -22,11 +23,7 @@ const ImageMessage: FC<ImageMessageDataType> = ({
       <TouchableOpacity
         style={[styles.chatImageContainer, positionStyles.contentPosition]}
         onPress={() => setImageVisible(true)}>
-        {senderName ? (
-          <Text style={styles.senderName}>{senderName}</Text>
-        ) : (
-          <></>
-        )}
+        <SenderName {...{ senderName }} senderStyle={styles.senderName} />
         <ImageBackground
           source={{ uri: message }}
           style={styles.chatImage}

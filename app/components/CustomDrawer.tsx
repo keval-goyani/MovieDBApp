@@ -2,7 +2,14 @@ import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Edit from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -31,9 +38,10 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
   const [open, setOpen] = useState(false);
   const [imagePath, setImagePath] = useState(strings.emptyString);
   const { persistor } = reduxStore;
-  const profileImagestyle = user?.profileImage
-    ? styles.profile
-    : [styles.profile, styles.profileBorder];
+  const profileImagestyle = StyleSheet.flatten([
+    styles.profile,
+    !user?.profileImage && styles.profileBorder,
+  ]);
 
   const getData = (
     selectedItemTab: string,

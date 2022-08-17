@@ -10,6 +10,7 @@ import {
   strings,
 } from '../constants';
 import { Color } from '../theme';
+import SenderName from './SenderName';
 import { styles } from './styles/LocationStyles';
 import { messagePosition } from './styles/PositionStyles';
 
@@ -78,11 +79,7 @@ const Location = ({
     <View style={styles.container}>
       <View
         style={[styles.shareLocationContainer, positionStyles.contentPosition]}>
-        {senderName ? (
-          <Text style={styles.senderName}>{senderName}</Text>
-        ) : (
-          <></>
-        )}
+        <SenderName {...{ senderName }} senderStyle={styles.senderName} />
         <TouchableOpacity
           style={styles.shareLocationView}
           activeOpacity={0.5}

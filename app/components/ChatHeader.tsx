@@ -27,7 +27,7 @@ const ChatHeader = ({
 }: ChatHeaderDataType) => {
   const navigation: NavigationDataType = useNavigation();
   const [isTextMoving, setIsTextMoving] = useState(appConstants.trueValue);
-  const userInfo = userStatus ? userStatus : membersName;
+  const userInfo = userStatus ?? membersName;
 
   return (
     <>
@@ -50,9 +50,9 @@ const ChatHeader = ({
                   style={styles.statusOrMembers}
                   duration={5000}
                   marqueeDelay={1500}
-                  onMarqueeComplete={() => {
-                    setIsTextMoving(appConstants.falseValue);
-                  }}>
+                  onMarqueeComplete={() =>
+                    setIsTextMoving(appConstants.falseValue)
+                  }>
                   {userInfo}
                 </TextTicker>
               ) : (

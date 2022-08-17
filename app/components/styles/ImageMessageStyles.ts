@@ -20,9 +20,6 @@ const styles = StyleSheet.create({
     padding: moderateScale(5),
   },
   senderName: {
-    color: Color.darkModerateMagenta,
-    fontWeight: 'bold',
-    fontSize: moderateScale(12),
     marginBottom: verticalScale(3),
   },
   chatImage: {

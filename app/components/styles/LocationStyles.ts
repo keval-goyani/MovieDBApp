@@ -22,10 +22,7 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   senderName: {
-    color: Color.darkModerateMagenta,
-    fontWeight: 'bold',
     paddingLeft: horizontalScale(6),
-    fontSize: moderateScale(12),
     marginBottom: verticalScale(4),
   },
   chatMap: {

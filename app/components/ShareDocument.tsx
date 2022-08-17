@@ -4,6 +4,7 @@ import { DocumentFooter } from '../components';
 import { ShareDocumentProps, strings } from '../constants';
 import { openDocument } from '../services';
 import { Icons, Images } from '../theme';
+import SenderName from './SenderName';
 import { messagePosition } from './styles/PositionStyles';
 import { documentMessageStyles } from './styles/ShareDocumentStyles';
 
@@ -65,11 +66,7 @@ const ShareDocument = ({
   return (
     <View style={[styles.container, positionStyles.contentPosition]}>
       <TouchableOpacity onPress={() => openDocument(message, documentName)}>
-        {senderName ? (
-          <Text style={styles.senderName}>{senderName}</Text>
-        ) : (
-          <></>
-        )}
+        <SenderName {...{ senderName }} senderStyle={styles.senderName} />
         <View style={styles.thumbnail}>
           {fileType === strings.pdf && (
             <Image source={Images.docFirstPage} style={styles.initialPage} />

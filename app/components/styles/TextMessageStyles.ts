@@ -21,9 +21,6 @@ export const textMessageStyles = (isLeft: boolean) =>
       maxWidth: '80%',
     },
     senderName: {
-      color: Color.darkModerateMagenta,
-      fontWeight: 'bold',
-      fontSize: moderateScale(12),
       marginBottom: verticalScale(3),
     },
     timeView: {

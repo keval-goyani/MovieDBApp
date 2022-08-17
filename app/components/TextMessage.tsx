@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Text, View } from 'react-native';
 import { TextMessageDataType } from '../constants';
+import SenderName from './SenderName';
 import { messagePosition } from './styles/PositionStyles';
 import { textMessageStyles } from './styles/TextMessageStyles';
 
@@ -16,11 +17,7 @@ const TextMessage: FC<TextMessageDataType> = ({
   return (
     <View style={[styles.messageContainer, positionStyles.contentPosition]}>
       <View style={styles.messageView}>
-        {senderName ? (
-          <Text style={styles.senderName}>{senderName}</Text>
-        ) : (
-          <></>
-        )}
+        <SenderName {...{ senderName }} senderStyle={styles.senderName} />
         <Text style={styles.message}>{message}</Text>
       </View>
       <View style={styles.timeView}>

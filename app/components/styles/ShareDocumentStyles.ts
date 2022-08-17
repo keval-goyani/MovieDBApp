@@ -19,9 +19,6 @@ export const documentMessageStyles = (isLeft: boolean) =>
       marginLeft: horizontalScale(10),
     },
     senderName: {
-      color: Color.darkModerateMagenta,
-      fontWeight: 'bold',
-      fontSize: moderateScale(12),
       marginTop: verticalScale(3),
       marginLeft: horizontalScale(8),
     },
