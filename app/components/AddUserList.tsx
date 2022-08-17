@@ -55,10 +55,8 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
   }, [selectedItems, setSelectedUsers]);
 
   const renderUserList = ({ item }: RenderItemTypes) => {
-    const conversationId: string = conversationIdCreation(
-      user?.email ?? '',
-      item?.email,
-    );
+    const usersEmail = [user?.email ?? '', item?.email];
+    const conversationId: string = conversationIdCreation(usersEmail);
 
     const handleOnPress = (selectedUser: UserDataType) => {
       if (selectedItems.length) {

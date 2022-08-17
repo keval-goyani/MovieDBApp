@@ -13,7 +13,7 @@ import styles from './styles/ImageModalStyles';
 
 const ImageModal: FC<ImageModalDataType> = ({
   message,
-  chatUsername,
+  userName,
   time,
   imageVisible,
   setImageVisible,
@@ -30,7 +30,7 @@ const ImageModal: FC<ImageModalDataType> = ({
                 <Image source={Icons.backIcon} style={styles.backIconStyle} />
               </TouchableOpacity>
               <View style={styles.description}>
-                <Text style={styles.username}>{chatUsername}</Text>
+                <Text style={styles.username}>{userName}</Text>
                 <Text style={styles.fullImageTime}>{time}</Text>
               </View>
             </View>

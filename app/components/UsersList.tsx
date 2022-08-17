@@ -16,11 +16,7 @@ import { authDataSelectors } from '../redux/AuthRedux';
 import userListDataAction, {
   chatUserListSelector,
 } from '../redux/ChatUserListRedux';
-import {
-  conversationIdCreation,
-  convertToTimestamp,
-  getChatTime,
-} from '../services';
+import { convertToTimestamp, getChatTime } from '../services';
 import { styles } from './styles/UsersListStyles';
 
 const UsersList = () => {
@@ -49,22 +45,41 @@ const UsersList = () => {
               conversationIds?.forEach(async (conversationId: string) => {
                 appConstants.conversationRef
                   .doc(conversationId)
-                  .onSnapshot(async conversationData => {
-                    if (conversationData.exists) {
-                      const members: UserDataType[] =
-                        await conversationData?.data()?.members;
-                      const latestMessage = await conversationData?.data()
-                        ?.latestMessage;
-                      const createdAt = convertToTimestamp(
-                        await conversationData?.data()?.createdAt,
-                      );
-                      const userData = Object.values(members).filter(
+                  .onSnapshot(async conversation => {
+                    if (conversation.exists) {
+                      const conversationData = conversation?.data();
+                      const members: UserDataType[] = conversationData?.members;
+                      const groupName = conversationData?.groupName;
+                      const userInfo = Object.values(members)?.filter(
                         item => item?.uid !== user?.uid,
                       )?.[0];
-                      const users = { ...userData, latestMessage, createdAt };
+                      const groupInfo = {
+                        members,
+                        groupName,
+                        createdBy: conversationData?.createdBy,
+                        groupImage: conversationData?.groupImage,
+                      };
+                      const conversationInfo = groupName ? groupInfo : userInfo;
+                      const users = {
+                        ...conversationInfo,
+                        latestMessage: conversationData?.latestMessage,
+                        conversationId: conversationData?.conversationId,
+                        groupInitializerId:
+                          conversationData?.groupInitializerId,
+                        updatedAt: convertToTimestamp(
+                          conversationData?.updatedAt,
+                        ),
+                        createdAt: convertToTimestamp(
+                          conversationData?.createdAt,
+                        ),
+                      };
+
                       const userIndex = conversationsList.findIndex(
                         conversationUser => {
-                          return conversationUser?.uid === users?.uid;
+                          return (
+                            conversationUser?.conversationId ===
+                            users?.conversationId
+                          );
                         },
                       );
 
@@ -79,11 +94,14 @@ const UsersList = () => {
 
                         userListData
                           .then(conversationsUser => {
-                            conversationsUser?.sort((a, b) => {
-                              return a?.createdAt === 0
-                                ? b?.createdAt
-                                : b?.createdAt - a?.createdAt;
-                            });
+                            conversationsUser?.sort(
+                              (previosData, currentData) => {
+                                return previosData?.updatedAt === 0
+                                  ? currentData?.updatedAt
+                                  : currentData?.updatedAt -
+                                      previosData?.updatedAt;
+                              },
+                            );
 
                             dispatch(
                               userListDataAction.userListRequest(
@@ -112,21 +130,25 @@ const UsersList = () => {
   );
 
   const renderUserList = (item: UserListDataType) => {
-    const conversationId: string = conversationIdCreation(
-      user?.email ?? '',
-      item?.email,
-    );
+    const conversationId = item?.conversationId;
     const message = item?.latestMessage;
-    const isSendByMe = item?.uid !== message?.senderId;
-    const time = getChatTime(item?.createdAt);
+    const userStatus = item?.status;
+    const groupName = item?.groupName;
+    const time = getChatTime(item?.updatedAt);
+    const profileImage = item?.profileImage ?? item?.groupImage;
+    const conversationName = groupName ? groupName : item?.username;
 
     const navigateToChatScreen = () => {
+      const data = groupName
+        ? { members: item?.members }
+        : { receiverId: item?.uid, userStatus };
+
       navigation.navigate(navigationStrings.Chat, {
         conversationId,
-        username: item?.username,
-        receiverId: item?.uid,
-        userStatus: item?.status,
-        profileImage: item?.profileImage,
+        groupName,
+        username: conversationName,
+        ...data,
+        profileImage,
       });
     };
 
@@ -136,13 +158,15 @@ const UsersList = () => {
         onPress={navigateToChatScreen}
         activeOpacity={0.5}>
         <View style={styles.avatarGroup}>
-          <ProfileImage
-            profileImage={item?.profileImage}
-            userStatus={item?.status}
-          />
+          <ProfileImage {...{ groupName, profileImage, userStatus }} />
           <View style={styles.nameView}>
-            <Text style={styles.text}>{item?.username}</Text>
-            <LatestMessage {...{ isSendByMe, message }} />
+            <Text style={styles.text}>{conversationName}</Text>
+            <LatestMessage
+              {...{ message }}
+              userId={user?.uid ?? ''}
+              groupInitializerId={item?.groupInitializerId}
+              createdBy={item?.createdBy}
+            />
           </View>
         </View>
         <View style={styles.dateView}>

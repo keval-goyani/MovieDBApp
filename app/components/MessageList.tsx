@@ -67,20 +67,24 @@ const MessageList = ({
         scrollRef?.current?.scrollToEnd({ animated: true });
       }}
       renderItem={({ item, index }: { item: ChatDataType; index: number }) => {
-        const senderId: string = item?.sender?.uid;
+        const sender = item?.sender;
         const timeStamp = convertToTimestamp(item?.createdAt);
         const time: string = timestampToTime(timeStamp);
         const chatUsername =
-          user?.uid === senderId ? `${strings.you}` : `${username}`;
+          user?.uid === sender?.uid ? `${strings.you}` : `${username}`;
+        const senderName =
+          item?.payload === strings.group && chatUsername === username
+            ? sender?.username
+            : strings.emptyString;
 
         return (
           <Message
             key={index}
-            isLeft={senderId !== currentUser?.current}
+            isLeft={sender?.uid !== currentUser?.current}
             message={item?.content}
             documentName={item?.documentName ?? ''}
             type={item?.type}
-            {...{ chatUsername, time }}
+            {...{ chatUsername, time, senderName }}
           />
         );
       }}

@@ -34,6 +34,7 @@ const ChatInput: FC<ChatInputDataType> = ({
   setShowMenu,
   username,
   receiverId,
+  members,
 }) => {
   const [message, setMessage] = useState<string>('');
   const { user } = useSelector(authDataSelectors.getData);
@@ -43,8 +44,9 @@ const ChatInput: FC<ChatInputDataType> = ({
       conversationId,
       senderId: user?.uid ?? '',
       receiverId: receiverId ?? '',
+      members,
     };
-  }, [conversationId, receiverId, user]);
+  }, [conversationId, members, receiverId, user]);
 
   const imageMessageCreation = useCallback(() => {
     const imageMessage = {

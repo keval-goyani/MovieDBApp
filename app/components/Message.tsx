@@ -16,6 +16,7 @@ const Message = ({
   documentName,
   type,
   chatUsername,
+  senderName,
 }: MessageDataType) => {
   const file = documentName?.split('.');
   const fileType = file?.[file?.length - 1];
@@ -23,15 +24,21 @@ const Message = ({
   const showChatMessage = (messageType: string) => {
     switch (messageType) {
       case strings.imageType:
-        return <ImageMessage {...{ isLeft, message, time, chatUsername }} />;
+        return (
+          <ImageMessage
+            {...{ isLeft, message, time, chatUsername, senderName }}
+          />
+        );
       case strings.locationType:
-        return <Location {...{ message, isLeft, time, chatUsername }} />;
+        return (
+          <Location {...{ message, isLeft, time, chatUsername, senderName }} />
+        );
       case strings.textMessageType:
-        return <TextMessage {...{ isLeft, message, time }} />;
+        return <TextMessage {...{ isLeft, message, time, senderName }} />;
       case strings.document:
         return (
           <ShareDocument
-            {...{ isLeft, message, documentName, fileType, time }}
+            {...{ isLeft, message, documentName, fileType, time, senderName }}
           />
         );
     }
