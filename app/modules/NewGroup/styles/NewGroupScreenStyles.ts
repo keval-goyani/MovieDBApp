@@ -39,6 +39,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  defaultGroupIcon: {
+    height: moderateScale(55),
+    width: moderateScale(55),
+    tintColor: Color.lightBlue,
+  },
   groupImageStyle: {
     height: moderateScale(100),
     width: moderateScale(100),

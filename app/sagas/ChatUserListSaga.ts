@@ -66,7 +66,6 @@ function* handleStausUpdate({ status }: UserStatusDataType) {
   const conversationIds: string[] = yield getConversationIds(
     userList,
     user?.uid,
-    user?.email,
   );
 
   yield call(
@@ -85,7 +84,6 @@ function* handleProfileUpdate({ profile }: ProfileUpdateDataType) {
   const conversationIds: string[] = yield getConversationIds(
     userList,
     user?.uid,
-    user?.email,
   );
 
   yield call(

@@ -404,6 +404,8 @@ interface ChatHeaderDataType {
   setChatWallpaper: Dispatch<React.SetStateAction<string>>;
   receiverId: string | undefined;
   conversationId: string;
+  membersName: string;
+  groupName: string | undefined;
 }
 
 interface MessageDataType {
@@ -414,6 +416,7 @@ interface MessageDataType {
   message: string;
   documentName: string;
   chatUsername: string;
+  senderName: string;
 }
 interface SkeletonProps {
   width: number;
@@ -426,12 +429,19 @@ interface LoadingStateProps {
 }
 
 interface UserListDataType {
-  email: string;
-  uid: string;
-  username: string;
-  profileImage: string;
+  email?: string;
+  uid?: string;
+  username?: string;
+  profileImage?: string;
+  status?: string;
+  members?: UserDataType[];
+  groupName?: string;
+  createdBy?: string;
+  groupImage?: string;
+  groupInitializerId?: string;
   createdAt: number;
-  status: string;
+  updatedAt: number;
+  conversationId: string;
   latestMessage: {
     type: string;
     content: string;
@@ -465,7 +475,7 @@ interface ChatDataType {
   type: string;
   documentName?: string;
   createdAt: { _seconds: number; _nanoseconds: number };
-  payload: '';
+  payload: string;
   sender: UserDataType;
   read: string[];
   status: string;
@@ -498,6 +508,7 @@ interface ChatInputDataType {
   username: string;
   imageUrl: string;
   receiverId: string | undefined;
+  members: { [id: string]: UserDataType } | undefined;
 }
 
 interface LatestMessageDataType {
@@ -540,6 +551,8 @@ interface ChatScreenDataType {
       receiverId?: string;
       userStatus?: string;
       profileImage?: string;
+      members?: { [id: string]: UserDataType };
+      groupName?: string;
     };
   };
 }
@@ -630,6 +643,7 @@ interface ShareDocumentProps {
   message: string;
   documentName: string;
   time: string;
+  senderName: string;
 }
 
 interface DocumentFooterProps {
@@ -639,7 +653,7 @@ interface DocumentFooterProps {
 }
 interface ImageModalDataType {
   message: string;
-  chatUsername: string;
+  userName: string;
   time: string;
   imageVisible: boolean;
   setImageVisible: Dispatch<React.SetStateAction<boolean>>;
@@ -674,6 +688,7 @@ interface LocationPropsType {
   message: string;
   isLeft: boolean;
   time: string;
+  senderName: string;
 }
 
 interface DocumentStateDataType {
@@ -686,12 +701,14 @@ interface ImageMessageDataType {
   message: string;
   time: string;
   chatUsername: string;
+  senderName: string;
 }
 
 interface TextMessageDataType {
   isLeft: boolean;
   message: string;
   time: string;
+  senderName: string;
 }
 
 interface UserToChatNavigationDataType {
@@ -699,10 +716,11 @@ interface UserToChatNavigationDataType {
     screen: string,
     params: {
       conversationId: string;
-      username: string;
-      receiverId: string;
-      userStatus: string;
-      profileImage: string;
+      username: string | undefined;
+      receiverId?: string;
+      userStatus?: string;
+      profileImage: string | undefined;
+      groupName: string | undefined;
     },
   ) => void;
 }
@@ -742,13 +760,16 @@ interface UserListEmptyType {
 
 interface LatestMessageProps {
   message: MessageProps;
-  isSendByMe: boolean;
+  groupInitializerId: string | undefined;
+  userId: string;
+  createdBy: string | undefined;
 }
 
 interface MessageProps {
   type: string;
   documentName?: string;
   content?: string;
+  senderId?: string;
 }
 
 interface EditProfileProps {
@@ -769,9 +790,11 @@ interface ChatSagaDataType {
 }
 
 interface ProfileImageDataType {
-  profileImage: string;
-  userStatus: string;
+  profileImage: string | undefined;
+  userStatus: string | undefined;
   style?: ImageProps;
+  groupName?: string | undefined;
+  isChatHeader?: boolean;
 }
 
 interface ImageProps {
@@ -821,6 +844,14 @@ interface NewGroupDataType {
 interface ParticipantsPropsType {
   participantsData: UserDataType[];
   setMembersInGroup: Dispatch<React.SetStateAction<Array<UserDataType>>>;
+}
+interface memberDataType {
+  members?: { [id: string]: UserDataType };
+}
+
+interface SenderNameDataType {
+  senderName: string;
+  senderStyle: StyleProp<TextStyle>;
 }
 
 export type {
@@ -921,4 +952,6 @@ export type {
   NewGroupRenderItemTypes,
   ParticipantsPropsType,
   NewGroupDataType,
+  memberDataType,
+  SenderNameDataType,
 };

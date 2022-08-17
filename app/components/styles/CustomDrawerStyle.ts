@@ -62,21 +62,35 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
   },
   profileView: {
     paddingVertical: verticalScale(20),
     marginBottom: verticalScale(10),
     borderColor: Color.white,
     borderBottomWidth: verticalScale(3),
-    backgroundColor: Color.darkBlue,
+  },
+  profileImageContainer: {
+    flex: 1,
   },
   profile: {
-    height: moderateScale(100),
-    width: moderateScale(100),
-    marginBottom: verticalScale(10),
+    height: moderateScale(90),
+    width: moderateScale(90),
+    borderRadius: 50,
   },
-  scrollView: { backgroundColor: Color.darkBlue },
+  profileBorder: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: moderateScale(4),
+    borderColor: Color.lightBlue,
+  },
+  defaultProfile: {
+    height: moderateScale(55),
+    width: moderateScale(55),
+    tintColor: Color.lightBlue,
+  },
+  scrollView: {
+    backgroundColor: Color.darkBlue,
+  },
   logOutButtonContainer: {
     marginTop: verticalScale(Metrics.screenHeight / 5),
   },
@@ -84,14 +98,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: Color.blueGreen,
     borderRadius: 20,
-    bottom: verticalScale(5),
+    bottom: 0,
     right: 0,
   },
   editIcon: {
     margin: moderateScale(3),
-  },
-  backgroundProfile: {
-    borderRadius: 50,
   },
 });
 

@@ -46,4 +46,9 @@ export const Color = {
   leafyGreen: '#51B73B',
   blueLagoon: '#85E6EB',
   transparentDarkBlue: '#0d253f99',
+  salmon: '#FA8072',
+  darkModerateMagenta: '#853a76',
+  darkCyan: '#288BA0',
+  raspberry: '#E30B5C',
+  axolotl: '#546747',
 };
