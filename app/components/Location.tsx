@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { SenderName } from '../components';
 import {
   LocationCoordsProps,
   LocationPropsType,
@@ -18,6 +19,7 @@ const Location = ({
   message,
   isLeft,
   time,
+  senderName,
 }: LocationPropsType) => {
   const navigation: NavigationDataType = useNavigation();
   const [latitude, setLatitude] = useState(0);
@@ -77,6 +79,7 @@ const Location = ({
     <View style={styles.container}>
       <View
         style={[styles.shareLocationContainer, positionStyles.contentPosition]}>
+        <SenderName {...{ senderName }} senderStyle={styles.senderName} />
         <TouchableOpacity
           style={styles.shareLocationView}
           activeOpacity={0.5}

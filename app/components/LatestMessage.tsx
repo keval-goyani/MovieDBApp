@@ -5,10 +5,20 @@ import { LatestMessageProps, strings } from '../constants';
 import { Color, moderateScale } from '../theme';
 import { styles } from './styles/LatestMessageStyles';
 
-const LatestMessage = ({ isSendByMe, message }: LatestMessageProps) => {
-  const { type, documentName, content } = message;
+const LatestMessage = ({
+  message,
+  groupInitializerId,
+  userId,
+  createdBy,
+}: LatestMessageProps) => {
+  const { type, documentName, content, senderId } = message;
   const [latestMessage, setLatestMessage] = useState<string | undefined>('');
   const [icon, setIcon] = useState<string>(strings.photoIcon);
+  const groupCreatedMessage =
+    groupInitializerId === userId
+      ? `${strings.you} ${content}`
+      : `${createdBy} ${strings.addedYou}`;
+  const messageContent = senderId ? content : groupCreatedMessage;
 
   const messageTypeHandler = useCallback(
     (param: string) => {
@@ -26,12 +36,12 @@ const LatestMessage = ({ isSendByMe, message }: LatestMessageProps) => {
           setIcon(strings.documentIcon);
         },
         [strings.textMessageType]: () => {
-          setLatestMessage(content);
+          setLatestMessage(messageContent);
         },
       };
       return messageType[param]();
     },
-    [content, documentName],
+    [messageContent, documentName],
   );
 
   useEffect(() => {
@@ -40,7 +50,9 @@ const LatestMessage = ({ isSendByMe, message }: LatestMessageProps) => {
 
   return (
     <View style={styles.container}>
-      {isSendByMe && <Text style={styles.youText}>{strings.you}:</Text>}
+      {senderId === userId && (
+        <Text style={styles.youText}>{strings.you}:</Text>
+      )}
       {type !== strings.textMessageType && (
         <Icon
           name={icon}

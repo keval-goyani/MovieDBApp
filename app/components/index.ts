@@ -39,6 +39,7 @@ import TextMessage from './TextMessage';
 import Trailers from './Trailers';
 import UserListEmpty from './UserListEmpty';
 import UsersList from './UsersList';
+import SenderName from './SenderName';
 
 export {
   Attach,
@@ -84,4 +85,5 @@ export {
   EditProfile,
   ProfileImage,
   ParticipantsList,
+  SenderName,
 };

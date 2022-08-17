@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { DocumentFooter } from '../components';
+import { DocumentFooter, SenderName } from '../components';
 import { ShareDocumentProps, strings } from '../constants';
 import { openDocument } from '../services';
 import { Icons, Images } from '../theme';
@@ -13,6 +13,7 @@ const ShareDocument = ({
   message,
   documentName,
   time,
+  senderName,
 }: ShareDocumentProps) => {
   const [docIcon, setDocIcon] = useState(Icons.documentIcon);
   const page = fileType === strings.pdf || fileType === strings.doc;
@@ -64,6 +65,7 @@ const ShareDocument = ({
   return (
     <View style={[styles.container, positionStyles.contentPosition]}>
       <TouchableOpacity onPress={() => openDocument(message, documentName)}>
+        <SenderName {...{ senderName }} senderStyle={styles.senderName} />
         <View style={styles.thumbnail}>
           {fileType === strings.pdf && (
             <Image source={Images.docFirstPage} style={styles.initialPage} />
