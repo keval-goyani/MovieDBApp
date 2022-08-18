@@ -34,20 +34,25 @@ export const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(10),
     marginHorizontal: horizontalScale(10),
   },
-  profile: { flexDirection: 'row', flex: 4, alignItems: 'center' },
-  userNameAndOnlineStatus: {
-    flexDirection: 'column',
+  profile: {
+    flexDirection: 'row',
+    flex: 4,
+    alignItems: 'center',
+  },
+  userNameAndStatus: {
     justifyContent: 'center',
+    width: horizontalScale(230),
     paddingHorizontal: horizontalScale(10),
   },
   username: {
     color: Color.white,
-    fontSize: moderateScale(18),
+    fontSize: moderateScale(19),
     fontWeight: 'bold',
+    paddingBottom: verticalScale(2),
   },
-  onlineStatus: {
+  statusOrMembers: {
     color: Color.white,
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(15),
   },
   dotsMenu: {
     height: moderateScale(25),

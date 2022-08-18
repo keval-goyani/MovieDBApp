@@ -20,6 +20,9 @@ export const textMessageStyles = (isLeft: boolean) =>
       backgroundColor: Color.transparent,
       maxWidth: '80%',
     },
+    senderName: {
+      marginBottom: verticalScale(3),
+    },
     timeView: {
       backgroundColor: Color.transparent,
       justifyContent: 'flex-end',
@@ -28,7 +31,7 @@ export const textMessageStyles = (isLeft: boolean) =>
     message: {
       color: isLeft ? Color.black : Color.white,
       alignSelf: 'flex-start',
-      fontSize: moderateScale(15),
+      fontSize: moderateScale(14),
     },
     time: {
       color: isLeft ? Color.gray : Color.lightGrey,

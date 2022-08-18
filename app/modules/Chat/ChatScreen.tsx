@@ -9,6 +9,7 @@ import {
   DocumentStateDataType,
   strings,
 } from '../../constants';
+import { authDataSelectors } from '../../redux/AuthRedux';
 import wallpaperActions, {
   wallpaperSelectors,
 } from '../../redux/ChatWallpaperRedux';
@@ -21,9 +22,17 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
   const verticalOffset = Metrics.isAndroid
     ? verticalScale(25)
     : verticalScale(45);
-  const { conversationId, username, receiverId, userStatus, profileImage } =
-    route.params;
+  const {
+    conversationId,
+    username,
+    receiverId,
+    userStatus,
+    profileImage,
+    groupName,
+    members = {},
+  } = route.params;
   const { wallpaperPath } = useSelector(wallpaperSelectors.getData);
+  const { user } = useSelector(authDataSelectors.getData);
   const [cameraModal, setCameraModal] = useState(false);
   const [isAttach, setIsAttach] = useState(false);
   const [imagePath, setImagePath] = useState('');
@@ -38,6 +47,10 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
   const chatBackground = chatWallpaper
     ? { uri: `${strings.files}${chatWallpaper}` }
     : Icons.chatBackground;
+  const filteredMember = Object.values(members)
+    .filter(memberData => memberData?.uid !== user?.uid)
+    .map(memberData => memberData?.username);
+  const membersName = [...filteredMember, strings.you].sort().join(', ');
 
   useEffect(() => {
     chatWallpaper && dispatch(wallpaperActions.setWallpaper(chatWallpaper));
@@ -87,6 +100,8 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
           setChatWallpaper,
           receiverId,
           conversationId,
+          membersName,
+          groupName,
         }}
       />
       <ImageBackground source={chatBackground} style={styles.container}>
@@ -115,6 +130,7 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
             imageUrl,
             username,
             receiverId,
+            members,
           }}
         />
       </ImageBackground>

@@ -11,23 +11,22 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   shareLocationContainer: {
-    backgroundColor: Color.lightBlue,
-    height: verticalScale(200),
-    width: horizontalScale(260),
     alignSelf: 'flex-end',
     borderRadius: 10,
-    alignItems: 'center',
+    padding: moderateScale(5),
   },
   shareLocationView: {
     height: verticalScale(150),
     width: horizontalScale(248),
-    borderRadius: 11,
-    margin: moderateScale(6),
+    borderRadius: 10,
     overflow: 'hidden',
+  },
+  senderName: {
+    paddingLeft: horizontalScale(6),
+    marginBottom: verticalScale(4),
   },
   chatMap: {
     ...StyleSheet.absoluteFillObject,
-    borderRadius: 10,
   },
   stopButtonStyle: {
     alignItems: 'center',
@@ -43,14 +42,14 @@ export const styles = StyleSheet.create({
   },
   locationEnded: {
     color: Color.gray,
-    fontSize: moderateScale(16),
-    marginLeft: horizontalScale(2),
+    fontSize: moderateScale(14),
+    marginLeft: horizontalScale(10),
   },
   timeStyle: {
     color: Color.gray,
     alignSelf: 'flex-end',
     fontSize: moderateScale(9),
-    marginLeft: horizontalScale(198),
+    right: 0,
     position: 'absolute',
   },
 });
