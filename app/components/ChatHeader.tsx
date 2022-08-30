@@ -20,7 +20,6 @@ const ChatHeader = ({
   setIsAttach,
   setCameraModal,
   setChatWallpaper,
-  receiverId,
   conversationId,
   membersName,
   groupName,
@@ -73,9 +72,7 @@ const ChatHeader = ({
         </Pressable>
       </View>
       {showMenu && (
-        <ChatMenu
-          {...{ conversationId, receiverId, setChatWallpaper, setShowMenu }}
-        />
+        <ChatMenu {...{ conversationId, setChatWallpaper, setShowMenu }} />
       )}
     </>
   );
