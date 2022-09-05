@@ -198,7 +198,7 @@ export const sortString = (input: string) => {
 
 export const conversationIdCreation = (userIds: string[]) => {
   let concatId = '';
-  userIds.sort().map(id => (concatId += id));
+  userIds?.sort()?.map(id => (concatId += id));
   return getHashCode(concatId);
 };
 

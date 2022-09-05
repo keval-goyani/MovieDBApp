@@ -7,8 +7,9 @@ import {
   appConstants,
   ChatHeaderDataType,
   NavigationDataType,
+  navigationStrings,
 } from '../constants';
-import { Icons } from '../theme';
+import { Color, Icons } from '../theme';
 import { styles } from './styles/ChatHeaderStyles';
 
 const ChatHeader = ({
@@ -23,6 +24,8 @@ const ChatHeader = ({
   conversationId,
   membersName,
   groupName,
+  userEmail,
+  receiverId,
 }: ChatHeaderDataType) => {
   const navigation: NavigationDataType = useNavigation();
   const [isTextMoving, setIsTextMoving] = useState(appConstants.trueValue);
@@ -40,7 +43,25 @@ const ChatHeader = ({
               {...{ profileImage, userStatus, groupName }}
               isChatHeader={appConstants.trueValue}
             />
-            <View style={styles.userNameAndStatus}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate(navigationStrings.ProfileInfo, {
+                  profileImage,
+                  username,
+                  userEmail,
+                  conversationId,
+                  receiverId,
+                  groupName,
+                })
+              }
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed
+                    ? Color.transparentGrey
+                    : Color.darkBlue,
+                },
+                styles.userNameAndStatus,
+              ]}>
               <Text style={styles.username}>{username}</Text>
               {isTextMoving ? (
                 <TextTicker
@@ -59,7 +80,7 @@ const ChatHeader = ({
                   {userInfo}
                 </Text>
               )}
-            </View>
+            </Pressable>
           </View>
         </View>
         <Pressable

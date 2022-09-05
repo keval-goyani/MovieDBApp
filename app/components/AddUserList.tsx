@@ -69,6 +69,7 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
         receiverId: item?.uid,
         userStatus: item?.status,
         profileImage: item?.profileImage,
+        userEmail: item?.email,
       });
     };
 

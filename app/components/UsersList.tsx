@@ -38,11 +38,9 @@ const UsersList = () => {
       .onSnapshot(conversations => {
         let conversationIds: string[] = [];
         let conversationsList: UserListDataType[] = [];
-
         conversations?.forEach(conversation => {
           conversationIds.push(conversation?.id);
         });
-
         if (conversationIds.length !== 0) {
           const userListData: Promise<UserListDataType[]> = new Promise(
             resolve => {
@@ -77,7 +75,6 @@ const UsersList = () => {
                           conversationData?.createdAt,
                         ),
                       };
-
                       const userIndex = conversationsList.findIndex(
                         conversationUser => {
                           return (
@@ -86,16 +83,13 @@ const UsersList = () => {
                           );
                         },
                       );
-
                       if (userIndex !== -1) {
                         conversationsList[userIndex] = users;
                       } else {
                         conversationsList.push(users);
                       }
-
                       if (conversationIds.length === conversationsList.length) {
                         resolve(conversationsList);
-
                         userListData
                           .then(conversationsUser => {
                             conversationsUser?.sort(
@@ -125,7 +119,6 @@ const UsersList = () => {
         }
       });
   }, [dispatch, user]);
-
   useFocusEffect(
     useCallback(() => {
       const sub = getUserList();
@@ -148,7 +141,12 @@ const UsersList = () => {
     const navigateToChatScreen = () => {
       const data = groupName
         ? { members: item?.members }
-        : { receiverId: item?.uid, userStatus };
+        : {
+            receiverId: item?.uid,
+            userStatus,
+            userEmail: item?.email,
+          };
+
       navigation.navigate(navigationStrings.Chat, {
         conversationId,
         groupName,
@@ -183,7 +181,6 @@ const UsersList = () => {
       </TouchableOpacity>
     );
   };
-
   return (
     <FlatList
       data={asMutable(userList)}
@@ -199,5 +196,4 @@ const UsersList = () => {
     />
   );
 };
-
 export default UsersList;

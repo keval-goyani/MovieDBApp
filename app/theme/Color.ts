@@ -51,4 +51,6 @@ export const Color = {
   darkCyan: '#288BA0',
   raspberry: '#E30B5C',
   axolotl: '#546747',
+  transparentGrey: '#c1c6c520',
+  darkestGray: '#505050',
 };
