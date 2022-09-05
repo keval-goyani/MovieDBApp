@@ -13,7 +13,6 @@ export const styles = StyleSheet.create({
     borderColor: Color.lightGrey,
     borderBottomWidth: Metrics.borderLineWidth,
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
     padding: moderateScale(20),
     marginBottom: verticalScale(3),
@@ -27,9 +26,11 @@ export const styles = StyleSheet.create({
     paddingBottom: verticalScale(2),
   },
   dateText: {
-    textAlign: 'right',
     fontSize: moderateScale(15),
     color: Color.black,
+    position: 'absolute',
+    right: 0,
+    bottom: verticalScale(12),
   },
   nameView: {
     width: horizontalScale(190),
@@ -41,5 +42,10 @@ export const styles = StyleSheet.create({
   avatarGroup: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  latestMessageContainer: {
+    width: horizontalScale(270),
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });

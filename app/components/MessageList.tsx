@@ -12,6 +12,7 @@ import {
 import { authDataSelectors } from '../redux/AuthRedux';
 import chatAction, { chatDataSelector } from '../redux/ChatRedux';
 import { convertToTimestamp, timestampToTime } from '../services';
+import { Metrics } from '../theme';
 
 const MessageList = ({
   conversationId,
@@ -25,35 +26,42 @@ const MessageList = ({
   const { chatData } = useSelector(chatDataSelector.getData);
   const { user } = useSelector(authDataSelectors.getData);
   const currentUser = useRef(user?.uid);
-  const chatMessages =
-    chatData?.filter(
-      conversation => Object.keys(conversation)?.[0] === conversationId,
-    )?.[0]?.[conversationId] ?? [];
+  const { data, clearChatLength } = chatData?.[conversationId] ?? {
+    data: appConstants.emptyArray,
+    clearChatLength: Metrics.zero,
+  };
 
-  const fetchRealTimeMessages = useCallback(() => {
+  const fetchRealTimeMessages = useCallback(async () => {
     const subscriber = appConstants.messageRef
       .doc(conversationId)
       .collection(strings.messageCollection)
       .orderBy('createdAt', 'asc')
       .onSnapshot(async documentSnapshot => {
         const firestoreChatList: LatestMessageDataType[] = [];
+        if (
+          !documentSnapshot?.metadata?.hasPendingWrites &&
+          !documentSnapshot?.empty
+        ) {
+          documentSnapshot?.forEach(document => {
+            const chatMessage = document?.data();
+            firestoreChatList.push(chatMessage);
+          });
 
-        documentSnapshot?.forEach(document => {
-          const chatMessage = document?.data();
-
-          firestoreChatList.push(chatMessage);
-        });
-
-        dispatch(
-          chatAction.chatDataRequest({
-            data: firestoreChatList,
-            conversationId,
-          }),
-        );
+          firestoreChatList.splice(
+            Metrics.zero,
+            clearChatLength ?? Metrics.zero,
+          );
+          dispatch(
+            chatAction?.chatDataRequest({
+              data: firestoreChatList,
+              conversationId,
+            }),
+          );
+        }
       });
 
     return () => subscriber();
-  }, [conversationId, dispatch]);
+  }, [clearChatLength, conversationId, dispatch]);
 
   useEffect(() => {
     fetchRealTimeMessages();
@@ -62,7 +70,7 @@ const MessageList = ({
   return (
     <FlatList
       ref={scrollRef}
-      data={Object.values(chatMessages)}
+      data={data ?? []}
       onContentSizeChange={() => {
         scrollRef?.current?.scrollToEnd({ animated: true });
       }}

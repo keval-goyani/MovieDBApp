@@ -515,71 +515,16 @@ const selectImage = (
 };
 
 export const clearChat = ({
-  conversationId,
   setShowMenu,
-  receiverId,
-  senderId,
+  clearConversation,
 }: ClearChatDataType) => {
   Alert.alert(strings.areYouSure, strings.clearChatAlert, [
     { text: strings.cancel, onPress: () => setShowMenu(false) },
     {
       text: strings.ok,
-      onPress: async () => {
-        setShowMenu(false);
-        await clearDataHandler(conversationId, receiverId, senderId);
-      },
+      onPress: clearConversation,
     },
   ]);
-};
-
-const clearDataHandler = async (
-  conversationId: string,
-  receiverId: string = '',
-  senderId: string,
-) => {
-  const messageBatch = firestore().batch();
-  const conversationBatch = firestore().batch();
-
-  await appConstants.messageRef
-    .doc(conversationId)
-    .collection(strings.messageCollection)
-    .get()
-    .then(async messages => {
-      messages?.docs?.forEach(messageData =>
-        messageBatch?.delete(messageData?.ref),
-      );
-      messageBatch?.commit();
-
-      await appConstants.conversationRef
-        .doc(conversationId)
-        .get()
-        .then(conversation => {
-          conversationBatch?.delete(conversation?.ref);
-        })
-        .catch(error => error);
-
-      await deleteChatRef(senderId, conversationId, conversationBatch);
-      await deleteChatRef(receiverId, conversationId, conversationBatch);
-
-      conversationBatch?.commit();
-    })
-    .catch(error => error);
-};
-
-const deleteChatRef = async (
-  id: string,
-  conversationId: string,
-  conversationBatch: FirebaseFirestoreTypes.WriteBatch,
-) => {
-  await appConstants.chatRef
-    .doc(id)
-    .collection(strings.conversationsCollection)
-    .doc(conversationId)
-    .get()
-    .then(chat => {
-      conversationBatch?.delete(chat?.ref);
-    })
-    .catch(error => error);
 };
 
 export const chatCreation = async ({

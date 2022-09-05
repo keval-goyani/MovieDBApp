@@ -6,6 +6,8 @@ import { asMutable } from 'seamless-immutable';
 import { LatestMessage, ProfileImage, UserListEmpty } from '../components';
 import {
   appConstants,
+  ChatStateDataType,
+  ClearDataUserProps,
   navigationStrings,
   strings,
   UserDataType,
@@ -13,6 +15,7 @@ import {
   UserToChatNavigationDataType,
 } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
+import { chatDataSelector } from '../redux/ChatRedux';
 import userListDataAction, {
   chatUserListSelector,
 } from '../redux/ChatUserListRedux';
@@ -26,6 +29,7 @@ const UsersList = () => {
   const { userList, fetchingUserList } = useSelector(
     chatUserListSelector.getData,
   );
+  const { chatData }: ChatStateDataType = useSelector(chatDataSelector.getData);
 
   const getUserList = useCallback(() => {
     appConstants.chatRef
@@ -131,6 +135,9 @@ const UsersList = () => {
 
   const renderUserList = (item: UserListDataType) => {
     const conversationId = item?.conversationId;
+    const clearChatUsers: ClearDataUserProps =
+      chatData[conversationId as keyof typeof chatData];
+    const isClear = clearChatUsers?.data?.length === 0;
     const message = item?.latestMessage;
     const userStatus = item?.status;
     const groupName = item?.groupName;
@@ -142,7 +149,6 @@ const UsersList = () => {
       const data = groupName
         ? { members: item?.members }
         : { receiverId: item?.uid, userStatus };
-
       navigation.navigate(navigationStrings.Chat, {
         conversationId,
         groupName,
@@ -161,16 +167,18 @@ const UsersList = () => {
           <ProfileImage {...{ groupName, profileImage, userStatus }} />
           <View style={styles.nameView}>
             <Text style={styles.text}>{conversationName}</Text>
-            <LatestMessage
-              {...{ message }}
-              userId={user?.uid ?? ''}
-              groupInitializerId={item?.groupInitializerId}
-              createdBy={item?.createdBy}
-            />
+            {!isClear && (
+              <View style={styles.latestMessageContainer}>
+                <LatestMessage
+                  {...{ message }}
+                  userId={user?.uid ?? ''}
+                  groupInitializerId={item?.groupInitializerId}
+                  createdBy={item?.createdBy}
+                />
+                <Text style={styles.dateText}>{time}</Text>
+              </View>
+            )}
           </View>
-        </View>
-        <View style={styles.dateView}>
-          <Text style={styles.dateText}>{time}</Text>
         </View>
       </TouchableOpacity>
     );
