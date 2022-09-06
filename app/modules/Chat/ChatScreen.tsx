@@ -30,7 +30,9 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
     profileImage,
     groupName,
     members = {},
+    userEmail,
   } = route.params;
+
   const { wallpaperPath } = useSelector(wallpaperSelectors.getData);
   const { user } = useSelector(authDataSelectors.getData);
   const [cameraModal, setCameraModal] = useState(false);
@@ -101,6 +103,8 @@ const ChatScreen = ({ route }: ChatScreenDataType) => {
           conversationId,
           membersName,
           groupName,
+          userEmail,
+          receiverId,
         }}
       />
       <ImageBackground source={chatBackground} style={styles.container}>

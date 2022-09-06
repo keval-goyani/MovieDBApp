@@ -291,6 +291,8 @@ interface NavigationDataType {
       userStatus?: string;
       profileImage?: string;
       selectedUser?: UserDataType[];
+      userEmail?: string;
+      groupName?: string;
     },
   ) => void;
   openDrawer: () => void;
@@ -405,6 +407,8 @@ interface ChatHeaderDataType {
   conversationId: string;
   membersName: string;
   groupName: string | undefined;
+  userEmail?: string;
+  receiverId?: string;
 }
 
 interface MessageDataType {
@@ -433,7 +437,7 @@ interface UserListDataType {
   username?: string;
   profileImage?: string;
   status?: string;
-  members?: UserDataType[];
+  members?: UserDataType;
   groupName?: string;
   createdBy?: string;
   groupImage?: string;
@@ -555,6 +559,7 @@ interface ChatScreenDataType {
       profileImage?: string;
       members?: { [id: string]: UserDataType };
       groupName?: string;
+      userEmail?: string;
     };
   };
 }
@@ -790,14 +795,16 @@ interface ChatSagaDataType {
 
 interface ProfileImageDataType {
   profileImage: string | undefined;
-  userStatus: string | undefined;
-  style?: ImageProps;
+  userStatus?: string | undefined;
   groupName?: string | undefined;
   isChatHeader?: boolean;
+  customStyle?: ImageProps;
+  customImageStyles?: ImageProps;
+  defaultUserImageStyle?: ImageProps;
 }
 
 interface ImageProps {
-  borderRadius: number;
+  borderRadius?: number;
   height: number;
   width: number;
 }
@@ -859,12 +866,124 @@ interface ClearDataUserProps {
 
 interface FilterDataOfClearChatProps {
   filteredList: UserListDataType[] | [];
+}
+
+interface ProfileInfoScreenProps {
+  route: {
+    params: {
+      profileImage: string;
+      username: string;
+      userEmail: string;
+      conversationId: string;
+      receiverId: string;
+      groupName: string;
+    };
+  };
+}
+
+interface GroupListProps {
+  GroupList: {
+    email: string;
+    uid: string;
+    username: string;
+    profileImage: string;
+    createdAt: number;
+    status: string;
+    latestMessage: {
+      type: string;
+      content: string;
+      senderId: string;
+      documentName?: string;
+    };
+  };
+}
+
+interface GroupItemProps {
+  members: GroupListProps;
+}
+
+interface ParticularGroupItem {
+  groupName: string;
+}
+
+interface ProfileInfoProps {
+  isEmail: boolean;
+  imageData: ImageDataProps[];
+  membersList: ImmutableArray<UserListDataType>;
+  membersArray: UserDataType[];
+  groupInitializerId: string | undefined;
+  createdBy: string | undefined;
+  time: string | undefined;
+  date: string | undefined;
+  conversationId: string | undefined;
+}
+
+interface ProfileInfoRenderItemProps {
+  item: {
+    content: string;
+  };
+}
+
+interface CommonGroupCardProps {
+  isEmail: boolean;
+  membersList: ImmutableArray<UserListDataType>;
+  membersArray: UserDataType[];
+  groupInitializerId: string | undefined;
+  conversationId: string | undefined;
+}
+
+interface FilterImageDataProps {
+  type: string;
+}
+
+interface ImageDataProps {
+  length: number;
+  content: string;
+}
+
+interface MembersListProps {
+  conversationId: string;
+  createdBy: string;
+  createdAt: number;
+  groupImage: string;
+  groupInitializerId: string;
+  groupName: string;
   latestMessage: {
     type: string;
     content: string;
     senderId: string;
     documentName?: string;
   };
+  members: object;
+  updatedAt: number;
+}
+
+interface CommonGroupListProps {
+  groupList: ImmutableArray<UserListDataType>;
+  conversationId: string | undefined;
+}
+
+interface RenderItemOfCommonGroupList {
+  item: UserListDataType;
+}
+
+interface GroupParticipantsProps {
+  groupList: UserDataType[];
+  groupInitializerId: string | undefined;
+  conversationId: string | undefined;
+}
+
+interface RenderItemOfGroupParticipants {
+  item: UserDataType;
+}
+
+interface CustomProfileCardProps {
+  profileImage: string;
+  username: string;
+  isEmail: boolean;
+  userEmail: string;
+  arrayLength: number;
+  groupName: string;
 }
 
 export type {
@@ -969,4 +1088,19 @@ export type {
   SenderNameDataType,
   ClearDataUserProps,
   FilterDataOfClearChatProps,
+  ProfileInfoScreenProps,
+  GroupListProps,
+  GroupItemProps,
+  ParticularGroupItem,
+  ProfileInfoProps,
+  ProfileInfoRenderItemProps,
+  CommonGroupCardProps,
+  FilterImageDataProps,
+  ImageDataProps,
+  MembersListProps,
+  CommonGroupListProps,
+  RenderItemOfCommonGroupList,
+  GroupParticipantsProps,
+  RenderItemOfGroupParticipants,
+  CustomProfileCardProps,
 };

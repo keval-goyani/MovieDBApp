@@ -25,6 +25,7 @@ import {
   alertBox,
   storeImageToStorage,
   groupCreation,
+  dateConvertor,
 } from './Utils';
 
 export {
@@ -54,4 +55,5 @@ export {
   alertBox,
   storeImageToStorage,
   groupCreation,
+  dateConvertor,
 };
