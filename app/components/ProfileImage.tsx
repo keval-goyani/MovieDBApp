@@ -9,15 +9,22 @@ const ProfileImage = ({
   profileImage,
   userStatus,
   groupName,
-  style,
+  customStyle,
+  customImageStyles,
+  defaultUserImageStyle,
   isChatHeader = appConstants.falseValue,
 }: ProfileImageDataType) => {
   const defaultImage = groupName ? Icons.communityIcon : Icons.avatar;
   const styles = profileStyles(profileImage, groupName);
-  const profileImageStyle = StyleSheet.flatten([styles.profile, style]);
+  const profileImageStyle = StyleSheet.flatten([
+    styles.profile,
+    customStyle,
+    customImageStyles,
+  ]);
+
   const profileContainerStyle = StyleSheet.flatten([
     styles.profileContainer,
-    style,
+    customStyle,
   ]);
   const onlineStatus =
     userStatus === strings.onlineStatus &&
@@ -34,7 +41,10 @@ const ProfileImage = ({
           style={profileImageStyle}
         />
       ) : (
-        <Image source={defaultImage} style={profileImageStyle} />
+        <Image
+          source={defaultImage}
+          style={[profileImageStyle, defaultUserImageStyle]}
+        />
       )}
       {onlineStatus && <View style={styles.userStatus} />}
     </View>

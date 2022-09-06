@@ -12,4 +12,5 @@ export default {
   Location: 'Location',
   ChatMessage: 'ChatMessage',
   NewGroup: 'NewGroup',
+  ProfileInfo: 'ProfileInfo',
 };

@@ -5,6 +5,7 @@ import { AppState } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { navigationStrings, strings } from '../constants';
+
 import {
   ChatMessageScreen,
   ChatScreen,
@@ -12,6 +13,7 @@ import {
   LocationScreen,
   LoginScreen,
   NewGroupScreen,
+  ProfileInfoScreen,
   SignUpScreen,
 } from '../modules';
 import { DrawerRoutes } from '../navigation';
@@ -85,6 +87,11 @@ const Routes = () => {
             <Stack.Screen
               name={navigationStrings.Location}
               component={LocationScreen}
+            />
+            <Stack.Screen
+              options={{ animation: 'slide_from_bottom' }}
+              name={navigationStrings.ProfileInfo}
+              component={ProfileInfoScreen}
             />
           </>
         </Stack.Navigator>
