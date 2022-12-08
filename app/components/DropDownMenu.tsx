@@ -3,10 +3,14 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
 import { appConstants, DropDownDataType, strings } from '../constants';
-import freeMovieAction from '../redux/FreeMovieRedux';
-import popularAction from '../redux/PopularRedux';
-import trailerAction from '../redux/TrailerRedux';
-import trendingAction from '../redux/TrendingRedux';
+import {
+  FreeToWatchAction,
+  WhatsPopluarActions,
+  type AppDispatch,
+} from '../redux';
+import { LatestTrailerAction } from '../redux/latestTrailer';
+import { TrendingAction } from '../redux/trending';
+// import trendingAction from '../redux/TrendingRedux';
 import { Color, Icons } from '../theme';
 import styles from './styles/DropDownMenuStyles';
 
@@ -22,13 +26,13 @@ const DropDownMenu: FC<DropDownDataType> = ({
   const [showOptions, setShowOptions] = useState(false);
   const [selectedItem, setSelectedItem] = useState(initialValue);
   const [urlEndPoint, setUrlEndPoint] = useState(data?.[0]?.endPoint);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const dropDownFilterData = useCallback(() => {
     switch (title) {
       case strings.whatsPopular:
         dispatch(
-          popularAction.whatsPopularDataRequest({
+          WhatsPopluarActions.popularData({
             urlMainPath: urlEndPoint,
             pageNo: appConstants.defaultPage,
           }),
@@ -36,7 +40,7 @@ const DropDownMenu: FC<DropDownDataType> = ({
         break;
       case strings.freeToWatch:
         dispatch(
-          freeMovieAction.freeToWatchDataRequest({
+          FreeToWatchAction.freeToWatchData({
             urlMainPath: urlEndPoint,
             pageNo: appConstants.defaultPage,
           }),
@@ -44,7 +48,7 @@ const DropDownMenu: FC<DropDownDataType> = ({
         break;
       case strings.latestTrailers:
         dispatch(
-          trailerAction.latestTrailerDataRequest({
+          LatestTrailerAction.latestTrailerData({
             urlMainPath: urlEndPoint,
             pageNo: appConstants.defaultPage,
           }),
@@ -52,7 +56,7 @@ const DropDownMenu: FC<DropDownDataType> = ({
         break;
       case strings.trending:
         dispatch(
-          trendingAction.trendingDataRequest({
+          TrendingAction.trendingData({
             urlMainPath: urlEndPoint,
             pageNo: appConstants.defaultPage,
           }),

@@ -17,9 +17,14 @@ import {
   navigationStrings,
   strings,
 } from '../constants';
-import freeMovieAction from '../redux/FreeMovieRedux';
-import popularAction from '../redux/PopularRedux';
-import trendingAction from '../redux/TrendingRedux';
+import {
+  FreeToWatchAction,
+  TrendingAction,
+  WhatsPopluarActions,
+  type AppDispatch,
+} from '../redux';
+// import freeMovieAction from '../redux/FreeMovieRedux';
+// import trendingAction from '../redux/TrendingRedux';
 import { Color, Icons, moderateScale } from '../theme';
 import styles from './styles/ListContainerStyles';
 
@@ -95,14 +100,14 @@ const ListContainer: FC<ListContainerDataType> = ({
   searchModal,
 }) => {
   const [dataEndPoint, setDataEndPoint] = useState<string>('');
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const movieListData = [...data];
 
   const pageLoading = () => {
     switch (title) {
       case strings.whatsPopular:
         dispatch(
-          popularAction.whatsPopularDataRequest({
+          WhatsPopluarActions.popularData({
             urlMainPath: dataEndPoint,
             pageNo: listPage + 1,
           }),
@@ -110,7 +115,7 @@ const ListContainer: FC<ListContainerDataType> = ({
         break;
       case strings.freeToWatch:
         dispatch(
-          freeMovieAction.freeToWatchDataRequest({
+          FreeToWatchAction.freeToWatchData({
             urlMainPath: dataEndPoint,
             pageNo: listPage + 1,
           }),
@@ -118,7 +123,7 @@ const ListContainer: FC<ListContainerDataType> = ({
         break;
       case strings.trending:
         dispatch(
-          trendingAction.trendingDataRequest({
+          TrendingAction.trendingData({
             urlMainPath: dataEndPoint,
             pageNo: listPage + 1,
           }),

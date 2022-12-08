@@ -19,7 +19,7 @@ export default {
   popularTvMoviePath: '/tv/popular',
   discoverMoviePath: '/discover/movie',
   discoverTvPath: '/discover/tv',
-  popularTheaterMoviePath: 'movie/now_playing',
+  popularTheaterMoviePath: '/movie/now_playing',
   latestTrailerPath: '/movie/upcoming',
   trendingDayMoviePath: '/trending/all/day',
   trendingWeekMoviePath: '/trending/all/week',
