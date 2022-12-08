@@ -1,14 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { applyMiddleware, compose, createStore } from 'redux';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
-import createSagaMiddleware from 'redux-saga';
-import { rootReducer } from '../redux';
-import rootSaga from '../sagas';
 import { immutablePersistenceTransform } from '../services';
-
-const sagaMonitor = undefined;
-const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
-const middleWare = [sagaMiddleware];
+import { WhatsPopluarReducer } from './';
 
 const persistConfig = {
   key: '@moviedb',
@@ -17,25 +11,16 @@ const persistConfig = {
   transforms: [immutablePersistenceTransform],
 };
 
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
+const rootReducer = combineReducers({
+  whatsPopular: WhatsPopluarReducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = applyMiddleware(...middleWare);
+export const store = configureStore({
+  reducer: persistedReducer,
+});
 
-const enhancers = __DEV__
-  ? composeEnhancers(middlewares)
-  : compose(middlewares);
-
-const store = createStore(persistedReducer, enhancers);
-
-sagaMiddleware.run(rootSaga);
-
-const persistor = persistStore(store);
-
-export default { store, persistor };
+export const persistor = persistStore(store);
+export type RootStateType = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

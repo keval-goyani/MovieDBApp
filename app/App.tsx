@@ -5,15 +5,13 @@ import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { Routes } from './navigation';
-import reduxStore from './redux/store';
+import { persistor, store } from './redux';
 import { styles } from './theme';
 
 const App = () => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
-
-  const { store, persistor } = reduxStore;
 
   return (
     <Provider store={store}>
