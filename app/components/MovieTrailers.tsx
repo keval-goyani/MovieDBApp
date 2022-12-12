@@ -16,7 +16,7 @@ import {
   ListItemDataType,
   strings,
 } from '../constants';
-import trailerAction from '../redux/TrailerRedux';
+import { type AppDispatch, LatestTrailerAction } from '../redux';
 import { Icons } from '../theme';
 import styles from './styles/MovieTrailersStyles';
 
@@ -77,12 +77,12 @@ const MovieTrailer: FC<ListContainerDataType> = ({
   const [dataEndPoint, setDataEndPoint] = useState<string>(
     trailerFilterData[0].endPoint,
   );
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const trailerListData = [...data];
 
   const pageLoading = () => {
     dispatch(
-      trailerAction.latestTrailerDataRequest({
+      LatestTrailerAction.latestTrailerData({
         urlMainPath: dataEndPoint,
         pageNo: listPage + 1,
       }),

@@ -17,7 +17,14 @@ import {
   navigationStrings,
   strings,
 } from '../constants';
-import { WhatsPopluarActions, type AppDispatch } from '../redux';
+import {
+  FreeToWatchAction,
+  TrendingAction,
+  WhatsPopluarActions,
+  type AppDispatch,
+} from '../redux';
+// import freeMovieAction from '../redux/FreeMovieRedux';
+// import trendingAction from '../redux/TrendingRedux';
 import { Color, Icons, moderateScale } from '../theme';
 import styles from './styles/ListContainerStyles';
 
@@ -101,6 +108,22 @@ const ListContainer: FC<ListContainerDataType> = ({
       case strings.whatsPopular:
         dispatch(
           WhatsPopluarActions.popularData({
+            urlMainPath: dataEndPoint,
+            pageNo: listPage + 1,
+          }),
+        );
+        break;
+      case strings.freeToWatch:
+        dispatch(
+          FreeToWatchAction.freeToWatchData({
+            urlMainPath: dataEndPoint,
+            pageNo: listPage + 1,
+          }),
+        );
+        break;
+      case strings.trending:
+        dispatch(
+          TrendingAction.trendingData({
             urlMainPath: dataEndPoint,
             pageNo: listPage + 1,
           }),

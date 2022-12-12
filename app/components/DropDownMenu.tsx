@@ -3,7 +3,14 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
 import { appConstants, DropDownDataType, strings } from '../constants';
-import { WhatsPopluarActions, type AppDispatch } from '../redux';
+import {
+  FreeToWatchAction,
+  WhatsPopluarActions,
+  type AppDispatch,
+} from '../redux';
+import { LatestTrailerAction } from '../redux/latestTrailer';
+import { TrendingAction } from '../redux/trending';
+// import trendingAction from '../redux/TrendingRedux';
 import { Color, Icons } from '../theme';
 import styles from './styles/DropDownMenuStyles';
 
@@ -26,6 +33,30 @@ const DropDownMenu: FC<DropDownDataType> = ({
       case strings.whatsPopular:
         dispatch(
           WhatsPopluarActions.popularData({
+            urlMainPath: urlEndPoint,
+            pageNo: appConstants.defaultPage,
+          }),
+        );
+        break;
+      case strings.freeToWatch:
+        dispatch(
+          FreeToWatchAction.freeToWatchData({
+            urlMainPath: urlEndPoint,
+            pageNo: appConstants.defaultPage,
+          }),
+        );
+        break;
+      case strings.latestTrailers:
+        dispatch(
+          LatestTrailerAction.latestTrailerData({
+            urlMainPath: urlEndPoint,
+            pageNo: appConstants.defaultPage,
+          }),
+        );
+        break;
+      case strings.trending:
+        dispatch(
+          TrendingAction.trendingData({
             urlMainPath: urlEndPoint,
             pageNo: appConstants.defaultPage,
           }),
