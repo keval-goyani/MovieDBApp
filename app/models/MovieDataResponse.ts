@@ -1,4 +1,5 @@
 import {
+  type DetailsDataResponseType,
   type MovieListItemDataType,
   type PopularListItemDataType,
 } from '../redux';
@@ -18,4 +19,8 @@ export type MovieListDataType = {
   results: Array<MovieListItemDataType>;
   total_pages: number;
   total_results: number;
+};
+
+export type DetailsResponseType = {
+  data: DetailsDataResponseType;
 };

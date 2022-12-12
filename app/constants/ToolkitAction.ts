@@ -5,4 +5,5 @@
 export default Object.freeze({
   whatsPopular: 'whatsPopular',
   freeToWatch: 'freeToWatch',
+  details: 'detailData',
 });

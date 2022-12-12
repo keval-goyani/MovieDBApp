@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import { immutablePersistenceTransform } from '../services';
+import { DetailReducer } from './detail';
 import { FreeToWatchReducer } from './freeToWatch';
 import { LatestTrailerReducer } from './latestTrailer';
 import { WhatsPopluarReducer } from './popular';
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   freeToWatch: FreeToWatchReducer,
   latestTrailer: LatestTrailerReducer,
   trending: TrendingReducer,
+  detail: DetailReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

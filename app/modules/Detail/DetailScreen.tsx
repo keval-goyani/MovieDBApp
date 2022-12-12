@@ -1,19 +1,23 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { FC, useEffect } from 'react';
+import React, { useEffect, type FC } from 'react';
 import { Image, ImageBackground, ScrollView, Text, View } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { useDispatch, useSelector } from 'react-redux';
 import { Header } from '../../components';
 import {
   appConstants,
-  NavigationDataType,
-  RouteDataType,
   strings,
+  type NavigationDataType,
+  type RouteDataType,
 } from '../../constants';
-import detailAction, {
-  detailDataSelectors,
-} from '../../redux/MovieDetailRedux';
-import { getDetails } from '../../services/Utils';
+import {
+  DetailAction,
+  DetailSelector,
+  type AppDispatch,
+  type DetailDataType,
+  type RootStateType,
+} from '../../redux';
+import { getDetails } from '../../services';
 import { Color, Icons, moderateScale } from '../../theme';
 import { styles } from './styles/DetailScreenStyles';
 
@@ -25,12 +29,16 @@ const DetailScreen: FC<RouteDataType> = ({ route }) => {
     data === ''
       ? `${appConstants.moviePath}${id}${appConstants.apiKey}${appConstants.appendResponseOfCredit}`
       : `${appConstants.tvPath}${id}${appConstants.apiKey}${appConstants.appendResponseOfCredit}`;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigation: NavigationDataType = useNavigation();
-  const { detailData } = useSelector(detailDataSelectors.getData);
+  const { detailData } = useSelector<RootStateType, DetailDataType>(
+    DetailSelector.getDetailData,
+  );
+
   useEffect(() => {
-    dispatch(detailAction.detailDataRequest(apiEndPoint));
-  }, [dispatch, apiEndPoint]);
+    dispatch(DetailAction.detailData(apiEndPoint));
+  }, [apiEndPoint, dispatch]);
+
   const {
     votePercentage,
     activeStrokeColor,
