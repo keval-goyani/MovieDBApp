@@ -14,7 +14,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import { ImmutableArray } from 'seamless-immutable';
-import { appReducer } from '../redux';
+import { ErrorResponse } from '../models';
+import { appReducer, type PopularListItemDataType } from '../redux';
 
 interface genresDataType {
   id: number;
@@ -185,9 +186,9 @@ interface DataType {
 interface ListContainerDataType {
   title?: string;
   filterOptions?: Array<DataType>;
-  data: ImmutableArray<ListItemDataType>;
+  data: Array<PopularListItemDataType>;
   fetchingState?: boolean;
-  errorState?: boolean;
+  errorState?: ErrorResponse | unknown;
   listPage: number;
   searchModal: boolean;
 }

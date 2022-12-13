@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { type FC, useCallback, useState } from 'react';
 import {
   Image,
   ListRenderItemInfo,
@@ -17,9 +17,7 @@ import {
   navigationStrings,
   strings,
 } from '../constants';
-import freeMovieAction from '../redux/FreeMovieRedux';
-import popularAction from '../redux/PopularRedux';
-import trendingAction from '../redux/TrendingRedux';
+import { WhatsPopluarActions, type AppDispatch } from '../redux';
 import { Color, Icons, moderateScale } from '../theme';
 import styles from './styles/ListContainerStyles';
 
@@ -95,37 +93,20 @@ const ListContainer: FC<ListContainerDataType> = ({
   searchModal,
 }) => {
   const [dataEndPoint, setDataEndPoint] = useState<string>('');
-  const dispatch = useDispatch();
-  const movieListData = [...data];
+  const dispatch = useDispatch<AppDispatch>();
 
-  const pageLoading = () => {
+  const pageLoading = useCallback(() => {
     switch (title) {
       case strings.whatsPopular:
         dispatch(
-          popularAction.whatsPopularDataRequest({
-            urlMainPath: dataEndPoint,
-            pageNo: listPage + 1,
-          }),
-        );
-        break;
-      case strings.freeToWatch:
-        dispatch(
-          freeMovieAction.freeToWatchDataRequest({
-            urlMainPath: dataEndPoint,
-            pageNo: listPage + 1,
-          }),
-        );
-        break;
-      case strings.trending:
-        dispatch(
-          trendingAction.trendingDataRequest({
+          WhatsPopluarActions.popularData({
             urlMainPath: dataEndPoint,
             pageNo: listPage + 1,
           }),
         );
         break;
     }
-  };
+  }, [dataEndPoint, dispatch, listPage, title]);
 
   return (
     <>
@@ -142,7 +123,7 @@ const ListContainer: FC<ListContainerDataType> = ({
           </View>
           <List
             fetching={fetchingState}
-            listData={movieListData}
+            listData={[...data]}
             searchModal={searchModal}
             pageHandler={pageLoading}
             footerStyle={styles.footerLoaderStyle}

@@ -3,29 +3,28 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect, useRef } from 'react';
 import { AppState } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { navigationStrings, strings } from '../constants';
 
 import {
   ChatMessageScreen,
   ChatScreen,
   DetailScreen,
+  HomeScreen,
   LocationScreen,
   LoginScreen,
   NewGroupScreen,
   ProfileInfoScreen,
   SignUpScreen,
 } from '../modules';
-import { DrawerRoutes } from '../navigation';
-import { authDataSelectors } from '../redux/AuthRedux';
-import statusAction from '../redux/ChatUserListRedux';
+import { type AppDispatch, statusAction } from '../redux';
 
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
-  const { authenticated } = useSelector(authDataSelectors.getData);
   const currentState = useRef(AppState.currentState);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const authenticated: boolean = true;
 
   useEffect(() => {
     if (currentState.current === strings.activeState) {
@@ -49,7 +48,7 @@ const Routes = () => {
           {authenticated ? (
             <Stack.Screen
               name={navigationStrings.HomeDrawer}
-              component={DrawerRoutes}
+              component={HomeScreen}
             />
           ) : (
             <>
