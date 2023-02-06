@@ -748,6 +748,7 @@ interface ChatUsersListType {
 
 interface RenderItemTypes {
   item: UserDataType;
+  index: number;
 }
 
 interface UsersDocumentDataType {

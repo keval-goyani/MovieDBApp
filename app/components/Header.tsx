@@ -30,7 +30,7 @@ const Header: FC<HeaderDataType> = ({
         <Image source={logoIcon} />
       )}
       {rightIcon ? (
-        <Pressable onPress={handleOnPress}>
+        <Pressable onPress={() => handleOnPress()} testID={'button'}>
           <Image source={rightIcon} style={styles.rightIconStyle} />
         </Pressable>
       ) : (

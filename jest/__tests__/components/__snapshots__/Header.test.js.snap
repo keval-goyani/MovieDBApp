@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header header component snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": undefined,
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+      "paddingHorizontal": undefined,
+      "paddingVertical": undefined,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Image
+      style={
+        Object {
+          "height": undefined,
+          "tintColor": undefined,
+          "width": undefined,
+        }
+      }
+    />
+  </View>
+  <Image />
+  <View
+    style={
+      Object {
+        "height": undefined,
+        "tintColor": undefined,
+        "width": undefined,
+      }
+    }
+  />
+</View>
+`;

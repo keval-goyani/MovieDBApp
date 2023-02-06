@@ -23,7 +23,8 @@ import statusAction from '../redux/ChatUserListRedux';
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
-  const { authenticated } = useSelector(authDataSelectors.getData);
+  // const { authenticated } = useSelector(authDataSelectors.getData);
+  const authenticated = true;
   const currentState = useRef(AppState.currentState);
   const dispatch = useDispatch();
 

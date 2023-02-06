@@ -14,7 +14,7 @@ const ProfileImage = ({
   defaultUserImageStyle,
   isChatHeader = appConstants.falseValue,
 }: ProfileImageDataType) => {
-  const defaultImage = groupName ? Icons.communityIcon : Icons.avatar;
+  const defaultImage = groupName ? Icons?.communityIcon : Icons?.avatar;
   const styles = profileStyles(profileImage, groupName);
   const profileImageStyle = StyleSheet.flatten([
     styles.profile,

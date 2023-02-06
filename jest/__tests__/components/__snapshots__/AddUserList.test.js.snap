@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddUserList should take a snapshot of addUserList 1`] = `
+<RCTScrollView
+  ListEmptyComponent={
+    <UserListEmpty
+      userListLength={0}
+    />
+  }
+  bounces={false}
+  data={Array []}
+  getItem={[Function]}
+  getItemCount={[Function]}
+  keyExtractor={[Function]}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  scrollEventThrottle={50}
+  showsVerticalScrollIndicator={false}
+  stickyHeaderIndices={Array []}
+  testID="flatList"
+  viewabilityConfigCallbackPairs={Array []}
+>
+  <View>
+    <ActivityIndicator
+      animating={false}
+      size="small"
+    />
+  </View>
+</RCTScrollView>
+`;

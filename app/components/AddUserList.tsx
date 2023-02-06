@@ -54,7 +54,7 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
     setSelectedUsers(selectedItems);
   }, [selectedItems, setSelectedUsers]);
 
-  const renderUserList = ({ item }: RenderItemTypes) => {
+  const renderUserList = ({ item, index }: RenderItemTypes) => {
     const usersEmail = [user?.email ?? '', item?.email];
     const conversationId: string = conversationIdCreation(usersEmail);
 
@@ -78,22 +78,22 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
 
     const selected = getSelected(item);
 
-    const selectUsers = (selectedUser: UserDataType) => {
-      if (selectedItems.includes(selectedUser)) {
-        const filteredList = selectedItems.filter(
+    const selectUsers = async (selectedUser: UserDataType) => {
+      if (selectedItems?.includes(selectedUser)) {
+        const filteredList = selectedItems?.filter(
           (items: UserDataType) => items !== selectedUser,
         );
         return setSelectedItems(filteredList);
       }
-      setSelectedItems([...selectedItems, selectedUser]);
+      setSelectedItems(await [...selectedItems, selectedUser]);
     };
-
     return (
       <TouchableOpacity
         style={styles.listItem}
         onPress={() => handleOnPress(item)}
         activeOpacity={0.8}
-        onLongPress={() => selectUsers(item)}>
+        onLongPress={() => selectUsers(item)}
+        testID={`button-for-test${index}`}>
         <View style={styles.itemContainer}>
           <ProfileImage
             profileImage={item?.profileImage}
@@ -136,6 +136,7 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
       }
       showsVerticalScrollIndicator={false}
       bounces={false}
+      testID={'flatList'}
     />
   );
 };
