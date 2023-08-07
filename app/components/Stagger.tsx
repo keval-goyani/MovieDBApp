@@ -14,7 +14,7 @@ const Stagger = ({ setCameraModal, setImagePath }: StaggerDataType) => {
           handleCameraPermission(setImagePath);
           setCameraModal(false);
         }}>
-        <Image source={Icons.cameraIcon} style={styles.cameraIconStyle} />
+        <Image source={Icons?.cameraIcon} style={styles.cameraIconStyle} />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.galleryContainer}
@@ -22,7 +22,7 @@ const Stagger = ({ setCameraModal, setImagePath }: StaggerDataType) => {
           handleGalleryPermission(setImagePath);
           setCameraModal(false);
         }}>
-        <Image source={Icons.galleryIcon} style={styles.galleryIconStyle} />
+        <Image source={Icons?.galleryIcon} style={styles.galleryIconStyle} />
       </TouchableOpacity>
     </View>
   );

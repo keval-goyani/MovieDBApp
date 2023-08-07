@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomFloatingButton should take a snapShot of Custom Floating Button 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "flex-end",
+      "bottom": 0,
+      "flex": 1,
+      "justifyContent": "flex-end",
+      "margin": undefined,
+      "position": "absolute",
+      "right": 0,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="custom-floating-button"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#0d253f",
+          "borderRadius": 100,
+          "height": undefined,
+          "justifyContent": "center",
+          "width": undefined,
+        }
+      }
+      testID="floating-button"
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../app/assets/icons/plusSign.png",
+          }
+        }
+        style={
+          Object {
+            "height": undefined,
+            "tintColor": "#01b4e4",
+            "width": undefined,
+          }
+        }
+        testID="plus-icon"
+      />
+    </View>
+  </View>
+</View>
+`;

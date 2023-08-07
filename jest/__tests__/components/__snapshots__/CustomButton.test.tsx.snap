@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomBUtton should take a snapshot of CustomBUtton 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "padding": 5,
+    }
+  }
+  testID="button"
+>
+  <Text
+    style={
+      Object {
+        "fontSize": 16,
+        "fontWeight": "bold",
+      }
+    }
+    testID="button-text"
+  >
+    Change Wallpaper
+  </Text>
+</View>
+`;

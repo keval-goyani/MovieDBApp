@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import Check from 'react-native-vector-icons/AntDesign';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,18 +7,16 @@ import { asMutable } from 'seamless-immutable';
 import { ProfileImage, UserListEmpty } from '../components';
 import {
   AddUserListProps,
-  appConstants,
   NavigationDataType,
   navigationStrings,
   RenderItemTypes,
   SelectedUsersProps,
   strings,
   UserDataType,
-  UsersDocumentDataType,
 } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
-import userListDataAction, { userListSelector } from '../redux/UserListRedux';
-import { conversationIdCreation } from '../services';
+import { userListSelector } from '../redux/UserListRedux';
+import { conversationIdCreation, sub } from '../services';
 import { Color, moderateScale } from '../theme';
 import { styles } from './styles/AddUserListStyles';
 
@@ -29,26 +27,10 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
   const { fetchingUserList } = useSelector(userListSelector.getData);
   const [selectedItems, setSelectedItems] = useState<UserDataType[]>([]);
 
-  const fetchingUser = useCallback(() => {
-    appConstants.userRef.onSnapshot(users => {
-      const fireStoreUserList: UsersDocumentDataType[] = [];
-
-      users.forEach(userData => {
-        if (userData?.data()?.uid !== user?.uid) {
-          fireStoreUserList.push(userData?.data());
-        }
-
-        dispatch(userListDataAction.usersListSuccess(fireStoreUserList));
-      });
-    });
-  }, [dispatch, user]);
-
-  useFocusEffect(
-    useCallback(() => {
-      const sub = fetchingUser();
-      return () => sub;
-    }, [fetchingUser]),
-  );
+  useFocusEffect(() => {
+    sub({ user, dispatch });
+    return () => sub;
+  });
 
   useEffect(() => {
     setSelectedUsers(selectedItems);
@@ -59,6 +41,9 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
     const conversationId: string = conversationIdCreation(usersEmail);
 
     const handleOnPress = (selectedUser: UserDataType) => {
+      console.log(selectedItems, '<==selectedItems.length');
+      console.log(selectedUser, '<==selectedUser');
+
       if (selectedItems.length) {
         return selectUsers(selectedUser);
       }
@@ -73,24 +58,29 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
       });
     };
 
-    const getSelected = (usersData: SelectedUsersProps) =>
-      selectedItems.includes(usersData);
+    const getSelected = (usersData: SelectedUsersProps) => {
+      return JSON.stringify(selectedItems).includes(JSON.stringify(usersData));
+    };
 
     const selected = getSelected(item);
 
-    const selectUsers = async (selectedUser: UserDataType) => {
-      if (selectedItems?.includes(selectedUser)) {
+    const selectUsers = (selectedUser: UserDataType) => {
+      if (
+        JSON.stringify(selectedItems).includes(JSON.stringify(selectedUser))
+      ) {
         const filteredList = selectedItems?.filter(
           (items: UserDataType) => items !== selectedUser,
         );
-        return setSelectedItems(filteredList);
+        setSelectedItems(filteredList);
+      } else {
+        setSelectedItems([...selectedItems, selectedUser]);
       }
-      setSelectedItems(await [...selectedItems, selectedUser]);
     };
+
     return (
       <TouchableOpacity
         style={styles.listItem}
-        onPress={() => handleOnPress(item)}
+        onPress={() => handleOnPress(item)}x
         activeOpacity={0.8}
         onLongPress={() => selectUsers(item)}
         testID={`button-for-test${index}`}>
@@ -113,6 +103,7 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
           <>
             <View style={styles.overlay} />
             <Check
+              testID="check"
               name={strings.checkIcon}
               size={moderateScale(23)}
               color={Color.lightBlue}
@@ -126,7 +117,8 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
 
   return (
     <FlatList
-      data={asMutable(userListData) ?? []}
+      testID={'flatList'}
+      data={asMutable(userListData)}
       renderItem={renderUserList}
       ListEmptyComponent={
         <UserListEmpty
@@ -136,7 +128,6 @@ const AddUsersList = ({ userListData, setSelectedUsers }: AddUserListProps) => {
       }
       showsVerticalScrollIndicator={false}
       bounces={false}
-      testID={'flatList'}
     />
   );
 };

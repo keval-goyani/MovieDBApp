@@ -15,6 +15,8 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(@react-native|react-native|react-native-system-setting)/)',
     'node_modules/(?!(@react-native|react-native|react-native-linear-gradient)/)',
+    'node_modules/(?!(@react-native|react-native|react-native-vector-icons)/)',
+
     // 'node_modules/(?!(@react-native|react-native|react-native-maps)/)',
   ],
   coveragePathIgnorePatterns: [
@@ -25,8 +27,6 @@ module.exports = {
     '<rootDir>/jest/__mock__',
   ],
   moduleNameMapper: {
-    'react-native-vector-icons':
-      '<rootDir>/jest/__mock__/react-native-vector-icons/AntDesign.js',
     'react-native-permissions':
       '<rootDir>/jest/__mock__/react-native-permissions.js',
     'rn-fetch-blob': '<rootDir>/jest/__mock__/rn-fetch-blob.js',
@@ -34,10 +34,8 @@ module.exports = {
       '<rootDir>/jest/__mock__/react-native-file-viewer.js',
     'react-native-image-picker':
       '<rootDir>/jest/__mock__/react-native-image-picker.js',
-    'react-native-system-setting':
-      '<rootDir>/jest/__mock__/react-native-system-setting.js',
-    'react-native-text-ticker':
-      '<rootDir>/jest/__mock__/react-native-text-ticker.js',
+    // 'react-native-system-setting':
+    //   '<rootDir>/jest/__mock__/react-native-system-setting.js',
     'react-native-linear-gradient':
       '<rootDir>/jest/__mock__/react-native-linear-gradient.js',
     'react-native-circular-progress-indicator':

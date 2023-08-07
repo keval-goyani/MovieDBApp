@@ -14,17 +14,26 @@ const CustomFloatingButton = ({
     styles.container,
     groupButtonStyle,
   ]);
+
   return (
     <View style={floatingContainer}>
-      <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
-        <View style={styles.buttonContainer}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={onPress}
+        testID={'custom-floating-button'}>
+        <View style={styles.buttonContainer} testID="floating-button">
           {buttonType === strings.plus ? (
-            <Image source={Icons.plus} style={styles.plusIcon} />
+            <Image
+              source={Icons.plus}
+              style={styles.plusIcon}
+              testID="plus-icon"
+            />
           ) : (
             <Check
               name={strings.check}
               size={moderateScale(25)}
               color={Color.lightBlue}
+              testID="check-icon"
             />
           )}
         </View>

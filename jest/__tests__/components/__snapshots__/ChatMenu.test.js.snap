@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChatMenu should take a snapShot of ChatMenu component 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#90cea1",
+      "borderRadius": 10,
+      "padding": undefined,
+      "position": "absolute",
+      "right": undefined,
+      "top": undefined,
+      "width": undefined,
+      "zIndex": 1,
+    }
+  }
+  testID="chat-menu"
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "padding": undefined,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#0d253f",
+          "fontSize": undefined,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Change Wallpaper
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "padding": undefined,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#0d253f",
+          "fontSize": undefined,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Clear Chat
+    </Text>
+  </View>
+</View>
+`;

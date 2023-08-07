@@ -6,11 +6,13 @@ const CustomButton = ({
   onPress,
   buttonStyle,
   buttonTextStyle,
-  buttonText,
+  buttonText, kw
 }: CustomButtonDataType) => {
   return (
-    <Pressable onPress={onPress} style={buttonStyle}>
-      <Text style={buttonTextStyle}>{buttonText}</Text>
+    <Pressable onPress={onPress} style={buttonStyle} testID={'button'}>
+      <Text style={buttonTextStyle} testID={'button-text'}>
+        {buttonText}
+      </Text>
     </Pressable>
   );
 };

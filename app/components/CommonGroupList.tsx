@@ -14,10 +14,10 @@ import { styles } from './styles/CommonGroupListStyles';
 const CommonGroupList = ({ groupList }: CommonGroupListProps) => {
   const navigation: NavigationDataType = useNavigation();
 
-  const renderUserList = ({ item }: RenderItemOfCommonGroupList) => {
+  const renderUserList = ({ item, index }: RenderItemOfCommonGroupList) => {
     const members = item?.members;
     const membersArray = Object.values(members ?? []);
-    const membersList = membersArray.map(list => Object.values(list ?? [])[0]);
+    const membersList = membersArray.map(list => Object.values(list)[0]);
 
     const handleOnPress = () => {
       navigation.navigate(navigationStrings.Chat, {
@@ -31,10 +31,11 @@ const CommonGroupList = ({ groupList }: CommonGroupListProps) => {
 
     return (
       <TouchableOpacity
+        testID={`button${index}`}
         style={styles.listItem}
         onPress={() => handleOnPress()}
         activeOpacity={0.8}>
-        <View style={styles.itemContainer}>
+        <View style={styles.itemContainer} testID={'Common-Group-List'}>
           <ProfileImage
             profileImage={item?.groupImage}
             customStyle={styles.avatar}
@@ -57,7 +58,8 @@ const CommonGroupList = ({ groupList }: CommonGroupListProps) => {
 
   return (
     <FlatList
-      data={asMutable(groupList) ?? []}
+      testID="Common-Group-List-"
+      data={asMutable(groupList)}
       renderItem={renderUserList}
       showsVerticalScrollIndicator={false}
       bounces={false}

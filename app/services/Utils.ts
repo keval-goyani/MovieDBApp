@@ -1,3 +1,4 @@
+import auth from '@react-native-firebase/auth';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
@@ -26,18 +27,26 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { ImmutableObject } from 'seamless-immutable';
 import {
   appConstants,
+  ChatImageHandlerProps,
   ClearChatDataType,
+  ClearConversationTypes,
   DetailResponseGenerator,
   DocumentStateDataType,
   genres,
+  HandleLogOutProps,
   ListItemDataType,
   memberDataType,
   MovieDetailsDataType,
   MovieResponseGenerator,
   pickerOptions,
   strings,
+  SubProps,
   UserListDataType,
+  UsersDocumentDataType,
 } from '../constants';
+import clearChatAction from '../redux/ChatRedux';
+import userListUpdateAction from '../redux/ChatUserListRedux';
+import userListDataAction from '../redux/UserListRedux';
 import { Color, Metrics } from '../theme';
 
 export const apiConfig = apisauce.create({
@@ -291,7 +300,7 @@ export const handleGalleryPermission = (
   setImagePath: Dispatch<React.SetStateAction<string>>,
   isProfile: boolean = false,
 ) => {
-  check(appConstants.galleryPermission)
+  check(appConstants?.galleryPermission)
     .then(result => {
       switch (result) {
         case RESULTS.BLOCKED:
@@ -517,16 +526,25 @@ const selectImage = (
     )
     .catch(error => alertMessage(error.message));
 };
-
+export const clearConversation = ({
+  setShowMenu,
+  dispatch,
+  conversationId,
+}: ClearConversationTypes) => {
+  setShowMenu(false);
+  dispatch(clearChatAction.chatDataRequest({ conversationId }));
+};
 export const clearChat = ({
   setShowMenu,
-  clearConversation,
+  conversationId,
+  dispatch,
 }: ClearChatDataType) => {
   Alert.alert(strings.areYouSure, strings.clearChatAlert, [
     { text: strings.cancel, onPress: () => setShowMenu(false) },
     {
       text: strings.ok,
-      onPress: clearConversation,
+      onPress: () =>
+        clearConversation({ setShowMenu, conversationId, dispatch }),
     },
   ]);
 };
@@ -548,6 +566,8 @@ export const chatCreation = async ({
   documentName?: string;
   members?: memberDataType;
 }) => {
+  console.log('in chat creation');
+
   let message = {};
   const membersData = receiverId
     ? {
@@ -870,4 +890,59 @@ export const groupCreation = async ({
       batch.commit();
     }
   });
+};
+
+export const sub = ({ dispatch, user }: SubProps) => {
+  appConstants.userRef.onSnapshot(users => {
+    const fireStoreUserList: UsersDocumentDataType[] = [];
+    users.forEach(usersData => {
+      if (usersData?.data()?.uid !== user?.uid) {
+        fireStoreUserList.push(usersData?.data());
+      }
+    });
+    dispatch(userListDataAction.usersListSuccess(fireStoreUserList));
+  });
+};
+
+export const handleLogOut = ({ dispatch, persistor }: HandleLogOutProps) => {
+  auth()
+    .signOut()
+    .then(() => {
+      dispatch(userListUpdateAction.userListStatus(strings.backgroundState));
+      dispatch({ type: strings.signoutRequest });
+      persistor.flush();
+    })
+    .catch(error => error);
+};
+
+export const chatImageHandler = ({
+  imagePath,
+  dispatch,
+  setImagePath,
+}: ChatImageHandlerProps) => {
+  if (imagePath) {
+    const selectedImage = imagePath?.split('/');
+    const imageName = selectedImage?.[selectedImage?.length - 1];
+
+    const storagePath = `${appConstants.storageProfilePath}${imageName}`;
+
+    storage()
+      .ref(storagePath)
+      .putFile(imagePath)
+      .then(response => {
+        const stroredImagePath = Metrics.isAndroid
+          ? `${appConstants.storageProfilePath}${response?.metadata?.name}`
+          : `${response?.metadata?.name}`;
+
+        storage()
+          .ref(stroredImagePath)
+          .getDownloadURL()
+          .then(remoteImage => {
+            dispatch(userListUpdateAction.userListProfile(remoteImage));
+            setImagePath('');
+          })
+          .catch(error => alertMessage(error));
+      })
+      .catch(error => alertMessage(error));
+  }
 };

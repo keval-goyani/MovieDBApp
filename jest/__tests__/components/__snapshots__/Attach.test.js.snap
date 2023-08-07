@@ -1,0 +1,625 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Attach Attach snapShot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "bottom": undefined,
+      "flex": 1,
+      "flexDirection": "row",
+      "position": "absolute",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+        "paddingTop": undefined,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginVertical": undefined,
+        }
+      }
+      testID="custom-icon-rounder"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#F9EDFF",
+            "borderRadius": 23,
+            "opacity": 1,
+            "padding": undefined,
+          }
+        }
+        testID="icon-button"
+      >
+        <Image
+          source={
+            Object {
+              "testUri": "../../../app/assets/icons/fileIcon.png",
+            }
+          }
+          style={
+            Array [
+              Object {
+                "height": undefined,
+                "width": undefined,
+              },
+              Object {
+                "tintColor": "#642CB8",
+              },
+            ]
+          }
+        />
+      </View>
+      <Text
+        style={
+          Object {
+            "color": "#0d253f",
+            "fontSize": undefined,
+            "marginTop": undefined,
+          }
+        }
+      >
+        Document
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginVertical": undefined,
+        }
+      }
+      testID="custom-icon-rounder"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#04c6ff1a",
+            "borderRadius": 23,
+            "opacity": 1,
+            "padding": undefined,
+          }
+        }
+        testID="icon-button"
+      >
+        <Image
+          source={
+            Object {
+              "default": Object {
+                "attach": Object {
+                  "testUri": "../../../app/assets/icons/attach.png",
+                },
+                "avatar": Object {
+                  "testUri": "../../../app/assets/icons/user.png",
+                },
+                "backIcon": Object {
+                  "testUri": "../../../app/assets/icons/backIcon.png",
+                },
+                "camera": Object {
+                  "testUri": "../../../app/assets/icons/camera.png",
+                },
+                "cameraIcon": Object {
+                  "testUri": "../../../app/assets/icons/cameraIcon.png",
+                },
+                "chatBackground": Object {
+                  "testUri": "../../../app/assets/icons/chatBackground.png",
+                },
+                "close": Object {
+                  "testUri": "../../../app/assets/icons/close.png",
+                },
+                "comingSoon": Object {
+                  "testUri": "../../../app/assets/icons/comingSoon.png",
+                },
+                "communityIcon": Object {
+                  "testUri": "../../../app/assets/icons/communityIcon.png",
+                },
+                "document": Object {
+                  "testUri": "../../../app/assets/icons/documentIcon.png",
+                },
+                "documentIcon": Object {
+                  "testUri": "../../../app/assets/icons/documentIcon.png",
+                },
+                "dotMenu": Object {
+                  "testUri": "../../../app/assets/icons/dots.png",
+                },
+                "expandIcon": Object {
+                  "testUri": "../../../app/assets/icons/expandIcon.png",
+                },
+                "fileIcon": Object {
+                  "testUri": "../../../app/assets/icons/fileIcon.png",
+                },
+                "fullStop": Object {
+                  "testUri": "../../../app/assets/icons/fullStop.png",
+                },
+                "galleryIcon": Object {
+                  "testUri": "../../../app/assets/icons/galleryIcon.png",
+                },
+                "homeIcon": Object {
+                  "testUri": "../../../app/assets/icons/homeIcon.png",
+                },
+                "imageDocument": Object {
+                  "testUri": "../../../app/assets/icons/imageIcon.png",
+                },
+                "location": Object {
+                  "testUri": "../../../app/assets/icons/share.png",
+                },
+                "locationIcon": Object {
+                  "testUri": "../../../app/assets/icons/locationIcon.png",
+                },
+                "logout": Object {
+                  "testUri": "../../../app/assets/icons/logout.png",
+                },
+                "menuIcon": Object {
+                  "testUri": "../../../app/assets/icons/menuIcon.png",
+                },
+                "movieDbIcon": Object {
+                  "testUri": "../../../app/assets/icons/movieDBIcon.png",
+                },
+                "movieDbIcon2x": Object {
+                  "testUri": "../../../app/assets/icons/movieDB2x.png",
+                },
+                "movieDbIcon3x": Object {
+                  "testUri": "../../../app/assets/icons/movieDB3x.png",
+                },
+                "moviesIcon": Object {
+                  "testUri": "../../../app/assets/icons/moviesIcon.png",
+                },
+                "noItemFound": Object {
+                  "testUri": "../../../app/assets/icons/noItemFound.png",
+                },
+                "notFound": Object {
+                  "testUri": "../../../app/assets/icons/notFoundIcon.png",
+                },
+                "pdfDocument": Object {
+                  "testUri": "../../../app/assets/icons/pdfDocument 2.png",
+                },
+                "playIcon": Object {
+                  "testUri": "../../../app/assets/icons/playIcon.png",
+                },
+                "plus": Object {
+                  "testUri": "../../../app/assets/icons/plusSign.png",
+                },
+                "pptDocument": Object {
+                  "testUri": "../../../app/assets/icons/pptDocument.png",
+                },
+                "searchIcon": Object {
+                  "testUri": "../../../app/assets/icons/searchIcon.png",
+                },
+                "send": Object {
+                  "testUri": "../../../app/assets/icons/send.png",
+                },
+                "threeDotIcon": Object {
+                  "testUri": "../../../app/assets/icons/threeDotIcon.png",
+                },
+                "trailerIcon": Object {
+                  "testUri": "../../../app/assets/icons/trailerIcon.png",
+                },
+                "trending": Object {
+                  "testUri": "../../../app/assets/icons/trending.png",
+                },
+                "tv": Object {
+                  "testUri": "../../../app/assets/icons/tv.png",
+                },
+                "videoDocument": Object {
+                  "testUri": "../../../app/assets/icons/mp4Document.png",
+                },
+              },
+            }
+          }
+          style={
+            Array [
+              Object {
+                "height": undefined,
+                "width": undefined,
+              },
+              Object {
+                "tintColor": "#09B2E6",
+              },
+            ]
+          }
+        />
+      </View>
+      <Text
+        style={
+          Object {
+            "color": "#0d253f",
+            "fontSize": undefined,
+            "marginTop": undefined,
+          }
+        }
+      >
+        Camera
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginVertical": undefined,
+        }
+      }
+      testID="custom-icon-rounder"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#EBF4FF",
+            "borderRadius": 23,
+            "opacity": 1,
+            "padding": undefined,
+          }
+        }
+        testID="icon-button"
+      >
+        <Image
+          source={
+            Object {
+              "default": Object {
+                "attach": Object {
+                  "testUri": "../../../app/assets/icons/attach.png",
+                },
+                "avatar": Object {
+                  "testUri": "../../../app/assets/icons/user.png",
+                },
+                "backIcon": Object {
+                  "testUri": "../../../app/assets/icons/backIcon.png",
+                },
+                "camera": Object {
+                  "testUri": "../../../app/assets/icons/camera.png",
+                },
+                "cameraIcon": Object {
+                  "testUri": "../../../app/assets/icons/cameraIcon.png",
+                },
+                "chatBackground": Object {
+                  "testUri": "../../../app/assets/icons/chatBackground.png",
+                },
+                "close": Object {
+                  "testUri": "../../../app/assets/icons/close.png",
+                },
+                "comingSoon": Object {
+                  "testUri": "../../../app/assets/icons/comingSoon.png",
+                },
+                "communityIcon": Object {
+                  "testUri": "../../../app/assets/icons/communityIcon.png",
+                },
+                "document": Object {
+                  "testUri": "../../../app/assets/icons/documentIcon.png",
+                },
+                "documentIcon": Object {
+                  "testUri": "../../../app/assets/icons/documentIcon.png",
+                },
+                "dotMenu": Object {
+                  "testUri": "../../../app/assets/icons/dots.png",
+                },
+                "expandIcon": Object {
+                  "testUri": "../../../app/assets/icons/expandIcon.png",
+                },
+                "fileIcon": Object {
+                  "testUri": "../../../app/assets/icons/fileIcon.png",
+                },
+                "fullStop": Object {
+                  "testUri": "../../../app/assets/icons/fullStop.png",
+                },
+                "galleryIcon": Object {
+                  "testUri": "../../../app/assets/icons/galleryIcon.png",
+                },
+                "homeIcon": Object {
+                  "testUri": "../../../app/assets/icons/homeIcon.png",
+                },
+                "imageDocument": Object {
+                  "testUri": "../../../app/assets/icons/imageIcon.png",
+                },
+                "location": Object {
+                  "testUri": "../../../app/assets/icons/share.png",
+                },
+                "locationIcon": Object {
+                  "testUri": "../../../app/assets/icons/locationIcon.png",
+                },
+                "logout": Object {
+                  "testUri": "../../../app/assets/icons/logout.png",
+                },
+                "menuIcon": Object {
+                  "testUri": "../../../app/assets/icons/menuIcon.png",
+                },
+                "movieDbIcon": Object {
+                  "testUri": "../../../app/assets/icons/movieDBIcon.png",
+                },
+                "movieDbIcon2x": Object {
+                  "testUri": "../../../app/assets/icons/movieDB2x.png",
+                },
+                "movieDbIcon3x": Object {
+                  "testUri": "../../../app/assets/icons/movieDB3x.png",
+                },
+                "moviesIcon": Object {
+                  "testUri": "../../../app/assets/icons/moviesIcon.png",
+                },
+                "noItemFound": Object {
+                  "testUri": "../../../app/assets/icons/noItemFound.png",
+                },
+                "notFound": Object {
+                  "testUri": "../../../app/assets/icons/notFoundIcon.png",
+                },
+                "pdfDocument": Object {
+                  "testUri": "../../../app/assets/icons/pdfDocument 2.png",
+                },
+                "playIcon": Object {
+                  "testUri": "../../../app/assets/icons/playIcon.png",
+                },
+                "plus": Object {
+                  "testUri": "../../../app/assets/icons/plusSign.png",
+                },
+                "pptDocument": Object {
+                  "testUri": "../../../app/assets/icons/pptDocument.png",
+                },
+                "searchIcon": Object {
+                  "testUri": "../../../app/assets/icons/searchIcon.png",
+                },
+                "send": Object {
+                  "testUri": "../../../app/assets/icons/send.png",
+                },
+                "threeDotIcon": Object {
+                  "testUri": "../../../app/assets/icons/threeDotIcon.png",
+                },
+                "trailerIcon": Object {
+                  "testUri": "../../../app/assets/icons/trailerIcon.png",
+                },
+                "trending": Object {
+                  "testUri": "../../../app/assets/icons/trending.png",
+                },
+                "tv": Object {
+                  "testUri": "../../../app/assets/icons/tv.png",
+                },
+                "videoDocument": Object {
+                  "testUri": "../../../app/assets/icons/mp4Document.png",
+                },
+              },
+            }
+          }
+          style={
+            Array [
+              Object {
+                "height": undefined,
+                "width": undefined,
+              },
+              Object {
+                "tintColor": "#2B23C6",
+              },
+            ]
+          }
+        />
+      </View>
+      <Text
+        style={
+          Object {
+            "color": "#0d253f",
+            "fontSize": undefined,
+            "marginTop": undefined,
+          }
+        }
+      >
+        Gallery
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "marginVertical": undefined,
+        }
+      }
+      testID="custom-icon-rounder"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#FFEBF8",
+            "borderRadius": 23,
+            "opacity": 1,
+            "padding": undefined,
+          }
+        }
+        testID="icon-button"
+      >
+        <Image
+          source={
+            Object {
+              "default": Object {
+                "attach": Object {
+                  "testUri": "../../../app/assets/icons/attach.png",
+                },
+                "avatar": Object {
+                  "testUri": "../../../app/assets/icons/user.png",
+                },
+                "backIcon": Object {
+                  "testUri": "../../../app/assets/icons/backIcon.png",
+                },
+                "camera": Object {
+                  "testUri": "../../../app/assets/icons/camera.png",
+                },
+                "cameraIcon": Object {
+                  "testUri": "../../../app/assets/icons/cameraIcon.png",
+                },
+                "chatBackground": Object {
+                  "testUri": "../../../app/assets/icons/chatBackground.png",
+                },
+                "close": Object {
+                  "testUri": "../../../app/assets/icons/close.png",
+                },
+                "comingSoon": Object {
+                  "testUri": "../../../app/assets/icons/comingSoon.png",
+                },
+                "communityIcon": Object {
+                  "testUri": "../../../app/assets/icons/communityIcon.png",
+                },
+                "document": Object {
+                  "testUri": "../../../app/assets/icons/documentIcon.png",
+                },
+                "documentIcon": Object {
+                  "testUri": "../../../app/assets/icons/documentIcon.png",
+                },
+                "dotMenu": Object {
+                  "testUri": "../../../app/assets/icons/dots.png",
+                },
+                "expandIcon": Object {
+                  "testUri": "../../../app/assets/icons/expandIcon.png",
+                },
+                "fileIcon": Object {
+                  "testUri": "../../../app/assets/icons/fileIcon.png",
+                },
+                "fullStop": Object {
+                  "testUri": "../../../app/assets/icons/fullStop.png",
+                },
+                "galleryIcon": Object {
+                  "testUri": "../../../app/assets/icons/galleryIcon.png",
+                },
+                "homeIcon": Object {
+                  "testUri": "../../../app/assets/icons/homeIcon.png",
+                },
+                "imageDocument": Object {
+                  "testUri": "../../../app/assets/icons/imageIcon.png",
+                },
+                "location": Object {
+                  "testUri": "../../../app/assets/icons/share.png",
+                },
+                "locationIcon": Object {
+                  "testUri": "../../../app/assets/icons/locationIcon.png",
+                },
+                "logout": Object {
+                  "testUri": "../../../app/assets/icons/logout.png",
+                },
+                "menuIcon": Object {
+                  "testUri": "../../../app/assets/icons/menuIcon.png",
+                },
+                "movieDbIcon": Object {
+                  "testUri": "../../../app/assets/icons/movieDBIcon.png",
+                },
+                "movieDbIcon2x": Object {
+                  "testUri": "../../../app/assets/icons/movieDB2x.png",
+                },
+                "movieDbIcon3x": Object {
+                  "testUri": "../../../app/assets/icons/movieDB3x.png",
+                },
+                "moviesIcon": Object {
+                  "testUri": "../../../app/assets/icons/moviesIcon.png",
+                },
+                "noItemFound": Object {
+                  "testUri": "../../../app/assets/icons/noItemFound.png",
+                },
+                "notFound": Object {
+                  "testUri": "../../../app/assets/icons/notFoundIcon.png",
+                },
+                "pdfDocument": Object {
+                  "testUri": "../../../app/assets/icons/pdfDocument 2.png",
+                },
+                "playIcon": Object {
+                  "testUri": "../../../app/assets/icons/playIcon.png",
+                },
+                "plus": Object {
+                  "testUri": "../../../app/assets/icons/plusSign.png",
+                },
+                "pptDocument": Object {
+                  "testUri": "../../../app/assets/icons/pptDocument.png",
+                },
+                "searchIcon": Object {
+                  "testUri": "../../../app/assets/icons/searchIcon.png",
+                },
+                "send": Object {
+                  "testUri": "../../../app/assets/icons/send.png",
+                },
+                "threeDotIcon": Object {
+                  "testUri": "../../../app/assets/icons/threeDotIcon.png",
+                },
+                "trailerIcon": Object {
+                  "testUri": "../../../app/assets/icons/trailerIcon.png",
+                },
+                "trending": Object {
+                  "testUri": "../../../app/assets/icons/trending.png",
+                },
+                "tv": Object {
+                  "testUri": "../../../app/assets/icons/tv.png",
+                },
+                "videoDocument": Object {
+                  "testUri": "../../../app/assets/icons/mp4Document.png",
+                },
+              },
+            }
+          }
+          style={
+            Array [
+              Object {
+                "height": undefined,
+                "width": undefined,
+              },
+              Object {
+                "tintColor": "#ff0080",
+              },
+            ]
+          }
+        />
+      </View>
+      <Text
+        style={
+          Object {
+            "color": "#0d253f",
+            "fontSize": undefined,
+            "marginTop": undefined,
+          }
+        }
+      >
+        Map
+      </Text>
+    </View>
+  </View>
+</View>
+`;

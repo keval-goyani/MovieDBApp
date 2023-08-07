@@ -1,7 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
-import TextTicker from 'react-native-text-ticker';
+import {
+  Image,
+  Pressable,
+  PressableStateCallbackType,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { ChatMenu, ProfileImage } from '../components';
 import {
   appConstants,
@@ -28,14 +34,22 @@ const ChatHeader = ({
   receiverId,
 }: ChatHeaderDataType) => {
   const navigation: NavigationDataType = useNavigation();
-  const [isTextMoving, setIsTextMoving] = useState(appConstants.trueValue);
   const userInfo = userStatus ?? membersName;
+
+  const styleFn = ({ pressed }: PressableStateCallbackType) => [
+    {
+      backgroundColor: pressed ? Color.transparentGrey : Color.darkBlue,
+    },
+    styles.userNameAndStatus,
+  ];
 
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={Icons.backIcon} style={styles.leftIconStyle} />
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          testID={'goBackButton'}>
+          <Image source={Icons?.backIcon} style={styles.leftIconStyle} />
         </TouchableOpacity>
         <View style={styles.profileView}>
           <View style={styles.profile}>
@@ -44,6 +58,7 @@ const ChatHeader = ({
               isChatHeader={appConstants.trueValue}
             />
             <Pressable
+              testID={'profileImagePressable'}
               onPress={() =>
                 navigation.navigate(navigationStrings.ProfileInfo, {
                   profileImage,
@@ -54,42 +69,22 @@ const ChatHeader = ({
                   groupName,
                 })
               }
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed
-                    ? Color.transparentGrey
-                    : Color.darkBlue,
-                },
-                styles.userNameAndStatus,
-              ]}>
+              style={styleFn}>
               <Text style={styles.username}>{username}</Text>
-              {isTextMoving ? (
-                <TextTicker
-                  loop={false}
-                  bounce={false}
-                  style={styles.statusOrMembers}
-                  duration={5000}
-                  marqueeDelay={1500}
-                  onMarqueeComplete={() =>
-                    setIsTextMoving(appConstants.falseValue)
-                  }>
-                  {userInfo}
-                </TextTicker>
-              ) : (
-                <Text numberOfLines={1} style={styles.statusOrMembers}>
-                  {userInfo}
-                </Text>
-              )}
+              <Text numberOfLines={1} style={styles.statusOrMembers}>
+                {userInfo}
+              </Text>
             </Pressable>
           </View>
         </View>
         <Pressable
+          testID={'dotsMenu'}
           onPress={() => {
             setShowMenu(!showMenu);
             setIsAttach(false);
             setCameraModal(false);
           }}>
-          <Image source={Icons.dotMenu} style={styles.dotsMenu} />
+          <Image source={Icons?.dotMenu} style={styles.dotsMenu} />
         </Pressable>
       </View>
       {showMenu && (

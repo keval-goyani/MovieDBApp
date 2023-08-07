@@ -25,6 +25,7 @@ const CustomSkeleton = ({ width, height }: SkeletonProps) => {
 
   return (
     <Animated.View
+      testID={'Skeleton'}
       style={[{ opacity: opacity.current, height, width }, styles.skeleton]}
     />
   );

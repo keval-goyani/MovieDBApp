@@ -14,6 +14,8 @@ const ProfileImage = ({
   defaultUserImageStyle,
   isChatHeader = appConstants.falseValue,
 }: ProfileImageDataType) => {
+  console.log(profileImage, '<==profileImage');
+
   const defaultImage = groupName ? Icons?.communityIcon : Icons?.avatar;
   const styles = profileStyles(profileImage, groupName);
   const profileImageStyle = StyleSheet.flatten([
@@ -31,7 +33,7 @@ const ProfileImage = ({
     isChatHeader === appConstants.falseValue;
 
   return (
-    <View style={profileContainerStyle}>
+    <View style={profileContainerStyle} testID={'profile-image'}>
       {profileImage ? (
         <FastImage
           source={{

@@ -100,6 +100,8 @@ const HomeScreen = () => {
     !searchModal && setSearchQuery('');
   }, [searchModal]);
 
+  console.log(popularMovieFilterData, '<==popularMovieFilterData');
+
   return (
     <View style={styles.container}>
       <Header

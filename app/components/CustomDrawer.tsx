@@ -1,7 +1,5 @@
-import auth from '@react-native-firebase/auth';
-import storage from '@react-native-firebase/storage';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Alert,
   Image,
@@ -12,20 +10,14 @@ import {
 } from 'react-native';
 import Edit from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  appConstants,
-  CustomDrawerDataType,
-  navigationStrings,
-  strings,
-} from '../constants';
+import { CustomDrawerDataType, navigationStrings, strings } from '../constants';
 import { authDataSelectors } from '../redux/AuthRedux';
-import userListUpdateAction from '../redux/ChatUserListRedux';
 import selectedAction, {
   selectedTabSelectors,
 } from '../redux/DrawerSelectRedux';
 import reduxStore from '../redux/store';
-import { alertMessage } from '../services';
-import { Color, Icons, Metrics, moderateScale } from '../theme';
+import { chatImageHandler, handleLogOut } from '../services';
+import { Color, Icons, moderateScale } from '../theme';
 import EditProfile from './EditProfile';
 import styles from './styles/CustomDrawerStyle';
 
@@ -68,47 +60,9 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
     return themeType[type]();
   };
 
-  const chatImageHandler = useCallback(() => {
-    if (imagePath) {
-      const selectedImage = imagePath?.split('/');
-      const imageName = selectedImage?.[selectedImage?.length - 1];
-      const storagePath = `${appConstants.storageProfilePath}${imageName}`;
-
-      storage()
-        .ref(storagePath)
-        .putFile(imagePath)
-        .then(response => {
-          const stroredImagePath = Metrics.isAndroid
-            ? `${appConstants.storageProfilePath}${response?.metadata?.name}`
-            : `${response?.metadata?.name}`;
-
-          storage()
-            .ref(stroredImagePath)
-            .getDownloadURL()
-            .then(remoteImage => {
-              dispatch(userListUpdateAction.userListProfile(remoteImage));
-              setImagePath('');
-            })
-            .catch(error => alertMessage(error));
-        })
-        .catch(error => alertMessage(error));
-    }
-  }, [dispatch, imagePath]);
-
   useEffect(() => {
-    chatImageHandler();
-  }, [chatImageHandler]);
-
-  const handleLogOut = () => {
-    auth()
-      .signOut()
-      .then(() => {
-        dispatch(userListUpdateAction.userListStatus(strings.backgroundState));
-        dispatch({ type: strings.signoutRequest });
-        persistor.flush();
-      })
-      .catch(error => error);
-  };
+    chatImageHandler({ imagePath, dispatch, setImagePath });
+  }, [dispatch, imagePath]);
 
   const userLogOut = () => {
     Alert.alert(strings.warning, strings.confirm, [
@@ -118,7 +72,7 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
       },
       {
         text: strings.ok,
-        onPress: handleLogOut,
+        onPress: handleLogOut({ dispatch, persistor }),
       },
     ]);
   };
@@ -187,13 +141,19 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
                   uri: user?.profileImage,
                 }}
                 style={profileImagestyle}
+                testID={'user-image'}
               />
             ) : (
               <View style={profileImagestyle}>
-                <Image source={Icons.avatar} style={styles.defaultProfile} />
+                <Image
+                  source={Icons?.avatar}
+                  style={styles.defaultProfile}
+                  testID={'default-profile-image'}
+                />
               </View>
             )}
             <TouchableOpacity
+              testID="edit-profile"
               style={styles.editProfileButton}
               activeOpacity={0.7}
               onPress={() => setOpen(true)}>
@@ -229,7 +189,7 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
             });
           }}
           icon={() => (
-            <Image source={Icons.trending} style={trendingIconStyle} />
+            <Image source={Icons?.trending} style={trendingIconStyle} />
           )}
           labelStyle={trendingLabelStyle}
           style={trendingActiveTabStyle}
@@ -243,7 +203,7 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
             });
           }}
           icon={() => (
-            <Image source={Icons.moviesIcon} style={movieIconStyle} />
+            <Image source={Icons?.moviesIcon} style={movieIconStyle} />
           )}
           labelStyle={moviesLabelStyle}
           style={moviesActiveTabStyle}
@@ -251,7 +211,7 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
         <DrawerItem
           label={strings.tvShows}
           onPress={() => {}}
-          icon={() => <Image source={Icons.tv} style={styles.icon} />}
+          icon={() => <Image source={Icons?.tv} style={styles.icon} />}
           labelStyle={styles.label}
         />
         <DrawerItem
@@ -263,13 +223,14 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
             });
           }}
           icon={() => (
-            <Image source={Icons.communityIcon} style={CommunityIconStyle} />
+            <Image source={Icons?.communityIcon} style={CommunityIconStyle} />
           )}
           labelStyle={CommunityLabelStyle}
           style={CommunityActiveTabStyle}
         />
         <View style={styles.logOutButtonContainer}>
           <TouchableOpacity
+            testID="logout-button"
             activeOpacity={3}
             style={[
               styles.touchable,
@@ -285,7 +246,7 @@ const CustomDrawer: FC<CustomDrawerDataType> = props => {
             }}
             onPress={userLogOut}>
             <View style={styles.logOutStyle}>
-              <Image source={Icons.logout} style={[styles.logOutIcon]} />
+              <Image source={Icons?.logout} style={[styles.logOutIcon]} />
               <Text style={styles.logOutText}>Logout</Text>
             </View>
           </TouchableOpacity>

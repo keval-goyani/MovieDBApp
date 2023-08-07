@@ -1,10 +1,11 @@
 import { act, renderHook } from '@testing-library/react-native';
-import useApiDemo from '../../../../app/components/hooks/useApiDemo';
+import useApiDemo from '   ../../../../app/components/hooks/useApiDemo';
 
 describe('useApiDemo hook', () => {
   it('render users list', () => {
     const data = { name: 'henry' };
-    const { result } = renderHook(useApiDemo);
+    const { result } = renderHook(useApiDemo(100));
+
     act(async () => {
       await result.current.users[data];
     });

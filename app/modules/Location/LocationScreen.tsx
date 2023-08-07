@@ -34,6 +34,8 @@ const LocationScreen = ({ route }: ChatScreenDataType) => {
   const chatValue = isFromChat ?? true;
   const headerTitle = isFromChat ? username : strings.sendLocation;
 
+  console.log('in location screen');
+
   useEffect(() => {
     if (!isFromChat) {
       Geolocation.getCurrentPosition(

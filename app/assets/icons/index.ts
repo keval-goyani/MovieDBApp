@@ -28,7 +28,7 @@ export default {
   fullStop: require('./fullStop.png'),
   imageDocument: require('./imageIcon.png'),
   videoDocument: require('./mp4Document.png'),
-  pdfDocument: require('./pdfDocument.png'),
+  pdfDocument: require('./pdfDocument 2.png'),
   pptDocument: require('./pptDocument.png'),
   document: require('./documentIcon.png'),
   plus: require('./plusSign.png'),

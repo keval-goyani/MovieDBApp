@@ -12,7 +12,7 @@ const DocumentFooter = ({ page, fileType, time }: DocumentFooterProps) => {
     <View style={styles.documentDetails}>
       {typeOfPage && (
         <>
-          <Text style={styles.pageNo}>
+          <Text style={styles.pageNo} testID={'Text according to FileType'}>
             {` ${strings.numberOfPages} ${slides}`}
           </Text>
           <Image source={Icons.fullStop} style={styles.dotIcon} />
@@ -20,8 +20,12 @@ const DocumentFooter = ({ page, fileType, time }: DocumentFooterProps) => {
       )}
       <Text style={styles.pageNo}>{strings.sizeOfDocument}</Text>
       <Image source={Icons.fullStop} style={styles.dotIcon} />
-      <Text style={styles.pageNo}>{fileType}</Text>
-      <Text style={styles.timeStyle}>{time}</Text>
+      <Text style={styles.pageNo} testID={'fileType-text'}>
+        {fileType}
+      </Text>
+      <Text style={styles.timeStyle} testID={'time-text'}>
+        {time}
+      </Text>
     </View>
   );
 };

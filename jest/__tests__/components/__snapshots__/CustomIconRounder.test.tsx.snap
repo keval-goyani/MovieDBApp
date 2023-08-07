@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Custom Icon Rounder should take snapshot of customIconRounder 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "marginVertical": undefined,
+    }
+  }
+  testID="custom-icon-rounder"
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "green",
+        "borderRadius": 23,
+        "opacity": 1,
+        "padding": undefined,
+      }
+    }
+    testID="icon-button"
+  >
+    <Image
+      source={
+        Object {
+          "testUri": "../../../app/assets/icons/fileIcon.png",
+        }
+      }
+      style={
+        Array [
+          Object {
+            "height": undefined,
+            "width": undefined,
+          },
+          Object {
+            "tintColor": "yellow",
+          },
+        ]
+      }
+    />
+  </View>
+  <Text
+    style={
+      Object {
+        "color": "#0d253f",
+        "fontSize": undefined,
+        "marginTop": undefined,
+      }
+    }
+  >
+    Document
+  </Text>
+</View>
+`;

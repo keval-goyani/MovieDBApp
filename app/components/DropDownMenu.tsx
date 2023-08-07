@@ -18,6 +18,8 @@ const DropDownMenu: FC<DropDownDataType> = ({
   dropDownTintStyle,
   setMethod,
 }) => {
+  console.log(data, '<==data');
+
   const initialValue = data?.[0].name;
   const [showOptions, setShowOptions] = useState(false);
   const [selectedItem, setSelectedItem] = useState(initialValue);

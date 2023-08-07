@@ -37,7 +37,7 @@ const GroupParticipants = ({
         style={styles.listItem}
         onPress={() => handleOnPress()}
         activeOpacity={0.8}>
-        <View style={styles.itemContainer}>
+        <View style={styles.itemContainer} testID={'Group-Participants'}>
           <ProfileImage
             profileImage={item?.profileImage}
             customStyle={styles.avatar}

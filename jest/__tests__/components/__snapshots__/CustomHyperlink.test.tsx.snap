@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomHyperlink should take snapshot of customHyperlink 1`] = `
+Array [
+  <Text
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": undefined,
+        "marginTop": undefined,
+        "textAlign": "center",
+      }
+    }
+  >
+    Don't Have Account?
+  </Text>,
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "center",
+        "opacity": 1,
+        "width": undefined,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#01b4e4",
+          "fontSize": undefined,
+          "textAlign": "center",
+        }
+      }
+    >
+      Create One!
+    </Text>
+  </View>,
+]
+`;

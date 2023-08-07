@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import {
   Control,
   FormState,
@@ -13,7 +13,9 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import { ImmutableArray } from 'seamless-immutable';
+import { AnyAction } from 'redux';
+import { Persistor } from 'redux-persist';
+import { ImmutableArray, ImmutableObject } from 'seamless-immutable';
 import { appReducer } from '../redux';
 
 interface genresDataType {
@@ -602,7 +604,8 @@ interface CustomButtonDataType {
 
 interface ClearChatDataType {
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
-  clearConversation: () => void;
+  conversationId: string;
+  dispatch: Dispatch<AnyAction>;
 }
 
 interface LocationCoordsProps {
@@ -987,6 +990,28 @@ interface CustomProfileCardProps {
   groupName: string;
 }
 
+interface ClearConversationTypes {
+  setShowMenu: Dispatch<SetStateAction<boolean>>;
+  dispatch: Dispatch<AnyAction>;
+  conversationId: string;
+}
+
+interface SubProps {
+  dispatch: Dispatch<AnyAction>;
+  user: ImmutableObject<UserDataType> | null;
+}
+
+interface HandleLogOutProps {
+  dispatch: Dispatch<AnyAction>;
+  persistor: Persistor;
+}
+
+interface ChatImageHandlerProps {
+  imagePath: string;
+  dispatch: Dispatch<AnyAction>;
+  setImagePath: Dispatch<React.SetStateAction<string>>;
+}
+
 export type {
   AddUserListProps,
   AttachDataType,
@@ -1104,4 +1129,8 @@ export type {
   GroupParticipantsProps,
   RenderItemOfGroupParticipants,
   CustomProfileCardProps,
+  ClearConversationTypes,
+  SubProps,
+  HandleLogOutProps,
+  ChatImageHandlerProps,
 };

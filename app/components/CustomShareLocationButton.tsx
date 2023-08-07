@@ -45,6 +45,7 @@ const CustomShareLocationButton = ({
       {!isFromChat && (
         <View style={styles.shareButton}>
           <TouchableOpacity
+            testID="share-location-button"
             style={styles.locationShareButton}
             onPress={() =>
               shareLocationHandler({

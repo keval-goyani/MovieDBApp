@@ -81,7 +81,7 @@ const ChatInput: FC<ChatInputDataType> = ({
   }, [fixedMessage, message]);
 
   const sendMessageHandler = useCallback(() => {
-    if (message.trim().length !== 0) {
+    if (message.trim().len gth !== 0) {
       textMessageCreation();
       setMessage('');
     }
@@ -92,7 +92,7 @@ const ChatInput: FC<ChatInputDataType> = ({
   }, [imageMessageCreation, imageUrl]);
 
   useEffect(() => {
-    documentData.documentUrl && documentMessageCreation();
+    documentData?.documentUrl && documentMessageCreation();
   }, [documentMessageCreation, documentData]);
 
   useEffect(() => {
@@ -104,6 +104,7 @@ const ChatInput: FC<ChatInputDataType> = ({
       <View style={styles.innerContainer}>
         <View style={styles.inputAndSend}>
           <TextInput
+            testID="textInput"
             multiline
             placeholder={strings.chatPlaceholder}
             placeholderTextColor={Color.darkGray}
@@ -117,25 +118,28 @@ const ChatInput: FC<ChatInputDataType> = ({
             ref={messageInput}
           />
           <TouchableOpacity
+            testID="AttachIcon"
             onPress={() => {
               setIsAttach(!isAttach);
               setCameraModal(false);
               setShowMenu(false);
               Keyboard.dismiss();
             }}>
-            <Image source={Icons.attach} style={styles.inputIcon} />
+            <Image source={Icons?.attach} style={styles.inputIcon} />
           </TouchableOpacity>
           <TouchableOpacity
+            testID="CameraIcon"
             onPress={() => {
               setCameraModal(!cameraModal);
               setIsAttach(false);
               setShowMenu(false);
               Keyboard.dismiss();
             }}>
-            <Image source={Icons.camera} style={styles.inputIcon} />
+            <Image source={Icons?.camera} style={styles.inputIcon} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity
+          testID="sendButton"
           style={styles.sendButtonView}
           onPress={() => {
             sendMessageHandler();
@@ -143,7 +147,7 @@ const ChatInput: FC<ChatInputDataType> = ({
             setIsAttach(false);
             setShowMenu(false);
           }}>
-          <Image source={Icons.send} style={styles.sendButton} />
+          <Image source={Icons?.send} style={styles.sendButton} />
         </TouchableOpacity>
       </View>
       {cameraModal && (

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Custom skeleton should take snapshot of customSkeleton 1`] = `
+<View
+  collapsable={false}
+  style={
+    Object {
+      "backgroundColor": "#0d253f",
+      "borderRadius": 10,
+      "height": 20,
+      "opacity": 0.3,
+      "width": 10,
+    }
+  }
+/>
+`;

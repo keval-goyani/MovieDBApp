@@ -9,13 +9,14 @@ const CommonGroupCard = ({
   isEmail,
   membersList,
   membersArray,
-  groupInitializerId,
+  groupInitializerId,  
   conversationId,
 }: CommonGroupCardProps) => {
   const groupText =
-    membersList.length > 1
-      ? `${strings.commonGroups}`
+    membersList.length > 1 
+      ? `${strings.commonGroups}` 
       : `${strings.commonGroup}`;
+
   return (
     <View style={styles.commonGroupContainer}>
       <View style={styles.commonGroupHeader}>

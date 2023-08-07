@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom profile card should take a snapshot of custom profile card 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "alignSelf": "center",
+      "backgroundColor": "#FFFFFF",
+      "borderRadius": 30,
+      "elevation": 20,
+      "paddingVertical": undefined,
+      "position": "absolute",
+      "shadowColor": "#BBCFD5",
+      "shadowOffset": Object {
+        "height": 2,
+        "width": 1,
+      },
+      "shadowOpacity": 0.9,
+      "top": 0,
+      "width": undefined,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "marginVertical": undefined,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#0d253f",
+          "borderColor": "#01b4e4",
+          "borderRadius": 50,
+          "borderWidth": 0,
+          "height": undefined,
+          "justifyContent": "center",
+          "width": undefined,
+        }
+      }
+      testID="profile-image"
+    >
+      <View
+        style={
+          Object {
+            "borderRadius": 50,
+            "height": undefined,
+            "tintColor": "#01b4e4",
+            "width": undefined,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginHorizontal": undefined,
+        "marginVertical": undefined,
+      }
+    }
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        Object {
+          "color": "#0d253f",
+          "fontSize": undefined,
+          "fontWeight": "700",
+        }
+      }
+    >
+      chandani
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "marginHorizontal": undefined,
+        "marginVertical": undefined,
+      }
+    }
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        Object {
+          "color": "#0d253f",
+          "fontSize": undefined,
+        }
+      }
+    >
+      chandani@gmail.com
+    </Text>
+  </View>
+</View>
+`;

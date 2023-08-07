@@ -1,5 +1,6 @@
-import { act, fireEvent, render, cleanup } from '@testing-library/react-native';
-import React from 'react';
+import { navigation } from '@react-navigation/native';
+import { fireEvent, render, waitFor } from 'p';
+import React, { useState } from 'react';
 import { AddUsersList } from '../../../app/components';
 
 const data = [
@@ -8,133 +9,116 @@ const data = [
     username: 'chandani',
   },
   {
-    email: 'chandani1@gmail.com',
-    username: 'chandani1',
+    email: 'chandani@gmail.com',
+    username: 'chandani3',
   },
 ];
-const selectedItems = [
-  { id: 1, name: 'John' },
-  { id: 2, name: 'Jane' },
-];
-const fetchingUser = jest.fn();
-// const cleanup = jest.fn();
 
-const selectUsers = async selectedUser => {
-  if (!selectedItems?.includes(selectedUser)) {
-    const filteredList = selectedItems?.filter(items => items !== selectedUser);
-    return filteredList;
-  }
-};
+const data2 = [
+  {
+    email: 'chandani@gmail.com',
+    username: 'chandani',
+  },
+];
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useState: jest.fn(),
+}));
 
 describe('AddUserList', () => {
+  beforeEach(() => {
+    useState.mockImplementation(jest.requireActual('react').useState);
+  });
+
   it('should take a snapshot of addUserList', () => {
-    const { toJSON } = render(
-      <AddUsersList userListData={[]} setSelectedUsers={jest.fn()} />,
+    const { toJSON, debug } = render(
+      <AddUsersList userListData={[]} setSelectedUsers={() => jest.fn()} />,
     );
+    debug();
     expect(toJSON()).toMatchSnapshot();
   });
 
-  it('on on press button ', () => {
+  it('should call handleOnPress on the onPress and navigate to chat Screen if no item are selected', () => {
     const { getByTestId } = render(
       <AddUsersList userListData={data} setSelectedUsers={jest.fn()} />,
     );
     const button = getByTestId('button-for-test0');
     fireEvent.press(button);
-    // const lengthOfSelectedItems = true;
-    // expect(lengthOfSelectedItems).toBe(true);
+    expect(navigation.goBack).toHaveBeenCalled();
+    expect(navigation.navigate).toHaveBeenCalledWith('Chat', {
+      conversationId: '5ddf976ba364b169e8981460ff50ea8d',
+      userEmail: 'chandani@gmail.com',
+      username: 'chandani',
+    });
   });
 
-  it('on long-press button return selectedUser', async () => {
-    const initialState = [
-      { id: 1, name: 'John' },
-      { id: 2, name: 'Jane' },
-    ];
-    React.useState = jest.fn().mockReturnValue([initialState, jest.fn()]);
-    const selectedUser = { id: 1, name: 'John' };
-
-    const { getByTestId } = await render(
+  it('should call handleOnPress on the onPress and call the selectUsers if item are selected', () => {
+    const someMockOrSpySetter = () => jest.fn();
+    const selectUsers = jest.fn();
+    useState.mockImplementation(() => [
+      [{ email: 'chandani@gmail.com', username: 'chandani2' }],
+      someMockOrSpySetter,
+    ]);
+    const { getByTestId } = render(
       <AddUsersList userListData={data} setSelectedUsers={jest.fn()} />,
     );
-    const longPressButton = await getByTestId('button-for-test0');
-    // fireEvent(longPressButton, 'onLongPress', { email: 'test@example.com' });
-    fireEvent(longPressButton, 'onLongPress');
-    // fireEvent.longPress(longPressButton);
-    act(() => {
-      selectUsers(selectedUser);
+    const button = getByTestId('button-for-test0');
+    fireEvent.press(button);
+
+    waitFor(() => {
+      expect(selectUsers).toHaveBeenCalledWith(data2);
     });
-    expect(selectedItems).toEqual([
-      { id: 1, name: 'John' },
-      { id: 2, name: 'Jane' },
+  });
+
+  it('should filter out the selected item list when user longPress the button and user is already present in the selection list', () => {
+    const someMockOrSpySetter = () => jest.fn();
+    useState.mockImplementation(() => [
+      [{ email: 'chandani@gmail.com', username: 'chandani' }],
+      someMockOrSpySetter,
     ]);
-  });
-
-  it('calls fetchingUser when component is focused', async () => {
-    // afterEach(cleanup);
-    try {
-      if (
-        render(
-          <AddUsersList userListData={data} setSelectedUsers={jest.fn()} />,
-        )
-      ) {
-        // Access the root element of the test renderer
-        const root = render(
-          <AddUsersList userListData={data} setSelectedUsers={jest.fn()} />,
-        );
-      }
-    } catch (error) {
-      // Do nothing
-    }
-    // const { unmount } = render(
-    //   <AddUsersList userListData={data} setSelectedUsers={jest.fn()} />,
-    // );
-    // unmount();
-    await act(async () => {
-      render(<AddUsersList userListData={data} setSelectedUsers={jest.fn()} />);
+    const { getByTestId } = render(
+      <AddUsersList userListData={data} setSelectedUsers={jest.fn()} />,
+    );
+    const longPressButton = getByTestId('button-for-test0');
+    fireEvent(longPressButton, 'onLongPress');
+    waitFor(() => {
+      expect(someMockOrSpySetter).toHaveBeenCalledWith([
+        { email: 'chandani@gmail.com', username: 'chandani' },
+      ]);
     });
-    expect(fetchingUser).toHaveBeenCalledTimes(1);
   });
 
-  // it('on long-press button return filteredList  ', async () => {
-  //   const { getByTestId } = await render(
-  //     <AddUsersList userListData={data} setSelectedUsers={jest.fn()} />,
-  //   );
-  //   const longPressButton = await getByTestId('button-for-test0');
-  //   fireEvent(longPressButton, 'onLongPress', { email: 'test@example.com' });
+  it('should update the selected item list when user longPress the button', () => {
+    const someMockOrSpySetter = () => jest.fn();
+    useState.mockImplementation(() => [
+      [{ email: 'chandani@gmail.com', username: 'chandani2' }],
+      someMockOrSpySetter,
+    ]);
 
-  //   const result = selectUsers({ email: 'keval@gmail.com' }).then(() => {
-  //     expect(result).toBe(selectedItems);
-  //   });
-  // });
+    const { getByTestId } = render(
+      <AddUsersList userListData={data} setSelectedUsers={jest.fn()} />,
+    );
 
-  // it('should call fetchingUser when screen is focused', async () => {
-  // const AddUsersList = () => {
-  //   useFocusEffect(
-  //     useCallback(() => {
-  //       const sub = mockedFetchingUser();
-  //       return () => sub;
-  //     }, []),
-  //   );
-  //   return <></>;
-  // };
-  // await waitFor(() => {
-  //   expect(fetchingUser).toHaveBeenCalled();
-  // });
-  // unmount();
-  // act(() => {
-  //   unmount();
-  // });
-  // expect(cleanup).toHaveBeenCalledTimes(0);
-  // expect(mockedFetchingUser).toHaveBeenCalledTimes(1);
-  // act(() => {
-  //   useFocusEffect.mock.calls[0];
-  // });
-  // expect(fetchingUser).toHaveBeenCalledTimes(1);
-  // const useCallbackMock = jest.fn();
-  // React.useCallback = jest.fn(() => useCallbackMock);
-  render(<AddUsersList userListData={data} setSelectedUsers={jest.fn()} />);
-  act(() => {
-    fireEvent(document, new FocusEvent('focus'));
-    expect(fetchingUser).toHaveBeenCalledTimes(1);
+    const longPressButton = getByTestId('button-for-test0');
+    fireEvent(longPressButton, 'onLongPress');
+    waitFor(() => {
+      expect(someMockOrSpySetter).toHaveBeenCalledWith([
+        { email: 'chandani@gmail.com', username: 'chandani2' },
+      ]);
+    });
   });
-  // });
+
+  it('should render the overlay and check button in the userList when user is selected', () => {
+    const someMockOrSpySetter = () => jest.fn();
+    useState.mockImplementation(() => [
+      [{ email: 'chandani@gmail.com', username: 'chandani' }],
+      someMockOrSpySetter,
+    ]);
+    const { queryByTestId } = render(
+      <AddUsersList userListData={data2} setSelectedUsers={jest.fn()} />,
+    );
+    const check = queryByTestId('check');
+    expect(check).toBeTruthy();
+  });
 });

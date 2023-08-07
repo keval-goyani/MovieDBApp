@@ -22,6 +22,7 @@ import { styles } from './styles/EditProfileStyles';
 
 const EditProfile = ({ setOpen, setImagePath }: EditProfileProps) => {
   const dispatch = useDispatch();
+  console.log('in modal');
 
   const removeProfile = () => {
     dispatch(deleteProfileAction.userListProfile(strings.emptyString));
@@ -30,8 +31,8 @@ const EditProfile = ({ setOpen, setImagePath }: EditProfileProps) => {
 
   return (
     <>
-      <Modal transparent={true}>
-        <SafeAreaView style={styles.container}>
+      <Modal transparent={true} >
+        <SafeAreaView style={styles.container} testID={'edit-profile-modal'}>
           <TouchableWithoutFeedback onPress={() => setOpen(false)}>
             <View style={styles.firstContainer} />
           </TouchableWithoutFeedback>
@@ -58,6 +59,7 @@ const EditProfile = ({ setOpen, setImagePath }: EditProfileProps) => {
               <View style={styles.optionsContainer}>
                 <View style={styles.optionContainer}>
                   <TouchableOpacity
+                  testID="camera-button"
                     style={styles.cameraContainer}
                     onPress={() => {
                       handleCameraPermission(
@@ -67,7 +69,7 @@ const EditProfile = ({ setOpen, setImagePath }: EditProfileProps) => {
                       setOpen(false);
                     }}>
                     <Image
-                      source={Icons.cameraIcon}
+                      source={Icons?.cameraIcon}
                       style={styles.cameraIconStyle}
                     />
                   </TouchableOpacity>
@@ -84,7 +86,7 @@ const EditProfile = ({ setOpen, setImagePath }: EditProfileProps) => {
                       setOpen(false);
                     }}>
                     <Image
-                      source={Icons.galleryIcon}
+                      source={Icons?.galleryIcon}
                       style={styles.galleryIconStyle}
                     />
                   </TouchableOpacity>

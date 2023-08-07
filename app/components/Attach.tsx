@@ -45,20 +45,20 @@ const Attach: FC<AttachDataType> = ({
     }
   };
 
-  const locationHandler = () => {
-    SystemSetting.isLocationEnabled()
+  const locationHandler = async () => {
+    await SystemSetting.isLocationEnabled()
       .then(enable => {
         turnOnLocation(enable);
       })
       .catch(error => Alert.alert(strings.warning, error));
   };
-
+ 
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <CustomIconRounder
           backgroundColor={styles.documentBackgroundColor}
-          path={Icons.fileIcon}
+          path={Icons?.fileIcon}
           iconName={strings.document}
           tintColor={styles.documentTintColor}
           onPress={() => {
@@ -68,7 +68,7 @@ const Attach: FC<AttachDataType> = ({
         />
         <CustomIconRounder
           backgroundColor={styles.cameraBackgroundColor}
-          path={Icons.cameraIcon}
+          path={Icons?.cameraIcon}
           iconName={strings.camera}
           tintColor={styles.cameraTintColor}
           onPress={() => {
@@ -78,7 +78,7 @@ const Attach: FC<AttachDataType> = ({
         />
         <CustomIconRounder
           backgroundColor={styles.galleryBackgroundColor}
-          path={Icons.galleryIcon}
+          path={Icons?.galleryIcon}
           iconName={strings.gallery}
           tintColor={styles.galleryTintColor}
           onPress={() => {
@@ -88,7 +88,7 @@ const Attach: FC<AttachDataType> = ({
         />
         <CustomIconRounder
           backgroundColor={styles.locationBackgroundColor}
-          path={Icons.locationIcon}
+          path={Icons?.locationIcon}
           iconName={strings.map}
           tintColor={styles.locationTintColor}
           onPress={locationHandler}
